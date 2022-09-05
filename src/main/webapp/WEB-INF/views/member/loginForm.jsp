@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <title>로그인</title>
     <!--  CSS Link -->
-    <link rel="stylesheet" href="resources/css/loginMain.css">
+    <link rel="stylesheet" href="/css/member/loginForm.css">
     <!-- Bootstrap CSS Link -->
-    <link rel="stylesheet" href="resources/bootstraps/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstraps/css/bootstrap.css">
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js"></script>
@@ -20,8 +20,8 @@
 <div id="main">
     <div class="main_title" style="margin-top: 80px">
         <!-- 북로고 -->
-        <div class="book_logo mt-5 mb-2" style="width: 280px">
-            <a href="/main"> <img src="/resources/img/bk_store2.png"></a>
+        <div class="book_logo mt-0 mb-2">
+            <a href="/main"> <img src="/img/bk_store2.png"></a>
         </div>
         <!-- 로그인 -->
         <form class="login__input" action="/login" method="post"
@@ -29,17 +29,16 @@
             <div class="form-group">
                 <label class="form-label mt-4">로그인</label>
                 <div id="main_id" class="form-floating mb-3" style="width: 350px">
-                    <input type="text" name="memberId" class="form-control"
-                           id="login_id" placeholder="ID"> <label
-                        for="floatingInput">아이디</label>
+                    <input type="text" name="memberId" class="form-control" id="login_id" placeholder="ID">
+                    <label for="login_id">이메일</label>
                 </div>
                 <div id="main_pw" class="form-floating" style="width: 350px">
-                    <input type="password" name="memberPw" class="form-control"
-                           id="login_pw" placeholder="PW"> <label
-                        for="floatingPassword">비밀번호</label>
+                    <input type="password" name="memberPw" class="form-control" id="login_pw" placeholder="PW">
+                    <label for="login_pw">비밀번호</label>
                 </div>
+
                 <a href="https://kauth.kakao.com/oauth/authorize?client_id=22968e372ff6eb359a4c50fa6ac2ad49&redirect_uri=http://localhost:8080/kakaoLogin&response_type=code">
-                    <img src="resources/img/kakao_login_medium_narrow.png" style="width: 170px; margin-top: 35px; float: left;">
+                    <img src="/img/kakao_login_medium_narrow.png" style="width: 170px; margin-top: 35px; float: left;">
                 </a>
                 <div id="button" class="g-signin2" data-onsuccess="onSignIn" style="float: left; margin-left: 10px; width: 170px; margin-top: 35px; height: 40px"></div>
                 <br>
@@ -47,21 +46,22 @@
                     <c:set value="checked" var="checked" />
                 </c:if>
 
-                <fieldset style=	"clear: left;">
+                <fieldset style="clear: left;">
                     <br />
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox"
                                id="flexSwitchCheckDefault"> <label
-                            class="form-check-label" for="idSaveCheck">자동로그인</label>
+                            class="form-check-label" for="flexSwitchCheckDefault" style="margin-right: 160px">자동로그인</label>
+                        <a href="/passearch"><label class="form-check-label">비밀번호찾기</label>
                     </div>
                 </fieldset>
             </div>
         </form>
-        <a href="/idsearch"> <span class="badge bg-success" style="margin-top: 10px; width: 170px; height: 25px; line-height: 15px; float: left; margin-top: 35px">아이디찾기</span></a>
-        <a href="/passearch"> <span class="badge bg-success" style="margin-top: 10px; width: 170px; margin-left: 10px; line-height: 15px; height: 25px; margin-top: 35px">비밀번호찾기</span></a>
-        <div style="margin-top: 20px; margin-left: 40px">
-            <button type="button" class="btn btn-warning" onclick="location.href='/join'" style="width: 130px; margin-top: 35px">회원가입</button>
-            <button type="button" id="loginBtn" class="btn btn-warning" style="width: 130px; margin-top: 35px">로그인</button>
+
+        <div style="margin-top: 40px;">
+            <button type="button" class="btn btn-warning" onclick="location.href='/join'" style="width:350px; color: white;background-color: #ff7f00;">로그인</button>
+            <br />
+            <button type="button" id="loginBtn" class="btn btn-warning" style="width: 350px;margin-top: 15px;color: black;background-color: #e9ecef;border-color: #e9ecef;">이메일로 회원가입</button>
             <br /> <br />
         </div>
     </div>

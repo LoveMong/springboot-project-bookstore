@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+#main {
+}
+
+.main_title {
+	width: fit-content;
+	margin: auto;
+	border: 2px solid #ced4da;
+	padding: 40px;
+}
+
+.join_btn {
+	width: 300px;
+	text-align: center;
+	margin-top: 20px;
+}
