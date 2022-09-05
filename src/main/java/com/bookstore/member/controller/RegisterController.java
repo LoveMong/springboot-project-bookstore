@@ -1,2 +1,16 @@
-package com.bookstore.member.controller;public class RegisterController {
+package com.bookstore.member.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/account")
+public class RegisterController {
+
+    @GetMapping("/sign-up")
+    public String joinForm() {
+        return "/member/joinForm";
+    }
+
 }

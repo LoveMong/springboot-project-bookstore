@@ -10,9 +10,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BookStore</title>
 <!--  CSS Link -->
-<link rel="stylesheet" href="resources/css/join.css">
+<link rel="stylesheet" href="/css/member/joinForm.css">
 <!-- Bootstrap CSS Link -->
-<link rel="stylesheet" href="resources/bootstraps/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.css">
 </head>
 <body>
 
@@ -36,7 +36,7 @@
 							<!-- <input type="text" name="user_id" placeholder="유저네임" required="required" id="user_id"> -->
 								<div id="main_id" class="form-floating mb-3" style="width: 330px; margin-top: 30px">
 									<input type="text" name="user_id" class="form-control"  required="required"  id="user_id"  placeholder="ID">
-									<label for="floatingInput">아이디</label>
+									<label for="user_id">아이디</label>
 								</div>
 								<!-- <input type="button" id="check" value="중복체크"> -->
 								<button type="button"  id="check" value="중복체크" class="btn btn-success">중복체크</button>
@@ -46,12 +46,12 @@
 								<br />
 								<div id="main_pw" class="form-floating" style="width: 330px">
 									<input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="Password" required="required">
-									<label for="floatingPassword">비밀번호</label>
+									<label for="user_pw">비밀번호</label>
 								</div>
 								<br>
 								<div id="main_pw2" class="form-floating" style="width: 330px">
 									<input type="password" name="user_pw2" class="form-control" id="user_pw2" placeholder="Check" required="required">
-									<label for="floatingPassword">비밀번호 확인</label>
+									<label for="user_pw2">비밀번호 확인</label>
 								</div>
 								
 								
@@ -59,27 +59,27 @@
 								<br />
 								<div id="main_pw" class="form-floating" style="width: 330px">
 									<input type="text" name="user_name" class="form-control" id="user_name" placeholder="Name" required="required">
-									<label for="floatingInput">이름</label>
+									<label for="user_name">이름</label>
 								</div>
 								
 								<!-- <input type="text" name="user_phone" placeholder="핸드폰 번호" required="required" id="user_phone"> -->
 								<br />
 								<div id="main_pw" class="form-floating" style="width: 330px">
 									<input type="text" name="user_phone" class="form-control" id="user_phone" placeholder="PhoneNumber" required="required">
-									<label for="floatingInput">전화번호</label>
+									<label for="user_phone">전화번호</label>
 								</div>
 								
 								<br />
 								<div class="form-floating mb-3">
 									<div id="mail_sign" class="form-floating mb-3" style="width: 330px">
 										<input type="email" name="user_email" class="form-control" id="user_email" placeholder="E-mail" required="required">
-										<label for="floatingInput">이메일 </label>
+										<label for="user_email">이메일 </label>
 									</div>
 									<button type="button" id="mail_check" value="이메일인증받기" class="btn btn-success">메일인증</button>
 								</div>
 								<div id="mail_sign_ch" class="form-floating mb-3 d-none" style="width: 330px">
 									<input type="text" class="form-control mb-3" id="user_mail_check" placeholder="Number" required="required">
-									<label for="floatingInput">인증번호 입력  </label>
+									<label for="user_mail_check">인증번호 입력  </label>
 									<button type="button" id="mail_num_sign" value="인증번호확인" class="btn btn-success">인증번호확인</button>
 								</div>
 								<br />
