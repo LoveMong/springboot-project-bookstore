@@ -26,69 +26,44 @@
 						<!--회원가입 폼-->
 						<div class="login__form">
 							<!--로고-->
-							<div class="book_logo mt-5 mb-2" style="    width: 280px;">
-	               <a href="/main"> <img src="/resources/img/bk_store2.png" alt="">
-	               </a>
-	            </div>
+							<div class="book_logo mt-0 mb-2" style="    width: 280px;">
+	               				<a href="/main"> <img src="/img/bk_store2.png" alt=""></a>
+	            			</div>
 							<!--로고end-->
 							<!--회원가입 인풋-->
 							<form class="login__input" action="/join" method="post" id="signFrm" name="signFrm">
-							<!-- <input type="text" name="user_id" placeholder="유저네임" required="required" id="user_id"> -->
-								<div id="main_id" class="form-floating mb-3" style="width: 330px; margin-top: 30px">
-									<input type="text" name="user_id" class="form-control"  required="required"  id="user_id"  placeholder="ID">
-									<label for="user_id">아이디</label>
-								</div>
-								<!-- <input type="button" id="check" value="중복체크"> -->
-								<button type="button"  id="check" value="중복체크" class="btn btn-success">중복체크</button>
-								<br />
-								
-								<!-- <input type="password" name="user_pw" placeholder="패스워드" required="required"	id="user_pw"> -->
-								<br />
-								<div id="main_pw" class="form-floating" style="width: 330px">
-									<input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="Password" required="required">
-									<label for="user_pw">비밀번호</label>
-								</div>
-								<br>
-								<div id="main_pw2" class="form-floating" style="width: 330px">
-									<input type="password" name="user_pw2" class="form-control" id="user_pw2" placeholder="Check" required="required">
-									<label for="user_pw2">비밀번호 확인</label>
-								</div>
-								
-								
-								<!-- <input type="text" name="user_name" placeholder="이름" required="required" id="user_name"> -->
-								<br />
-								<div id="main_pw" class="form-floating" style="width: 330px">
+
+								<div id="main_name" class="form-floating mb-4" style="width: 330px">
 									<input type="text" name="user_name" class="form-control" id="user_name" placeholder="Name" required="required">
 									<label for="user_name">이름</label>
 								</div>
-								
-								<!-- <input type="text" name="user_phone" placeholder="핸드폰 번호" required="required" id="user_phone"> -->
-								<br />
-								<div id="main_pw" class="form-floating" style="width: 330px">
-									<input type="text" name="user_phone" class="form-control" id="user_phone" placeholder="PhoneNumber" required="required">
-									<label for="user_phone">전화번호</label>
-								</div>
-								
-								<br />
-								<div class="form-floating mb-3">
-									<div id="mail_sign" class="form-floating mb-3" style="width: 330px">
+
+								<div class="form-floating mb-4">
+									<div id="mail_sign" class="form-floating mb-4" style="width: 330px">
 										<input type="email" name="user_email" class="form-control" id="user_email" placeholder="E-mail" required="required">
 										<label for="user_email">이메일 </label>
 									</div>
-									<button type="button" id="mail_check" value="이메일인증받기" class="btn btn-success">메일인증</button>
+									<div><button type="button" id="mail_check" value="이메일인증받기" class="btn btn-success">인증메일 발송</button></div>
 								</div>
-								<div id="mail_sign_ch" class="form-floating mb-3 d-none" style="width: 330px">
+								<div id="mail_sign_ch" class="form-floating mb-4" style="display: none">
 									<input type="text" class="form-control mb-3" id="user_mail_check" placeholder="Number" required="required">
 									<label for="user_mail_check">인증번호 입력  </label>
-									<button type="button" id="mail_num_sign" value="인증번호확인" class="btn btn-success">인증번호확인</button>
+									<button type="button" id="mail_num_sign" value="인증번호확인" class="btn btn-success">인증번호 확인</button>
+								</div>
+								<div id="main_pw" class="form-floating mb-4" style="width: 330px">
+									<input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="Password" required="required">
+									<label for="user_pw">비밀번호</label>
+								</div>
+								<div id="main_pw2" class="form-floating mb-4" style="width: 330px">
+									<input type="password" name="user_pw2" class="form-control" id="user_pw2" placeholder="Check" required="required">
+									<label for="user_pw2">비밀번호 확인</label>
 								</div>
 								<br />
-								
-							
-							
+
+								<br />
 								<br/>
 								<!-- <input type="button" id="signUp" value="회원가입"> -->
-								<button type="button" class="btn btn-primary" id="signUp" value="회원가입" onclick="check()" style="width: 250px; margin-left: 35px">회원가입</button>
+								<button type="button" class="btn btn-primary" id="signUp" value="회원가입" onclick="check()">회원가입</button>
 								
 							</form>
 							<!--회원가입 인풋end-->
@@ -213,9 +188,9 @@
 		var cehckBox = $("#mail_sign");        // 인증번호 입력란
 		var boxWrap = $(".mail_check_input_box");   // 인증번호 입력란 박스
 		check_same_mail = $("#user_email").val();
-		$("#mail_check").slideUp();
-   		$("#mail_sign_ch").removeClass("d-none");
-   		
+		// $("#mail_check").slideUp();
+   		$("#mail_sign_ch").slideDown("slow");
+
 		$.ajax({
 	        
 	        type : "GET",
