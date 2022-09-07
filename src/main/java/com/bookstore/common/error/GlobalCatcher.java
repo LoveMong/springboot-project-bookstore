@@ -1,4 +1,4 @@
-package com.spring.minip.common.error;
+package com.bookstore.common.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * 모든 @Controller 즉, 전역에서 발생할 수 있는 예외를 처리해주는 클래스 작성
- *
- * @Project : spring-minp
- * @Date : 2022-06-09
  * @author : L
- *
  */
 @ControllerAdvice
 public class GlobalCatcher {

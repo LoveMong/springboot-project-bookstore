@@ -1,8 +1,7 @@
-package com.spring.minip.common.validation;
+package com.bookstore.common.validation;
 
-import com.spring.minip.member.domain.MemberDto;
+import com.bookstore.member.domain.MemberDto;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
