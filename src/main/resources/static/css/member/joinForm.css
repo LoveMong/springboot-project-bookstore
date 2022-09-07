@@ -30,7 +30,7 @@
 	font-size: 14px;
 }
 
-#user_email {
+#memberEmail {
 	width:200px;
 	float: left;
 	margin-right: 10px;
@@ -46,10 +46,15 @@
 	width: 300px;
 	margin-left: 10px;
 	margin-bottom: 20px;
+	margin-top: 50px;
 	color: white;
 	background-color: #ff7f00;
 	border-color: #ff7f00;
+}
 
+#message_join {
+	color: red;
+	margin-top: 30px;
 }
 
 .login__input {
