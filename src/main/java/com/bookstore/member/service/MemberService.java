@@ -13,8 +13,9 @@ public class MemberService {
 
 
     public void createMember(MemberDto member) {
-        memberMapper.createMember(member);
-    }
 
+        memberMapper.createMember(member);
+
+    }
 
 }
