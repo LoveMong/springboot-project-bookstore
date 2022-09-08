@@ -53,7 +53,7 @@ public class MemberValidator implements Validator {
 
 
 
-        if (idCheck(memberName)) {
+        if (nameCheck(memberName)) {
             errors.rejectValue("memberName", "form", "아이디에 공백 또는 특스문자가 입력되었습니다.");
         }
 
@@ -82,7 +82,7 @@ public class MemberValidator implements Validator {
     }
 
 
-    private boolean idCheck(String memberName) { // 이름에 공백 포함 시 false 반환
+    private boolean nameCheck(String memberName) { // 이름에 공백 포함 시 false 반환
         return Pattern.matches("/\\s/g", memberName);
     }
     private boolean pwdCheck(String memberPassword) { // 비밀번호는 영문 대소문자와 숫자 4~12자리로 입력 아니면 false 반환
