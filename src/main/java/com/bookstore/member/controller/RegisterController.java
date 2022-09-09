@@ -1,5 +1,6 @@
 package com.bookstore.member.controller;
 
+import com.bookstore.common.validation.MemberValidator;
 import com.bookstore.member.domain.MemberDto;
 import com.bookstore.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -48,12 +50,13 @@ public class RegisterController {
         return "/member/joinForm";
     }
 
+
     /**
      *
      */
     @PostMapping("/sign-up")
     @ResponseBody
-    public int joinMember(@RequestBody @Valid MemberDto memberDto,
+    public int joinMember(@Valid MemberDto memberDto,
                              BindingResult bindingResult,
                              Model model) throws Exception {
 
@@ -66,6 +69,7 @@ public class RegisterController {
             String pwdBcrypt = passwordEncoder.encode(memberDto.getMemberPassword());
             memberDto.setMemberPassword(pwdBcrypt);
             memberService.createMember(memberDto);
+            joinSuccessResult = 1;
         }
 
         return joinSuccessResult;

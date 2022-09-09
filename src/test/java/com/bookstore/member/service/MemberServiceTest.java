@@ -26,7 +26,7 @@ class MemberServiceTest {
     public void createMember() throws Exception {
         //given
         MemberDto memberDto = MemberDto.builder()
-                .memberEmail("mong@naver.com")
+                .memberEmail("mong22@naver.com")
                 .memberName("LeeMong")
                 .memberPassword("1234")
                 .build();
