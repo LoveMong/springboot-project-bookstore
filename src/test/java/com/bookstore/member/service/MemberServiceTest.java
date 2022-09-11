@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
@@ -39,6 +40,30 @@ class MemberServiceTest {
 
 
     }
+
+    @Test
+    @DisplayName("회원 찾기")
+    public void selectMember() throws Exception {
+        //given
+        MemberDto memberDto = MemberDto.builder()
+                .memberEmail("mong9012@naver.com")
+                .memberName("리몽")
+                .memberPassword("1234")
+                .build();
+
+        memberMapper.createMember(memberDto);
+
+        //when
+        MemberDto member = memberMapper.selectMemberByEmail(memberDto.getMemberEmail());
+
+
+        //then
+
+        assertEquals(member.getMemberName(), memberDto.getMemberName());
+
+
+    }
+
 
 
 }

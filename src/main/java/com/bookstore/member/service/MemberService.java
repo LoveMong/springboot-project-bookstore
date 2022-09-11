@@ -13,9 +13,11 @@ public class MemberService {
 
 
     public void createMember(MemberDto member) {
-
         memberMapper.createMember(member);
+    }
 
+    public MemberDto selectMemberByEmail(String email) {
+        return memberMapper.selectMemberByEmail(email);
     }
 
 }

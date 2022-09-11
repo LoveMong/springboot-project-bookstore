@@ -4,9 +4,16 @@
 
 <mapper namespace="com.bookstore.member.mapper.MemberMapper">
 
-    <insert id="createMember">
-        insert into member(member_name, member_email, member_password) values(#{memberName}, #{memberEmail}, #{memberPassword})
+    <insert id="createMember" parameterType="com.bookstore.member.domain.MemberDto">
+        INSERT INTO member(member_name, member_email, member_password)
+        VALUES (#{memberName}, #{memberEmail}, #{memberPassword})
     </insert>
+
+    <select id="selectMemberByEmail" parameterType="String" resultType="com.bookstore.member.domain.MemberDto">
+        SELECT *
+        FROM member
+        WHERE member_email = #{email}
+    </select>
 
 
 </mapper>

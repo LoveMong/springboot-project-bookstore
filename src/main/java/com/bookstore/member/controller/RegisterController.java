@@ -76,4 +76,13 @@ public class RegisterController {
         return joinSuccessResult;
 
     }
+
+//    @GetMapping("/mailCheck")
+//    @ResponseBody
+//    public String mailCheck(String mail) {
+//
+//
+//
+//    }
+
 }
