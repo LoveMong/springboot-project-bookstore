@@ -1,6 +1,7 @@
 package com.bookstore.member.controller;
 
 import com.bookstore.member.domain.MemberDto;
+import com.bookstore.member.service.EmailService;
 import com.bookstore.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,9 @@ import javax.validation.Valid;
 public class RegisterController {
 
     private final MemberService memberService;
-
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
+
 
 
     /**
@@ -77,12 +79,27 @@ public class RegisterController {
 
     }
 
-//    @GetMapping("/mailCheck")
-//    @ResponseBody
-//    public String mailCheck(String mail) {
-//
-//
-//
-//    }
+
+    @GetMapping("/mailCheck")
+    @ResponseBody
+    public int mailCheck(String mail) {
+
+        int checkSuccessResult = 0;
+
+        if (!checkDuplication(mail)) {
+            return checkSuccessResult;
+        } else {
+            checkSuccessResult = emailService.mailCheck(mail);
+        }
+
+        return checkSuccessResult;
+
+    }
+
+
+    private boolean checkDuplication(String mail) {
+        MemberDto member = memberService.selectMemberByEmail(mail);
+        return member == null;
+    }
 
 }

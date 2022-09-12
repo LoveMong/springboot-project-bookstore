@@ -192,4 +192,7 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+#파일 무시
+application.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,java,maven,intellij
