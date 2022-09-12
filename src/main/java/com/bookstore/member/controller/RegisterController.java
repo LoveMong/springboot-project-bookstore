@@ -82,7 +82,7 @@ public class RegisterController {
 
     @GetMapping("/mailCheck")
     @ResponseBody
-    public int mailCheck(String mail) {
+    public int mailCheck(String mail) throws Exception {
 
         int checkSuccessResult = 0;
 

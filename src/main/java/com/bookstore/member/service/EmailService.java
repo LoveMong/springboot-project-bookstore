@@ -1,10 +1,14 @@
 package com.bookstore.member.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -24,21 +28,20 @@ public class EmailService {
      * @param email 수신 메일주소
      * @return 6자리 난수
      */
-    public int mailCheck(String email) {
+    public int mailCheck(String email) throws Exception {
 
 
         int key = generateAuthNum(); // 인증번호 생성
+        MimeMessage mailMessage = javaMailSender.createMimeMessage();
+        String mailContent = "<h1>[이메일 인증]</h1><br><p>아래 인증번호를 인증번호 확인란에 기입하여 주세요.</p><br>"
+                + "인증번호는 "
+                + key
+                + " 입니다.";
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        mailMessage.setTo(email); // 수신 메일주소
-        mailMessage.setSubject("회원가입 인증 이메일입니다."); // 메일 제목
-        mailMessage.setText( // 메일 내용
-                        "홈페이지를 방문해주셔서 감사합니다." +
-                        "<br><br>" +
-                        "인증 번호는 " + key + "입니다." +
-                        "<br>" +
-                        "해당 인증번호를 인증번호 확인란에 기입하여 주세요.");
+        mailMessage.setSubject("회원가입 이메일 인증 ", "utf-8");
+        mailMessage.setText(mailContent, "utf-8", "html");
+        mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 
         javaMailSender.send(mailMessage);
 
