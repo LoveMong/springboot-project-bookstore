@@ -52,11 +52,19 @@
 	border-color: #ff7f00;
 }
 
+
+.login__input {
+	margin-top: 40px;
+}
+
+
 #message_join {
 	color: red;
 	margin-top: 30px;
 }
 
-.login__input {
-	margin-top: 40px;
-}
+
+
+
+
+
