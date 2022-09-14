@@ -46,7 +46,7 @@
 	width: 300px;
 	margin-left: 10px;
 	margin-bottom: 20px;
-	margin-top: 50px;
+	margin-top: 30px;
 	color: white;
 	background-color: #ff7f00;
 	border-color: #ff7f00;
@@ -61,6 +61,10 @@
 #message_join {
 	color: red;
 	margin-top: 30px;
+}
+
+#memberName {
+	margin-top: 80px;
 }
 
 

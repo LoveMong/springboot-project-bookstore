@@ -62,9 +62,14 @@
 									<label for="memberPassword2">비밀번호 확인</label>
 								</div>
 								<div class="form-group text-center" id="message_join">
-									<c:if test="${not empty param.joinMessage}">
-										<i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.joinMessage, "utf-8")}</i>
-									</c:if>
+									<c:choose>
+										<c:when test="${not empty param.joinMessage}">
+											${URLDecoder.decode(param.joinMessage, "utf-8")}
+										</c:when>
+										<c:otherwise>
+											<br>
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<button type="button" class="btn btn-primary" name="signUp" id="signUp" value="회원가입">회원가입</button>
 							</form>
