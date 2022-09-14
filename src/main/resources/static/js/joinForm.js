@@ -158,7 +158,7 @@ $(function (){
         document.getElementById("message_join").innerHTML = `<i class="fa fa-exclamation-circle"> ${joinMessage}</i>`;
 
         setTimeout(function (){
-            document.getElementById("message_join").innerHTML = '';
+            document.getElementById("message_join").innerHTML = `<div><br></div>`;
         }, 2000);
 
         if(element) {
