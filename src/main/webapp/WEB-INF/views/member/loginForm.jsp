@@ -23,7 +23,9 @@
             <a href="/main"> <img src="/img/bk_store2.png"></a>
         </div>
         <!-- 로그인 -->
-        <form class="login__input" action="<c:url value='/account/sign-in'/>" method="post" id="loginFrm" name="loginFrm">
+<%--        <c:url value='/account/sign-in'/>--%>
+        <form class="login__input" action="/login" method="post" id="loginFrm" name="loginFrm">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <div class="form-group" style="margin-top: 50px">
                 <label class="form-label mt-4">로그인</label>
                 <div id="main_id" class="form-floating mb-3" style="width: 350px">
@@ -47,9 +49,8 @@
                 <fieldset style="clear: left;">
                     <br />
                     <div class="form-check form-switch" style="margin-top: 10px">
-                        <input class="form-check-input" type="checkbox"
-                               id="flexSwitchCheckDefault"> <label
-                            class="form-check-label" for="flexSwitchCheckDefault" style="margin-right: 160px">자동로그인</label>
+                        <input class="form-check-input" type="checkbox" id="remember" name="remember-me">
+                        <label class="form-check-label" for="remember" style="margin-right: 160px">자동로그인</label>
                         <a href="/passearch"><label class="form-check-label">비밀번호찾기</label></a>
                     </div>
                 </fieldset>
@@ -59,6 +60,9 @@
             <c:choose>
                 <c:when test="${not empty param.loginMessage}">
                     ${URLDecoder.decode(param.loginMessage, "utf-8")}
+                </c:when>
+                <c:when test="${not empty param.message}">
+                    ${param.message}
                 </c:when>
                 <c:otherwise>
                     <br>
