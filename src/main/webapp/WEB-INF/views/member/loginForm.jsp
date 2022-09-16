@@ -20,7 +20,7 @@
     <div class="main_title" style="margin-top: 80px">
         <!-- 북로고 -->
         <div class="book_logo mt-0 mb-2">
-            <a href="/main"> <img src="/img/bk_store2.png"></a>
+            <a href="/main"> <img src="/img/bk_store2.png" alt=""></a>
         </div>
         <!-- 로그인 -->
 <%--        <c:url value='/account/sign-in'/>--%>
