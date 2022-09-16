@@ -13,18 +13,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome! SJBook Store!</title>
-    <link rel="stylesheet" href="resources/css/main.css">
+    <link rel="stylesheet" href="/css/main/main.css">
     <script
             src="https://code.jquery.com/jquery-3.4.1.js"
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
             crossorigin="anonymous"></script>
     <script src="resources/js/main.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" type="text/css" href="resources/css/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="resources/css/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/main/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/main/slick-theme.css"/>
 
-    <script type="text/javascript" src="resources/js/slick.js"></script>
-    <script type="text/javascript" src="resources/js/main.js"></script>
+    <script type="text/javascript" src="js/slick.js"></script>
+    <script type="text/javascript" src=/js/main.js"></script>
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -55,7 +55,7 @@
 </head>
 <body>
 
-<jsp:include page="include/header.jsp"></jsp:include>
+<jsp:include page="common/header.jsp"></jsp:include>
 
 
 
@@ -287,7 +287,7 @@
         </div>
     </div>
 
-    <jsp:include page="include/footerBox.jsp"></jsp:include>
+    <jsp:include page="common/footer.jsp"></jsp:include>
 
 
 
