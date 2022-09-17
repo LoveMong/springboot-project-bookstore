@@ -30,7 +30,6 @@ public class LoginController {
 
     /**
      * 로그인 화면으로 이동하는 메소드
-     *
      * @return 로그인 화면
      */
     @GetMapping("/sign-in")

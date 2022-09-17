@@ -158,10 +158,11 @@ header {
 							<li><a href="/account/sign-up">회원가입</a></li>
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
-							<li><p><sec:authentication property="memberDto.userName"/> 님</p></li>
-							<li><p><sec:authentication property="memberDto.userRank"/> 회원</p></li>
+							<sec:authentication property="principal" var="member"/>
+							<li><p>${member.memberName} 님</p></li>
+							<li><p>${member.memberRank} 회원</p></li>
 							<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
-									value="${login.user_point}" pattern="#,###" /> </a></li>
+									value="${member.memberPoint}" pattern="#,### 원" /> </a></li>
 							<li><a href="/mypage/cart">마이페이지</a></li>
 							<c:set var="String" value="${login.user_id }"/>
 							<c:choose>
@@ -169,7 +170,7 @@ header {
 									<li><a href="#" onclick="signOut();">로그아웃</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="/logout">로그아웃</a></li>
+									<li><a href="/account/logout">로그아웃</a></li>
 								</c:otherwise>
 							</c:choose>
 							<c:if test="${login.user_grade==1 }">
