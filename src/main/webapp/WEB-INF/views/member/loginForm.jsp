@@ -12,7 +12,7 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://apis.google.com/js/platform.js"></script>
+<%--    <script src="https://apis.google.com/js/platform.js"></script>--%>
     <script type="text/javascript" src="/js/loginForm.js"></script>
 </head>
 <body>

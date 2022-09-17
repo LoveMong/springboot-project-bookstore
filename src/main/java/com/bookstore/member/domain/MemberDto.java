@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,13 +15,14 @@ import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
 
 @Builder
 @Getter @Setter
 @ToString
 @NoArgsConstructor // 파라미터가 없는 기본 생성자 생성
 @AllArgsConstructor // 필드 값을 파라미터로 받는 생성자 생성
-public class MemberDto implements UserDetails {
+public class MemberDto implements UserDetails, OAuth2User {
 
     @NotBlank
     @Length(min = 2, max = 10)
@@ -37,9 +39,13 @@ public class MemberDto implements UserDetails {
 
     private String memberRank; // 회원 등급
 
+    private int memberPoint; // 회원 포인트
+
     private Date memberRegisterDate; // 회원 가입일
 
     private String memberRole; // 일반 or 관리자
+
+    private Map<String, Object> attributes;
 
     /**
      * 해당 유저의 권한 목록
@@ -112,4 +118,13 @@ public class MemberDto implements UserDetails {
         return true;
     }
 
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return memberEmail;
+    }
 }

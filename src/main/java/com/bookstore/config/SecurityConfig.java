@@ -1,7 +1,9 @@
 package com.bookstore.config;
 
 import com.bookstore.member.service.MemberService;
+import com.bookstore.member.service.Oauth2MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -32,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberService memberService;
     private final DataSource dataSource;
 
+    private final Oauth2MemberService oauth2MemberService;
+
     // http 요청에 대한 보안을 설정
     // 페이지 권한 설정, 로그인 페이지 설정, 로그아웃 메소드 등에 대한 설정 등
     @Override
@@ -46,16 +50,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout() // 로그아웃 처리
                 .logoutRequestMatcher(new AntPathRequestMatcher("/account/logout")) // 로그아웃 URL 설정
-//                .logoutUrl("/account/logout") // 로그아웃 처리 URL
                 .deleteCookies("JSESSIONID", "remember-me") // 로그아웃 후 해당 쿠키 삭제
                 .logoutSuccessUrl("/") // 로그아웃 성공 시 이동할 URL을 설정
+        ;
+
+        http.oauth2Login()
+                .loginPage("/account/sign-in")
+                .defaultSuccessUrl("/")
+                .failureUrl("/account/sign-in/error") // 로그인 실패 시 이동할 URL을 설정
+                .userInfoEndpoint()
+                .userService(oauth2MemberService)
         ;
 
         http.rememberMe()
                 .tokenValiditySeconds(3600*24*365)
                 .userDetailsService(memberService)
                 .tokenRepository(tokenRepository())
-                ;
+        ;
 
         http.authorizeRequests() // 시큐리티 처리에 HttpServletRequest를 이용
                 .mvcMatchers("/", "/login", "/logout", "/account/sign-in", "/account/sign-up", "/account/sign-in/error").permitAll() // 메인, 회원 관련, 상품 관련, 상품 이미지 관련 페이지는 모든 사용자가 로그인(인증)없이 접근 가능
