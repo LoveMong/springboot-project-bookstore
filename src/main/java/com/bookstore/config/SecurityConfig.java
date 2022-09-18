@@ -2,8 +2,8 @@ package com.bookstore.config;
 
 import com.bookstore.member.service.MemberService;
 import com.bookstore.member.service.Oauth2MemberService;
+import com.bookstore.member.service.PrincipalDetailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,9 +31,8 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final MemberService memberService;
+    private final PrincipalDetailService principalDetailService;
     private final DataSource dataSource;
-
     private final Oauth2MemberService oauth2MemberService;
 
     // http 요청에 대한 보안을 설정
@@ -52,19 +51,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/account/logout")) // 로그아웃 URL 설정
                 .deleteCookies("JSESSIONID", "remember-me") // 로그아웃 후 해당 쿠키 삭제
                 .logoutSuccessUrl("/") // 로그아웃 성공 시 이동할 URL을 설정
-        ;
-
-        http.oauth2Login()
-                .loginPage("/account/sign-in")
-                .defaultSuccessUrl("/")
-                .failureUrl("/account/sign-in/error") // 로그인 실패 시 이동할 URL을 설정
+                .and()
+                .oauth2Login()
                 .userInfoEndpoint()
                 .userService(oauth2MemberService)
         ;
 
+
         http.rememberMe()
                 .tokenValiditySeconds(3600*24*365)
-                .userDetailsService(memberService)
+                .userDetailsService(principalDetailService)
                 .tokenRepository(tokenRepository())
         ;
 
@@ -98,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 //      시큐리티가 대신 로그인할 때 password를 가로채기 하는데 해당 pqssword가 무엇으로 해쉬되어 회원가입 되었는지 알아야 같은 해쉬로 암호화해서 DB에 있는 해쉬랑 비교 가능
-        auth.userDetailsService(memberService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(principalDetailService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Bean

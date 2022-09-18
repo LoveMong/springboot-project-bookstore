@@ -40,7 +40,8 @@
                 <a href="https://kauth.kakao.com/oauth/authorize?client_id=22968e372ff6eb359a4c50fa6ac2ad49&redirect_uri=http://localhost:8080/kakaoLogin&response_type=code">
                     <img src="/img/kakao_login_medium_narrow.png" style="width: 170px; margin-top: 35px; float: left;">
                 </a>
-                <div id="button" class="g-signin2" data-onsuccess="onSignIn" style="float: left; margin-left: 10px; width: 170px; margin-top: 35px; height: 40px"></div>
+                <a href="/oauth2/authorization/google">구글 로그인</a>
+<%--                <div id="button" class="g-signin2" data-onsuccess="onSignIn" style="float: left; margin-left: 10px; width: 170px; margin-top: 35px; height: 40px"></div>--%>
                 <br>
                 <c:if test="${not empty cookie.user_check}">
                     <c:set value="checked" var="checked" />

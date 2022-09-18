@@ -22,12 +22,6 @@ import java.nio.charset.StandardCharsets;
 public class LoginController {
 
 
-    private final MemberService memberService;
-
-    private final PasswordEncoder passwordEncoder;
-
-
-
     /**
      * 로그인 화면으로 이동하는 메소드
      * @return 로그인 화면
