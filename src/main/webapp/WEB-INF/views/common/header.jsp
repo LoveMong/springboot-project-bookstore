@@ -159,10 +159,11 @@ header {
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<sec:authentication property="principal" var="member"/>
-							<li><p>${member.memberName} 님</p></li>
-							<li><p>${member.memberRank} 회원</p></li>
+<%--							<li><p><sec:authentication property="principal.memberDto.memberName"/> 님</p></li>--%>
+							<li><p>${member.memberDto.memberName} 님</p></li>
+							<li><p>${member.memberDto.memberRank} 회원</p></li>
 							<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
-									value="${member.memberPoint}" pattern="#,### 원" /> </a></li>
+									value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>
 							<li><a href="/mypage/cart">마이페이지</a></li>
 							<c:set var="String" value="${login.user_id }"/>
 							<c:choose>
