@@ -166,14 +166,7 @@ header {
 									value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>
 							<li><a href="/mypage/cart">마이페이지</a></li>
 							<c:set var="String" value="${login.user_id }"/>
-							<c:choose>
-								<c:when test="${fn:contains(String, 'gmail')}">
-									<li><a href="#" onclick="signOut();">로그아웃</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="/account/logout">로그아웃</a></li>
-								</c:otherwise>
-							</c:choose>
+							<li><a href="/account/logout">로그아웃</a></li>
 							<c:if test="${login.user_grade==1 }">
 								<li><a href="/admin/product">관리자 페이지</a></li>
 							</c:if>
