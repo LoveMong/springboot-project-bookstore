@@ -18,7 +18,7 @@
             src="https://code.jquery.com/jquery-3.4.1.js"
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
             crossorigin="anonymous"></script>
-    <script src="resources/js/main.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="/css/main/slick.css"/>
     <link rel="stylesheet" type="text/css" href="/css/main/slick-theme.css"/>

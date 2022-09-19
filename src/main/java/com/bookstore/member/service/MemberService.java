@@ -3,10 +3,6 @@ package com.bookstore.member.service;
 import com.bookstore.member.domain.MemberDto;
 import com.bookstore.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
