@@ -37,7 +37,7 @@ public class EmailService {
                 + " 입니다.";
 
 
-        mailMessage.setSubject("회원가입 이메일 인증 ", "utf-8");
+        mailMessage.setSubject("[BookStore] 이메일 인증 ", "utf-8");
         mailMessage.setText(mailContent, "utf-8", "html");
         mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 

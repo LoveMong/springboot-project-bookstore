@@ -15,5 +15,11 @@
         WHERE member_email = #{email}
     </select>
 
+    <update id="updatePassword" parameterType="String">
+        UPDATE member
+        SET member_password = #{password}
+        WHERE member_email = #{email}
+    </update>
+
 
 </mapper>

@@ -10,4 +10,6 @@ public interface MemberMapper {
 
     MemberDto selectMemberByEmail(String email);
 
+    void updatePassword(String email, String password);
+
 }
