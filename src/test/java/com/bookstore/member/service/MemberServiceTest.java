@@ -64,6 +64,32 @@ class MemberServiceTest {
 
     }
 
+    @Test
+    @DisplayName("비밀번호 변경")
+    public void resetPassword() throws Exception {
+        //given
+        MemberDto memberDto = MemberDto.builder()
+                .memberEmail("test")
+                .memberName("test1")
+                .memberPassword("1234")
+                .build();
+
+        memberMapper.createMember(memberDto);
+
+
+        //when
+        memberMapper.updatePassword(memberDto.getMemberEmail(), "1111");
+        MemberDto memberDto1 = memberMapper.selectMemberByEmail(memberDto.getMemberEmail());
+
+
+        //then
+        assertNotEquals(memberDto.getMemberPassword(), memberDto1.getMemberPassword());
+
+
+
+    }
+
+
 
 
 }

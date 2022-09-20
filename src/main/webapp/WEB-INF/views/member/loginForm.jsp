@@ -47,7 +47,7 @@
                             <div class="form-check form-switch" style="margin-top: 10px">
                                 <input class="form-check-input" type="checkbox" id="remember" name="remember-me">
                                 <label class="form-check-label" for="remember" style="margin-right: 160px">자동로그인</label>
-                                <a href="/passearch"><label class="form-check-label">비밀번호찾기</label></a>
+                                <a href="/account/searchPassword">비밀번호찾기</a>
                             </div>
                         </fieldset>
                     </div>

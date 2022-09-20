@@ -20,5 +20,9 @@ public class MemberService {
         return memberMapper.selectMemberByEmail(email);
     }
 
+    public void updatePassword(String email, String password) {
+         memberMapper.updatePassword(email, password);
+    }
+
 
 }
