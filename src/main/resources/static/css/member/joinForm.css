@@ -67,6 +67,24 @@
 	margin-top: 80px;
 }
 
+label {
+	display: block;
+}
+
+
+#agree {
+	margin-left: 35px;
+	margin-top: 20px;
+	font-size: 15px;
+	line-height: 30px;
+	margin-bottom: 20px;
+}
+
+#agreeAll {
+	margin-top: 35px;
+	font-size: 20px;
+	margin-left: 10px;
+}
 
 
 
