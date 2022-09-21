@@ -37,7 +37,7 @@
 							<!--로고end-->
 							<!--회원가입 인풋-->
 							<form class="join__input" action="" method="" id="signFrm" name="signFrm">
-								<div id="main_name" class="form-floating mb-4" style="width: 330px">
+								<%--@declare id="agree"--%><div id="main_name" class="form-floating mb-4" style="width: 330px">
 									<input type="text" name="memberName" class="form-control" id="memberName" placeholder="Name" required="required">
 									<label for="memberName">이름</label>
 								</div>
@@ -71,6 +71,31 @@
 										</c:otherwise>
 									</c:choose>
 								</div>
+								<div id="agreeAll">
+								<label for="agree_all">
+									<input type="checkbox" name="agree_all" id="agree_all" style="zoom: 1.3; margin-right: 5px">
+									<span style="color: black">전체 동의</span>
+								</label><br>
+								</div>
+								<div id="agree">
+									<label for="agree">
+										<input type="checkbox" id="check1" name="agree" value="1" style="margin-right: 5px">
+										<span>이용약관 동의<strong>(필수)</strong></span>
+									</label><br>
+									<label for="agree">
+										<input type="checkbox" id="check2" name="agree" value="2" style="margin-right: 5px">
+										<span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
+									</label><br>
+									<label for="agree">
+										<input type="checkbox" id="check3" name="agree" value="3" style="margin-right: 5px">
+										<span>개인정보 이용 동의<strong>(필수)</strong></span>
+									</label><br>
+									<label for="agree">
+										<input type="checkbox" name="agree" value="4" style="margin-right: 5px">
+										<span>이벤트, 혜택정보 수신동의<strong class="select_disable">(선택)</strong></span>
+									</label><br>
+								</div>
+
 								<button type="button" class="btn btn-primary" name="signUp" id="signUp" value="회원가입">회원가입</button>
 							</form>
 							<!--회원가입 인풋end-->

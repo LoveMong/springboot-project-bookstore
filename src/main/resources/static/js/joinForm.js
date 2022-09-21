@@ -27,6 +27,9 @@ $(function (){
         name = document.getElementById("memberName").value;
         pwd = document.getElementById("memberPassword").value;
         cpwd = document.getElementById("memberPassword2").value;
+        let agree_check1 = document.getElementById("check1").checked;
+        let agree_check2 = document.getElementById("check2").checked;
+        let agree_check3 = document.getElementById("check3").checked;
 
 
         if (name === "") {
@@ -58,6 +61,8 @@ $(function (){
         }
         else if (pwd !== cpwd) {
             setMessage_Join("비밀번호가 일치하지 않습니다.", signFrm.memberPassword2);
+        }else if (agree_check1 === false || agree_check2 === false || agree_check3 === false ) {
+            setMessage_Join("개인정보 동의가 필요합니다.", signFrm.agree_all);
         } else {
             $.ajax({
                 type : 'post', // 요청 메서드
@@ -168,5 +173,15 @@ $(function (){
         }
     }
 
+    // 동의 모두선택 / 해제
+    const agreeChkAll = document.querySelector('input[name=agree_all]');
+    agreeChkAll.addEventListener('change', (e) => {
+        let agreeChk = document.querySelectorAll('input[name=agree]');
+        for(let i = 0; i < agreeChk.length; i++){
+            agreeChk[i].checked = e.target.checked;
+        }
+    });
 
 });
+
+
