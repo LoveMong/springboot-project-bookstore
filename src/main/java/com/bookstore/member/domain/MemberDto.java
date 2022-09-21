@@ -3,19 +3,12 @@ package com.bookstore.member.domain;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Map;
 
 @Builder
 @Getter @Setter
@@ -34,7 +27,7 @@ public class MemberDto {
     private String memberEmail; // 회원 아이디(Email)
 
     @NotEmpty
-    @Length(min = 4, max = 12)
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
     private String memberPassword; // 회원 비밀번호
 
     private String memberRank; // 회원 등급

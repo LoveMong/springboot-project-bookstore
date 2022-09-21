@@ -39,41 +39,7 @@ $(function (){
             let option = "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=400, left=" + popupX + ", top=" + popupY;
             window.open(url, "_blank", option);
         }
-            // } else {
-        //     $.ajax({
-        //         type : 'post', // 요청 메서드
-        //         url : '/account/', // 요청 URI
-        //         beforeSend : function (xhr){
-        //             xhr.setRequestHeader(header, token);
-        //         },
-        //         data : {memberName : name,
-        //             memberEmail : email,
-        //             memberPassword : pwd
-        //         }, // 서버로 전송할 데이터
-        //         success : function (joinSuccessResult) {
-        //             if(joinSuccessResult === 1) {
-        //                 swal({
-        //                     icon: 'success',                         // Alert 타입
-        //                     title: '회원가입에 성공했습니다.',         // Alert 제목
-        //                     text: '다시 로그인해주세요.',             // Alert 내용
-        //                     button: '확인'
-        //                 }).then((value) => {
-        //                     if(value) {
-        //                         location.href = '/account/sign-in';
-        //                     }
-        //                 })
-        //             } else {
-        //                 Swal.fire({
-        //                     icon: 'error',                         // Alert 타입
-        //                     title: '회원가입에 실패했습니다.',         // Alert 제목
-        //                     text: '다시 시도해주세요.',// Alert 내용
-        //                     showConfirmButton: true,
-        //                     timer: 1500
-        //                 });
-        //             }
-        //         },
-        //     })
-        // }
+
     });
 
 
@@ -88,9 +54,9 @@ $(function (){
         else if (email_pattern.test(email) === false) {
             setMessage_Join("이메일 형식이 아닙니다.", signFrm.memberEmail);
         } else {
-
             $("#mail_sign_ch").slideDown(1000);
             document.getElementById("mail_check").value = "발송완료";
+            document.getElementById("memberEmail").disabled = true;
             $('#mail_check').html('메일발송 완료').css('color', 'aquamarine');
 
             $.ajax({
@@ -114,6 +80,7 @@ $(function (){
         if (entryKey ==  key) {
             setMessage_Join("인증번호 확인 완료", signFrm.user_mail_check);
             document.getElementById("mail_num_sign").value = "인증완료";
+            document.getElementById("user_mail_check").disabled = true;
             $('#mail_num_sign').html('메일인증 완료').css('color', 'aquamarine');
         } else {
             setMessage_Join("인증번호를 확인해주세요.", signFrm.user_mail_check);

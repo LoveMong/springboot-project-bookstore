@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 
@@ -43,7 +45,7 @@ public class RegisterController {
     /**
      * 회원가입 처리(ajax) 메소드(입력받은 회원정보 유효성 검사 후 DB 저장)
      *
-     * @param memberDto     입력받은 회원정보 객체(아이디, 이름, 비밀번호 등)
+     * @param memberDto 입력받은 회원정보 객체(아이디, 이름, 비밀번호 등)
      * @param bindingResult 객체 바인딩 처리시 결과(error) 정보
      * @return ajaxResult 회원가입 실패 시 0 반환(Binding Error), 성공 시 1 반환
      * @throws Exception
@@ -102,52 +104,4 @@ public class RegisterController {
 
     }
 
-
-    /**
-     * 비밀번호 찾기 양식 화면으로 이동
-     * @return
-     */
-    @GetMapping("/searchPassword")
-    public String searchPassword() {
-
-        return "member/searchPasswordForm";
-
-    }
-
-
-    /**
-     * 비밀번호 재설정 화면으로 이동
-     * @param email 비밀번호 재설정 대상 아이디(email)
-     * @param model email
-     * @return
-     */
-    @GetMapping("/resetPassword")
-    public String resetPassword(String email, Model model) {
-
-        model.addAttribute("email", email);
-
-        return "member/resetPasswordForm";
-
-    }
-
-
-    /**
-     *
-     * @param email
-     * @param password
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/resetPassword")
-    @ResponseBody
-    public int resetPassword(@RequestParam("email") String email,
-                             @RequestParam("password") String password) {
-
-        String encodePassword = passwordEncoder.encode(password);
-
-        memberService.updatePassword(email, encodePassword);
-
-        return 1;
-
-    }
 }
