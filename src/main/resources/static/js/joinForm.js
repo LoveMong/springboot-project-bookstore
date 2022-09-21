@@ -14,7 +14,7 @@ $(function (){
     //특수문자가 있는 경우
     let special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
     // 비밀번호 유효성 검사
-    let password_pattern = /^[a-zA-z0-9]{4,12}$/;
+    let password_pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     // 이메일 유효성 검사
     let email_pattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 
@@ -51,7 +51,7 @@ $(function (){
             setMessage_Join("비밀번호를 입력해주세요.", signFrm.memberPassword);
         }
         else if (password_pattern.test(pwd) === false) {
-            setMessage_Join("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해주세요.", signFrm.memberPassword);
+            setMessage_Join("비밀번호는 8~20자 영문 대소문자, 숫자, 특수문자 사용", signFrm.memberPassword);
         }
         else if (cpwd === "") {
             setMessage_Join("비밀번호를 확인해주세요.", signFrm.memberPassword2);
@@ -82,7 +82,7 @@ $(function (){
                             }
                         })
                     } else {
-                        Swal.fire({
+                        swal.fire({
                             icon: 'error',                         // Alert 타입
                             title: '회원가입에 실패했습니다.',         // Alert 제목
                             text: '다시 시도해주세요.',// Alert 내용
@@ -118,6 +118,7 @@ $(function (){
                         setMessage_Join("이미 가입된 이메일입니다.", signFrm.memeberEmail);
                     } else {
                         $("#mail_sign_ch").slideDown(1000);
+                        document.getElementById("memberEmail").disabled = true;
                         document.getElementById("mail_check").value = "발송완료";
                         $('#mail_check').html('메일발송 완료').css('color', 'aquamarine');
 
@@ -144,6 +145,7 @@ $(function (){
 
         if (entryKey ==  key) {
             setMessage_Join("인증번호 확인 완료", signFrm.user_mail_check);
+            document.getElementById("user_mail_check").disabled = true;
             document.getElementById("mail_num_sign").value = "인증완료";
             $('#mail_num_sign').html('메일인증 완료').css('color', 'aquamarine');
         } else {

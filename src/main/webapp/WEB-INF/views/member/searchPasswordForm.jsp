@@ -71,9 +71,9 @@
 						<br/>
 						<!--계정이 있으신가요?-->
 						<div class="login__register">
-							<span>계정이 있으신가요?</span>
-							<a href="/login">
-								<button type="button" id="loginBtn" class="btn btn-danger">로그인</button>
+							<span>회원이 아니신가요?</span>
+							<a href="/account/sign-up">
+								<button type="button" class="btn btn-danger">회원가입</button>
 							</a>
 						</div>
 					</article>

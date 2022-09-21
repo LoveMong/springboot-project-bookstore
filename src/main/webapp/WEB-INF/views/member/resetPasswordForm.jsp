@@ -32,7 +32,7 @@
 								<h2 id="guide_message"> 비밀번호 재설정 </h2>
 							</div>
 							<form class="login__input" action="" method="" id="signFrm" name="signFrm">
-								<input type="hidden" name="memberEmail" id="memberEmail" value="${email}}">
+								<input type="hidden" name="memberEmail" id="memberEmail" value="${email}">
 								<div id="main_pw" class="form-floating mb-4" style="width: 330px">
 									<input type="password" name="memberPassword" class="form-control" id="memberPassword" placeholder="Password" required="required">
 									<label for="memberPassword">새로운 비밀번호</label>
