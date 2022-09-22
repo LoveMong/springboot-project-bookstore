@@ -5,6 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet" href="/css/common/searchBox.css">
+<link rel="stylesheet"  href="/css/common/header.css">
 <meta name="description" content="Phozogy Template">
 <meta name="keywords" content="Phozogy, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,76 +14,9 @@
 <meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<style>
-
-header {
-   margin: 0 auto;
-}
-
-#top_mini_1>ul>li {
-   display: inline-block;
-   box-sizing: border-box;
-   padding: 20px 8px 30px;
-}
- 
-#top_mini_1>ul>li>a {
-   font-size: 13px;
-   color: #000;
-   font-weight: 100;
-   display: block;
-   padding: 14px 6px 14px 6px;
-}
-
-#top_mini_1 {
-   width: auto;
-   margin: auto;
-   clear: both;
-   position: absolute;
-   right: 0;
-   top: 0;
-}
-
-#top_mini_1>ul {
-   float: right;
-   list-style: none;
-   position: relative;
-   width: 100%;
-}
-
-#top_1_logo_1 {
-   width: 100%;
-   text-align: center;
-   padding-top: 7px;
-}
-
-#top_1_logo_1 {
-   width: 100%;
-}
-
-.book_logo {
-   text-align: center;
-}
-.nav-menu {
-    float: left;
-    /* text-align: center; */
-    /* margin: auto; */
-    amrgin: 0 auto;
-    margin-left: 200px;
-}
-.book_logo {
-    text-align: left;
-    margin-left: 200px;
-}
-    
-</style>
-
 <!-- Google Font -->
-<link
-   href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap"
-   rel="stylesheet">
-<link
-   href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap"
-   rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
 
 <!-- 부트스트랩 CSS -->
 <link rel="stylesheet" href="/css/bootstraps/css/bootstrap.min.css"
@@ -109,11 +43,11 @@ header {
          <div class="col-lg-12">
          	<div class="row">
 	            <div class="book_logo mt-5 mb-2" style="width: 280px;">
-	               <a href="/main"> <img src="/img/bk_store2.png" alt="">
+	               <a href="/main" id="logo"> <img src="/img/bk_store2.png" alt="">
 	               </a>
 	            </div>
-	            <form action="/search" method="get" style="margin: 110px 0 0 180px;">
-	               <div id="top_1_selection_1_search" >	            
+	            <form action="/search" method="get" style="margin: 105px 10px 1px 30px;">
+	               <div id="top_1_selection_1_search" >
 	                  <div class="keyword_box">
 	                     <select name="searchType" id="searchType">
 	                        <option value="title">제목 검색</option>
@@ -127,7 +61,7 @@ header {
 	            </form>
             .</div>
 
-				<nav class="nav-menu mobile-menu">
+				<nav class="nav-menu mobile-menu" id="nav-menu mobile-menu" >
 					<ul>
 						<li class="active"><a href="#">Category</a>
 							<ul class="dropdown">
@@ -167,8 +101,9 @@ header {
 							<li><a href="/mypage/cart">마이페이지</a></li>
 							<c:set var="String" value="${login.user_id }"/>
 							<li><a href="/account/logout">로그아웃</a></li>
-							<c:if test="${login.user_grade==1 }">
-								<li><a href="/admin/product">관리자 페이지</a></li>
+<%--							<li><p> ${member.memberDto.memberRole}</p></li>--%>
+							<c:if test="${member.memberDto.memberRole == 'ROLE_ADMIN'}">
+								<li><a href="/admin/enrollBook">관리자 페이지</a></li>
 							</c:if>
 						</sec:authorize>
 					</ul>
