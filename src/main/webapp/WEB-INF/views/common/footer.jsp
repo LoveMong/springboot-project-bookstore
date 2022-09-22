@@ -26,13 +26,13 @@
 
 
 <!-- Footer Section Begin -->
-<footer class="footer-section">
+<footer class="footer-section" style="margin-top: 400px">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-3 col-md-6 col-sm-6">
 				<div class="fs-about">
 					<div class="fa-logo">
-						<a href="#"> <img src="img/f-logo.png" alt="">
+						<a href="#"> <img src="" alt="">
 						</a>
 					</div>
 					<p>방문해주셔서 감사합니다. 아래의 링크를 통해 다양한 정보를
@@ -49,7 +49,7 @@
 				<div class="fs-widget">
 					<h5>Instagram</h5>
 					<div class="fw-instagram">
-						<img src="/css/bootstraps/instagram/insta-1.jpg" alt=""> <img
+						<img src="/css/bootstraps/img/instagram/insta-1.jpg" alt=""> <img
 							src="/css/bootstraps/img/instagram/insta-2.jpg" alt=""> <img
 							src="/css/bootstraps/img/instagram/insta-3.jpg" alt="">
 					</div>
