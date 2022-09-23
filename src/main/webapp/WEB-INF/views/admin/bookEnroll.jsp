@@ -103,12 +103,19 @@
 										<tr>
 											<th style="background: #f8f8ff; padding-left: 20px">도서 소개</th>
 											<td colspan="5">
-												<textarea id="bookContent" class="box" style="width:98%;height:200px;" name="bookContent"></textarea>
+												<textarea id="bookContent" class="box" style="width:98%;height:200px;" name="bookContent" maxlength="1000"></textarea>
 											</td>
 										</tr>
 
 										<tr>
-											<th style="background: #f8f8ff; padding-left: 20px">도서 표지</th>
+											<th style="background: #f8f8ff; padding-left: 20px">도서 표지<p style="display: inline">(미리보기 URL)</p></th>
+											<td colspan="5">
+												<img id="imageUrl" src="" alt=""></img>
+											</td>
+										</tr>
+
+										<tr>
+											<th style="background: #f8f8ff; padding-left: 20px">도서 표지<p style="display: inline">(첨부하기)</p></th>
 											<td colspan="5">
 												<input type="file" name="image" id="image">
 											</td>

@@ -63,15 +63,14 @@ $(function (){
                 headers : {Authorization: "KakaoAK 7277ba284ecfcf5b6513ac9ba4c9348f"}
             })
                 .done(function (res) {
-                    // $('#coverimg').append("<img src=" + res.documents[0].thumbnail + "/>");
                     $('#coverimg').attr('src',res.documents[0].thumbnail);
                     $('#bookTitle').attr('value',res.documents[0].title);
                     $('input[name=bookPublisher]').attr('value',res.documents[0].publisher);
                     $('input[name=bookAuthor]').attr('value',res.documents[0].authors);
                     $('input[name=bookPublishingDate]').attr('value',res.documents[0].datetime);
-                    // $('#contents').attr('value',res.documents[0].contents);
                     $('#bookContent').val(res.documents[0].contents);
                     $('input[name=bookPrice]').attr('value',res.documents[0].price);
+                    $('#imageUrl').attr('src',res.documents[0].thumbnail);
                 });
         });
     });
