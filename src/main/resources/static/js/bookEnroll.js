@@ -1,6 +1,6 @@
 $(function (){
 
-    $("#input_img").change(function(){
+    $("#image").change(function(){
         if(this.files && this.files[0]) {
             var reader = new FileReader;
             reader.onload = function(data) {
@@ -8,6 +8,11 @@ $(function (){
             }
             reader.readAsDataURL(this.files[0]);
         }
+    });
+
+    $("#delete").click(function(){
+        $('#image').val('');
+        $("#img-preview").attr("src", '');
     });
 
     $(document).ready(function(e){
@@ -19,10 +24,10 @@ $(function (){
                 alert("제목을 입력해주세요.");
                 $('#bookTitle').focus();
                 return false;
-            }else if($.trim($('#bookAuthor').val()) === ''){
-                alert("작가를 입력해주세요.");
-                $('#authorName').focus();
-                return false;
+            // }else if($.trim($('#bookAuthor').val()) === ''){
+            //     alert("작가를 입력해주세요.");
+            //     $('#authorName').focus();
+            //     return false;
             }else if($.trim($('#bookPublisher').val()) === ''){
                 alert("출판사를 입력해주세요.");
                 $('#publisher').focus();
@@ -71,6 +76,7 @@ $(function (){
                     $('#bookContent').val(res.documents[0].contents);
                     $('input[name=bookPrice]').attr('value',res.documents[0].price);
                     $('#imageUrl').attr('src',res.documents[0].thumbnail);
+                    $('#bookSearchPictureUrl').attr('value',res.documents[0].thumbnail);
                 });
         });
     });

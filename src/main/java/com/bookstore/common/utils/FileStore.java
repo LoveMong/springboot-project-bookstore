@@ -1,71 +1,74 @@
 package com.bookstore.common.utils;
 
 
-import net.coobird.thumbnailator.Thumbnails;
+import com.bookstore.admin.domain.UploadResultDto;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.tree.ExpandVetoException;
 import java.io.File;
-import java.text.DecimalFormat;
-import java.util.Calendar;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Component
 public class FileStore {
 
+    @Value("${file.upload.location}/")
+    private String uploadPath;
 
-    static final int THUMB_WIDTH = 300;
-    static final int THUMB_HEIGHT = 300;
 
-    public String fileUpload(String uploadPath, String fileName, byte[] fileData, String ymdPath) throws Exception {
+    public UploadResultDto uploadFile(MultipartFile uploadFile) throws Exception {
 
-        UUID uid = UUID.randomUUID();
 
-        String newFileName = uid + "_" + fileName;
-        String imgPath = uploadPath + ymdPath;
 
-        File target = new File(imgPath, newFileName);
-        FileCopyUtils.copy(fileData, target);
 
-        String thumbFileName = "s_" + newFileName;
-        File image = new File(imgPath + File.separator + newFileName);
 
-        File thumbnail = new File(imgPath + File.separator + "s" + File.separator + thumbFileName);
+        // 실제 파일 이름 IE나 Edge는 전체 경로가 들어오므로
+        String originalName = uploadFile.getOriginalFilename();
+        String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+        // 날짜 폴더 생성
+        String folderPath = makeFolder();
+        //UUID
+        String uuid = UUID.randomUUID().toString();
+        //저장할 파일 이름 중간에 "_"를 이용해 구분
+        String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
+        Path savePath = Paths.get(saveName);
+        uploadFile.transferTo(savePath);
 
-        if (image.exists()) {
-            thumbnail.getParentFile().mkdirs();
-            Thumbnails.of(image).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(thumbnail);
+        //섬네일 생성 -> 섬네일 파일 이름은 중간에 s_로 시작
+        String thubmnailSaveName = uploadPath + File.separator + folderPath + File.separator +"s_" + uuid +"_"+ fileName;
+        File thumbnailFile = new File(thubmnailSaveName);
+        // 섬네일 생성
+        Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,100,100);
+
+
+        return new UploadResultDto(saveName, thubmnailSaveName);
+
+    }
+
+    private String makeFolder() {
+
+        String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+
+        String folderPath = str.replace("/", File.separator);
+
+        // make folder ----
+        File uploadPatheFolder = new File(uploadPath, folderPath);
+
+        if (!uploadPatheFolder.exists()) {
+            uploadPatheFolder.mkdirs();
         }
-        return newFileName;
+
+        return folderPath;
+
     }
+}
 
-    public String calcPath(String uploadPath) {
-        Calendar cal = Calendar.getInstance();
-        String yearPath = File.separator + cal.get(Calendar.YEAR);
-        String monthPath = yearPath + File.separator + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
-        String datePath = monthPath + File.separator + new DecimalFormat("00").format(cal.get(Calendar.DATE));
-
-        makeDir(uploadPath, yearPath, monthPath, datePath);
-        makeDir(uploadPath, yearPath, monthPath, datePath + "\\s");
-
-        return datePath;
-    }
-
-    public void makeDir(String uploadPath, String... paths) {
-
-        if (new File(paths[paths.length - 1]).exists()) { return; }
-
-        for (String path : paths) {
-            File dirPath = new File(uploadPath + path);
-
-            if (!dirPath.exists()) {
-                dirPath.mkdir();
-            }
-        }
-    }
-
- }
 
 
 

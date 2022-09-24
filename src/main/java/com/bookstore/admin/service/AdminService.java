@@ -1,6 +1,7 @@
 package com.bookstore.admin.service;
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.admin.domain.UploadResultDto;
 import com.bookstore.admin.mapper.AdminMapper;
 import com.bookstore.common.utils.FileStore;
 import lombok.RequiredArgsConstructor;
@@ -26,24 +27,12 @@ public class AdminService {
 
     public void enrollBook(BookDto bookDto, MultipartFile uploadFile) throws Exception {
 
-        if (Objects.requireNonNull(uploadFile.getContentType()).startsWith("image")) {
 
-            return;
+        UploadResultDto bookPictureUrl = fileStore.uploadFile(uploadFile);
 
-        }
 
-        String imgUploadPath = uploadPath + File.separator + "imgUpload";
-        String ymdPath = fileStore.calcPath(imgUploadPath);
-        String fileName = null;
-
-        if(uploadFile.getOriginalFilename() != null && uploadFile.getOriginalFilename() != "") {
-            fileName = fileStore.fileUpload(imgUploadPath, uploadFile.getOriginalFilename(), uploadFile.getBytes(), ymdPath);
-        } else {
-            fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
-        }
-
-        bookDto.setBookPictureUrl(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-        bookDto.setBookThumbUrl(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+        bookDto.setBookPictureUrl(bookPictureUrl.getBookPictureUrl());
+        bookDto.setBookThumbUrl(bookPictureUrl.getBookThumbUrl());
 
         adminMapper.enrollBook(bookDto);
 

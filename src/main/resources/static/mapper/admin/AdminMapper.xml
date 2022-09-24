@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookstore.admin.mapper.AdminMapper">
+
+    <insert id="enrollBook" parameterType="com.bookstore.admin.domain.BookDto">
+        INSERT INTO book(book_title, book_price, book_publisher, book_author, book_publishingDate, book_category, book_content, book_stock, book_pictureUrl, book_thumbUrl)
+        VALUES (#{bookTitle}, #{bookPrice}, #{bookPublisher}, #{bookAuthor}, #{bookPublishingDate}, #{bookCategory}, #{bookContent}, #{bookStock}, #{bookPictureUrl}, #{bookThumbUrl});
+    </insert>
+
+
+
+
+</mapper>
