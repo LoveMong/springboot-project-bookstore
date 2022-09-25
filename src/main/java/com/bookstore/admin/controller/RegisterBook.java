@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.Objects;
 
 
 @Controller
@@ -34,14 +37,16 @@ public class RegisterBook {
     @PostMapping("/enrollBook")
     public String enrollBook(@Valid BookDto bookDto, @RequestParam("image") MultipartFile file) throws Exception {
 
+        File checkFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+        String type = null;
 
+        type = Files.probeContentType(checkFile.toPath());
+        log.info("MIME TYPE : " + type);
 
-        log.info("book : " + bookDto);
-        log.info("file : " + file.getOriginalFilename());
-
-
+        if (!type.startsWith("image")) {
+            throw new Exception("이미지 파일이 아닙니다.");
+        }
         adminService.enrollBook(bookDto, file);
-
 
         return "";
 

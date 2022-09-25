@@ -17,17 +17,21 @@ $(function (){
 
     $(document).ready(function(e){
 
-        var idx = false;
+        let idx = false;
+
+        let imgFile = $('#image').val();
+        let fileSize;
+
 
         $('#signUp').click(function(){
             if($.trim($('#bookTitle').val()) === ''){
                 alert("제목을 입력해주세요.");
                 $('#bookTitle').focus();
                 return false;
-            // }else if($.trim($('#bookAuthor').val()) === ''){
-            //     alert("작가를 입력해주세요.");
-            //     $('#authorName').focus();
-            //     return false;
+            }else if($.trim($('#bookAuthor').val()) === ''){
+                alert("작가를 입력해주세요.");
+                $('#authorName').focus();
+                return false;
             }else if($.trim($('#bookPublisher').val()) === ''){
                 alert("출판사를 입력해주세요.");
                 $('#publisher').focus();
@@ -48,7 +52,20 @@ $(function (){
                 alert("도서내용을 입력해주세요.");
                 $('#contents').focus();
                 return false;
-            }else {
+            } else if ($('#image').val() === "") {
+                alert("도서 표지를 등록해주세요.")
+                $('#image').focus();
+                return false;
+            // } else if ($('#image').val() !== "") {
+            //     fileSize = document.getElementById("image").files[0].size;
+            //     if(!/\.(jpeg|jpg|png|gif|bmp)$/i.test($('#image').value)) {
+            //         alert("이미지 파일만 업로드 가능");
+            //         return false;
+            //     } else if(fileSize === maxSize) {
+            //         alert("파일 사이즈는 5MB까지 가능");
+            //         return false;
+            //     }
+            } else {
                 $('#book_reg').submit();
             }
         });

@@ -12,11 +12,10 @@
     <div class="middle">
       <div class="inner">
         <!--BEGIN CONTENT-->
-        <div class="inner-circle"><i class="fa fa-home"></i><span>${status}</span></div>
-        <span class="inner-status">Oops! You're lost</span>
+        <div class="inner-circle"><i class="fa fa-home"></i><span>400</span></div>
+        <span class="inner-status">잘못된 요청입니다.</span>
         <span class="inner-detail">
-                    We can not find the page you're looking for.
-            <div>${message}</div>
+                            ${pageContext.exception.message}
                     <a href="/" class="btn btn-info mtl"><i class="fa fa-home"></i>&nbsp;
                         Return home
                     </a>
