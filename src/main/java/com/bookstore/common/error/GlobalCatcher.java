@@ -16,6 +16,6 @@ public class GlobalCatcher {
     @ExceptionHandler(Exception.class) // @Controller, @RestController가 적용 된 Bean에서 발생하는 예외를 잡아서 하나의 메서드에서 처리
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 응답의 상태코들 지정해줄 수 있다.(예:200 -> 500)
     public String catcher(Exception exception) {
-        return "/error/error";
+        return "/error/error1";
     }
 }

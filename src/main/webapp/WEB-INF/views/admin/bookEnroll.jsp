@@ -120,7 +120,7 @@
 											<th style="background: #f8f8ff; padding-left: 20px">도서 표지<p style="display: inline">(첨부하기)</p></th>
 											<td colspan="5">
 												<input type="file" name="image" id="image">
-												<img id="delete" href="" src="/img/btn_delete.png" style="display: inline; margin-left: -50px; width: 20px"/>
+												<img id="delete" href="" src="/img/btn_delete.png" style="display: inline; margin-left: 200px; width: 20px"/>
 												<div class='uploadResult'>
 													<div class="upload-img" style="display: flex; width: 130px;">
 														<img src="" alt="" id="img-preview" >

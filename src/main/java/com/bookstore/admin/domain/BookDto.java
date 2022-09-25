@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter @Setter
@@ -19,7 +20,7 @@ public class BookDto {
     @Length(max = 15)
     private String bookTitle; // 제목
 
-    @NotBlank
+    @NotNull
     private int bookPrice; // 가격
 
     @NotBlank
@@ -31,7 +32,7 @@ public class BookDto {
     @NotBlank
     private String bookPublishingDate; // 출판일
 
-    @NotBlank
+    @NotNull
     private int bookCategory; // 카테고리
 
     @NotBlank
