@@ -19,10 +19,15 @@ $(function (){
 
         let idx = false;
 
-        let imgFile = null;
+        let imgFile;
         let fileSize;
         let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
         let maxSize = 5 * 1024 * 1024;
+
+        $("#image").change(function(){
+            fileSize = document.getElementById("image").files[0].size;
+            imgFile = document.getElementById("image").files[0].name;
+        });
 
 
 
@@ -59,20 +64,11 @@ $(function (){
                 alert("도서 표지를 등록해주세요.")
                 $('#image').focus();
                 return false;
-            } else if (imgFile !== null) {
-                fileSize = document.getElementById("image").files[0].size;
-                imgFile = document.getElementById("image").files[0].name;
-
-                console.log("imgFile : " + imgFile);
-                console.log("fileSize : " + fileSize);
-
-                if(!imgFile.match(fileForm)) {
-                alert("이미지 파일만 업로드 가능");
+            } else if (!imgFile.match(fileForm)) {
+                alert("이미지 파일만 업로드 가능합니다.");
                 return false;
-                } else if (fileSize === maxSize) {
-                    alert("파일 사이즈는 5MB까지 가능");
-                    return false;
-                }
+            } else if (fileSize === maxSize) {
+                alert("파일 사이즈는 5MB까지 가능합니다.")
                 return false;
             } else {
                 alert("전송");

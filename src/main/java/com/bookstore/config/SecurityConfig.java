@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe()
                 .tokenValiditySeconds(3600*24*365)
                 .userDetailsService(principalDetailService)
-                .tokenRepository(tokenRepository())
+                .tokenRepository(tokenRepository()) // DB에서 토큰 값 가져오기 (Username, 토큰, 시리즈)
         ;
 
 
@@ -78,27 +78,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+
+    /**
+     * 웹 시큐리티 설정
+     * @param web
+     * @throws Exception
+     */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/mapper/**", "/error");
         web.httpFirewall(defaultHttpFirewall());
     }
 
+    /**
+     * 스프링 시큐리티 URL 더블슬래시 허용
+     * @return
+     */
     @Bean
     public HttpFirewall defaultHttpFirewall() {
         return new DefaultHttpFirewall();
     }
 
 
-
-
-    // 비밀번호 데이터베이스에 그대로 저장했을 경우, 데이터베이스가 해킹당하면 고객의 회원정보가 그대로 노출
-    // BCryptPasswordEncoder의 해시 함수를 이용하여 비밀번호를 암호화하여 저장
-    // BCryptPasswordEncoder를 Bean으로 등록
+    /**
+     * BCryptPasswordEncoder의 해시 함수를 이용하여 비밀번호를 암호화하여 저장, BCryptPasswordEncoder를 Bean으로 등록
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     /**
      * 로그인 인증 처리 메소드
@@ -110,6 +120,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //      시큐리티가 대신 로그인할 때 password를 가로채기 하는데 해당 pqssword가 무엇으로 해쉬되어 회원가입 되었는지 알아야 같은 해쉬로 암호화해서 DB에 있는 해쉬랑 비교 가능
         auth.userDetailsService(principalDetailService).passwordEncoder(new BCryptPasswordEncoder());
     }
+
 
     @Bean
     public PersistentTokenRepository tokenRepository() {
