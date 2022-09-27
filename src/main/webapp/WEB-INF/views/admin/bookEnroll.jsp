@@ -16,12 +16,15 @@
 	<script type="text/javascript" src="/js/bookEnroll.js"></script>
 </head>
 <body>
+
+<jsp:include page="../common/admin_header.jsp"></jsp:include>
+
 <div id="wrap_">
 	<!-- 상단부(로고, 검색창, 로그인창) -->
 	<div id="main" class="categories-section mt-3">
 		<div id="main_wrap" class="container">
 			<div class="book_logo mt-5 mb-2" style="width: 280px;">
-				<a href="/main"> <img src="/img/bk_store2.png" alt=""></a>
+				<a href="/main" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
 			</div>
 			<div id="main_subject">
 				<p>관리자페이지</p>

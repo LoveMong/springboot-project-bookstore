@@ -94,7 +94,7 @@
 						<sec:authorize access="isAuthenticated()">
 							<sec:authentication property="principal" var="member"/>
 <%--							<li><p><sec:authentication property="principal.memberDto.memberName"/> 님</p></li>--%>
-							<li><p>${member.memberDto.memberName} 님</p></li>
+							<li><p>${member.memberDto.memberName} </p> <li><p style="font-size: 14px; margin-left: -11px;">님</p></li>
 							<li><p>${member.memberDto.memberRank} 회원</p></li>
 							<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
 									value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>

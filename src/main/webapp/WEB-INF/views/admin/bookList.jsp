@@ -7,36 +7,40 @@
 <meta charset="UTF-8">
 <title>Welcome! Book Store!</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<link rel="stylesheet" href="../resources/css/admin/bookList.css">
-<script integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-      crossorigin="anonymous"></script>
-<script src="../resources/js/admin/authorList.js" type="text/javascript"></script>
-<script src="../resources/ckeditor/ckeditor.js"></script>
-<script src="../resources/bootstraps/css/bootstrap.css"></script>
+<link rel="stylesheet" href="/css/admin/bookList.css">
+<script integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="/css/bootstraps/css/bootstrap.css"></script>
 
 </head>
+
 <body>
-   <div id="wrap">
+
+    <jsp:include page="../common/admin_header.jsp"></jsp:include>
+
+
+    <div id="wrap">
       <!-- 상단부(로고, 검색창, 로그인창) -->
       <div id="main" class="categories-section mt-3">
          <div id="main_wrap" class="container">
         <div class="book_logo mt-5 mb-2" style="    width: 280px;">
-	               <a href="/main"> <img src="/resources/img/bk_store2.png" alt="">
-	               </a>
-	            </div>
+            <a href="/main" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
+        </div>
             <div id="main_subject">
                <p>관리자페이지</p>
             </div>
-            <!-- 메인 네비게이션 -->
+            <!-- 사이드 네비게이션 -->
          	<div id="side_menu">
-				<jsp:include page="../include/admin_menu.jsp"></jsp:include>
+                <jsp:include page="../common/admin_menu.jsp"/>
 			</div>
             <!-- 메인  컨텐츠-->
             <div id="main_content_wrap">
-               <div id="main_content">
-                  <div id="main_content_subject">
-                     <p>도서 목록</p>
-                  </div>
+               <div id="main_content" style="margin-left: 50px; margin-top: 30px; ">
+                   <div class="row-fluid">
+                       <div class="alert alert-success">
+                           <button type="button" class="close" data-dismiss="alert">&times;</button>
+                           <h4>도서 목록</h4>
+                       </div>
+                   </div>
                   <br>
                   <div id="main_content_1">
                      <table class="table table-hover">
@@ -235,27 +239,8 @@
 
                            </script>
                            
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-		crossorigin="anonymous"></script>
-	<!-- Option 2: Separate Popper and Bootstrap JS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-		integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-		crossorigin="anonymous"></script>
 
-	<!-- Bootstrap JS Script -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<!-- Bootstrap jQuery Script -->
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	
-	<jsp:include page="../include/footerBox.jsp"></jsp:include>
+    <jsp:include page="../common/footer.jsp"></jsp:include>
 
 </body>
 

@@ -27,12 +27,23 @@ public class RegisterBook {
     private final AdminService adminService;
 
 
+    /**
+     * 도서 등록 화면으로 이동
+     *
+     * @return 도서 등록 화면
+     */
     @GetMapping("/enrollBook")
     public String enrollBook() {
         return "/admin/bookEnroll";
     }
 
 
+    /**
+     * @param bookDto
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/enrollBook")
     public String enrollBook(@Valid BookDto bookDto, @RequestParam("image") MultipartFile file) throws Exception {
 
@@ -47,7 +58,13 @@ public class RegisterBook {
         }
         adminService.enrollBook(bookDto, file);
 
-        return "/";
+        return "redirect:/admin/bookList";
 
+    }
+
+
+    @GetMapping("/bookList")
+    public String bookList() {
+        return "/admin/bookList";
     }
 }
