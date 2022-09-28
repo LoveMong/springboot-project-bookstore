@@ -15,13 +15,13 @@
 	<div id="main_nav">
 		<ul>
 
-			<li id="main_nav_1"><a href="/admin/productList" class="primary-btn">도서 목록</a></li>
+			<li id="main_nav_1"><a href="/admin/bookList" class="primary-btn">도서 목록</a></li>
 		
-			<li id="main_nav_1"><a href="/admin/product" class="primary-btn">도서 등록</a></li>
+			<li id="main_nav_2"><a href="/admin/enrollBook" class="primary-btn">도서 등록</a></li>
 			
-			<li id="main_nav_2"><a href="/admin/orderList" class="primary-btn">주문 목록</a></li>
+			<li id="main_nav_3"><a href="/admin/orderList" class="primary-btn">주문 목록</a></li>
 			
-			<li id="main_nav_3"><a href="/admin/memberList" class="primary-btn">회원 리스트</a></li>
+			<li id="main_nav_4"><a href="/admin/memberList" class="primary-btn">회원 리스트</a></li>
 		
 		</ul>
 	</div>

@@ -16,8 +16,8 @@ public class BookDto {
 
     private int bookNum; // 도서 번호
 
-    @NotBlank()
-    @Length(max = 15)
+    @NotBlank
+    @Length(max = 30)
     private String bookTitle; // 제목
 
     @NotNull
