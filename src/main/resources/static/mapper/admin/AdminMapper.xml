@@ -9,7 +9,49 @@
         VALUES (#{bookTitle}, #{bookPrice}, #{bookPublisher}, #{bookAuthor}, #{bookPublishingDate}, #{bookCategory}, #{bookContent}, #{bookStock}, #{bookPictureUrl}, #{bookThumbUrl});
     </insert>
 
+    <select id="countBookList" resultType="int">
+        SELECT COUNT(*)
+        FROM book
+    </select>
 
+    <select id="bookList" parameterType="map" resultType="com.bookstore.admin.domain.BookDto">
+        SELECT *
+        FROM book
+        ORDER BY book_num DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+
+    <select id="searchSelectPage" parameterType="com.bookstore.common.utils.SearchCondition" resultType="com.bookstore.admin.domain.BookDto">
+        SELECT *
+        FROM  book
+        WHERE true
+        <include refid="searchCondition"/>
+        ORDER BY book_num DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="searchResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM  book
+        WHERE true
+        <include refid="searchCondition"/>
+    </select>
+
+    <sql id="searchCondition">
+        <choose>
+            <when test='option=="T"'>
+                AND book_title LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='option=="W"'>
+                AND book_author LIKE concat('%', #{keyword}, '%')
+            </when>
+            <otherwise>
+                AND (book_title   LIKE concat('%', #{keyword}, '%')
+                OR   book_content LIKE concat('%', #{keyword}, '%'))
+            </otherwise>
+        </choose>
+    </sql>
 
 
 </mapper>
