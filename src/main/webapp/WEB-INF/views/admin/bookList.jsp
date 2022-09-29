@@ -61,35 +61,25 @@
                     <br>
                     <div id="main_content_1">
                         <table class="table table-hover">
-                            <colgroup>
-                                <col width="5%"/>
-                                <col width="10%"/>
-                                <col width="10%"/>
-                                <col width="5%"/>
-                                <col width="20%"/>
-                            </colgroup>
-                            <thead>
-                            <tr class="table-success">
-                                <th scope="col">도서 제목</th>
+                            <thead style="background-color: #e9e9e9; border: none; border-bottom: double">
+                            <tr class="">
+                                <th scope="col" style="padding-right: 70px">도서 제목</th>
                                 <th scope="col">작가</th>
+                                <th scope="col">출판사</th>
                                 <th scope="col">출판년도</th>
+                                <th scope="col">가격</th>
                                 <th scope="col">재고</th>
-                                <th scope="col">재고 추가</th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${bookList}" var="list" varStatus="vs">
                                 <tr id="">
-                                    <th>${list.bookTitle}</th>
+                                    <th><a href="<c:url value="/admin/bookDetail?bookNum=${list.bookNum}"/>" style="color: #00a3d2">${list.bookTitle}</a></th>
                                     <th>${list.bookAuthor}</th>
+                                    <th>${list.bookPublisher}</th>
                                     <th>${list.bookPublishingDate}</th>
+                                    <th>${list.bookPrice}</th>
                                     <th>${list.bookStock}</th>
-                                    <th><form id="addSt" method="get">
-                                        <input type="hidden" id="bk_num${vs.getIndex()}" name="bk_num" value="${list.bookNum }">
-                                        <input type="text" id="stockAdd${vs.getIndex()}" name="stockAdd">개
-                                        <input type="button" class="btn btn-outline-secondary" id="add${vs.getIndex()}" value="추가">
-                                        <input type="button" class="btn btn-outline-secondary" id="delete${vs.getIndex()}" value="삭제">
-                                    </form></th>
                                 </tr>
                             </c:forEach>
                             </tbody>

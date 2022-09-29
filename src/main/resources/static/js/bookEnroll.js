@@ -71,7 +71,6 @@ $(function (){
                 alert("파일 사이즈는 5MB까지 가능합니다.")
                 return false;
             } else {
-                alert("전송");
                 $('#book_reg').submit();
             }
         });

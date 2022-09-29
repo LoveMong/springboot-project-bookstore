@@ -24,6 +24,7 @@ import java.util.Objects;
 
 /**
  * 도서등록기 능을 위한 컨트롤러
+ *
  * @author L
  */
 @Controller
@@ -48,8 +49,9 @@ public class RegisterBook {
 
     /**
      * 도서 등록
+     *
      * @param bookDto 등록될 도서 정보
-     * @param file 도서 표지 이미지파일
+     * @param file    도서 표지 이미지파일
      * @return 도서 리스트 출력 화면
      * @throws Exception
      */
@@ -74,7 +76,8 @@ public class RegisterBook {
 
     /**
      * 등록된 도서 리스트 출력
-     * @param sc 도서 리스트 페이징 처리 및 검색 조건
+     *
+     * @param sc    도서 리스트 페이징 처리 및 검색 조건
      * @param model 도서 리스트, 페이징 설정 등
      * @return
      */
@@ -97,5 +100,19 @@ public class RegisterBook {
     }
 
 
+    /**
+     *
+     * @param bookNum
+     * @param model
+     * @return
+     */
+    @GetMapping("/bookDetail")
+    public String bookView(@RequestParam("bookNum") int bookNum, Model model) {
 
+            BookDto bookDetail = adminService.searchBookDetailByBookNum(bookNum);
+
+            model.addAttribute("bookDetail", bookDetail);
+
+        return "/admin/bookDetail";
+    }
 }
