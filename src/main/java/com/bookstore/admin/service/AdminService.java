@@ -25,6 +25,8 @@ public class AdminService {
 
     private final FileStoreHandler fileStore;
 
+
+
     public void enrollBook(BookDto bookDto, MultipartFile uploadFile) throws Exception {
 
 
@@ -41,6 +43,10 @@ public class AdminService {
 
     public int countBookList() {
         return adminMapper.countBookList();
+    }
+
+    public BookDto searchBookDetailByBookNum(int bookNum) {
+        return adminMapper.searchBookDetailByBookNum(bookNum);
     }
 
 

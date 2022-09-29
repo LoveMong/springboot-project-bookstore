@@ -14,6 +14,8 @@ public interface AdminMapper {
 
     int countBookList();
 
+    BookDto searchBookDetailByBookNum(int num);
+
     List<BookDto> bookList(Map<String, Integer> map);
 
     int searchResultCnt(SearchCondition sc);

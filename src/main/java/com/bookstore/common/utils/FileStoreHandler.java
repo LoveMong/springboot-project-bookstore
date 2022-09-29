@@ -57,7 +57,11 @@ public class FileStoreHandler {
         Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,100,100);
 
 
-        return new UploadResultDto(saveName, thumbnailSaveName);
+        String originImageSaveName = File.separator + folderPath + File.separator + uuid + "_" + fileName;
+        String thumbnailImageSaveName = File.separator + folderPath + File.separator +"s_" + uuid +"_"+ fileName;
+
+
+        return new UploadResultDto(originImageSaveName, thumbnailImageSaveName);
 
     }
 
