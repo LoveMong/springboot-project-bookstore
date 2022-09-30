@@ -44,7 +44,7 @@
                     <div id="main_content_1">
                         <form action="MacaronicsServlet" method="post"  name="form1">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="book_detail">
                                     <tr>
                                         <th class="success" style="width: 130px">도서 분류</th>
                                         <td colspan="5">
@@ -61,8 +61,8 @@
                                         <th>출판일</th><td>${bookDetail.bookPublishingDate}</td>
                                     </tr>
                                     <tr>
-                                        <th>가격</th><td><fmt:formatNumber  type="currency" value="${bookDetail.bookPrice}" /></td>
-                                        <th>재고</th><td colspan="3">
+                                        <th>가격<p style="display: inline">(원)</p></th><td><fmt:formatNumber value="${bookDetail.bookPrice}" /></td>
+                                        <th>재고<p style="display: inline">(개)</p></th><td colspan="3">
                                         <c:choose>
                                             <c:when test="${bookDetail.bookStock==0 }">
                                                 없음
@@ -87,15 +87,10 @@
                                     </tr>
 
                                 </table>
-
-                                <input  type="hidden" name="command" id="command" >
-                                <input  type="hidden" name="pageNum" value="${pageN}">
-                                <input  type="hidden" name="pseq" value="${productVO.pseq}">
-
                             </div>
                             <div class="text-center">
                                 <input type="button" value="수정하기"  class="btn btn-success" onclick="go_update();">
-                                <input type="button" value="목록보기"  class="btn btn-primary" onclick="go_list();">
+                                <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList"/>' ">
                                 <input type="button" value="삭제하기"  class="btn btn-danger" onclick="go_delete();">
 
                             </div>
@@ -114,8 +109,67 @@
 
 <jsp:include page="../common/footer.jsp"/>
 
+
+<script>
+
+
+    $(document).ready(function(){
+
+
+        window.onload=function () {
+
+            let book_category = '<c:out value="${bookDetail.bookCategory}"/>'
+
+
+             let result = "";
+
+            switch(book_category){
+                case "1":
+                    result = "소설";
+                    break;
+                case "2":
+                    result = "시/에세이";
+                    break;
+                case "3":
+                    result = "경제/경영";
+                    break;
+                case "4":
+                    result = "자기계발";
+                    break;
+                case "5":
+                    result = "인문";
+                    break;
+                case "6":
+                    result = "역사/문화";
+                    break;
+                case "7":
+                    result = "종교";
+                    break;
+                case "8":
+                    result = "정치/사회";
+                    break;
+                case "9":
+                    result = "예술/대중문화";
+                    break;
+                case "10":
+                    result = "과학";
+                    break;
+                case "11":
+                    result = "기술/공학";
+                    break;
+                case "12":
+                    result = "컴퓨터/IT";
+                    break;
+            }
+             $('#book_detail td:eq(0)').html(result);
+        }
+
+
+    });
+
+</script>
+
+
 </body>
-
-
 
 </html>

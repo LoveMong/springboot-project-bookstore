@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,8 +68,8 @@
                                 <th scope="col">작가</th>
                                 <th scope="col">출판사</th>
                                 <th scope="col">출판년도</th>
-                                <th scope="col">가격</th>
-                                <th scope="col">재고</th>
+                                <th scope="col">가격<p style="display: inline">(원)</p></th>
+                                <th scope="col">재고<p style="display: inline">(개)</p></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -78,7 +79,7 @@
                                     <th>${list.bookAuthor}</th>
                                     <th>${list.bookPublisher}</th>
                                     <th>${list.bookPublishingDate}</th>
-                                    <th>${list.bookPrice}</th>
+                                    <th><fmt:formatNumber value="${list.bookPrice}" /></th>
                                     <th>${list.bookStock}</th>
                                 </tr>
                             </c:forEach>
