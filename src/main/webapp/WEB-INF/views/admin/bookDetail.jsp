@@ -38,7 +38,6 @@
                 <div id="main_content" style="margin-left: 50px; margin-top: 30px; ">
                     <div class="row-fluid">
                         <div class="alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
                             <h4>도서 상세보기</h4>
                         </div>
                     <div id="main_content_1">
@@ -46,23 +45,23 @@
                             <div class="table-responsive">
                                 <table class="table" id="book_detail">
                                     <tr>
-                                        <th class="success" style="width: 130px">도서 분류</th>
+                                        <th class="success" style="width: 130px; background-color: #f8f8ff">도서 분류</th>
                                         <td colspan="5">
                                             ${bookDetail.bookCategory}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="success">도서 제목</th>
+                                        <th class="success" style="background-color: #f8f8ff">도서 제목</th>
                                         <td colspan="5">${bookDetail.bookTitle}</td>
                                     </tr>
                                     <tr>
-                                        <th>작가</th><td>${bookDetail.bookAuthor}</td>
-                                        <th>출판사</th><td>${bookDetail.bookPublisher}</td>
-                                        <th>출판일</th><td>${bookDetail.bookPublishingDate}</td>
+                                        <th style="background-color: #f8f8ff">작가</th><td>${bookDetail.bookAuthor}</td>
+                                        <th style="background-color: #f8f8ff">출판사</th><td>${bookDetail.bookPublisher}</td>
+                                        <th style="background-color: #f8f8ff">출판일</th><td>${bookDetail.bookPublishingDate}</td>
                                     </tr>
                                     <tr>
-                                        <th>가격<p style="display: inline">(원)</p></th><td><fmt:formatNumber value="${bookDetail.bookPrice}" /></td>
-                                        <th>재고<p style="display: inline">(개)</p></th><td colspan="3">
+                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><fmt:formatNumber value="${bookDetail.bookPrice}" /></td>
+                                        <th style="background-color: #f8f8ff">재고<p style="display: inline">(개)</p></th><td colspan="3">
                                         <c:choose>
                                             <c:when test="${bookDetail.bookStock==0 }">
                                                 없음
@@ -74,13 +73,13 @@
                                     </td>
                                     </tr>
                                     <tr>
-                                        <th>도서 설명</th>
+                                        <th style="background-color: #f8f8ff">도서 설명</th>
                                         <td colspan="5" style="padding-bottom: 100px">
                                             ${bookDetail.bookContent}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>도서 표지</th>
+                                        <th style="background-color: #f8f8ff">도서 표지</th>
                                         <td colspan="5">
                                             <img src="/image${bookDetail.bookPictureUrl}" width="200" height="300" class="img-responsive" alt=""/>
                                         </td>

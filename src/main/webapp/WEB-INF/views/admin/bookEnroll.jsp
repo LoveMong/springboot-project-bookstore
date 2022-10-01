@@ -39,7 +39,6 @@
 					<div class="span9" id="content">
 						<div class="row-fluid">
 							<div class="alert alert-success">
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
 								<h4>도서 등록</h4>
 							</div>
 						</div>

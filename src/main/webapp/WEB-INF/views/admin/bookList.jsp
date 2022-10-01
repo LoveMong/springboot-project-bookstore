@@ -38,7 +38,6 @@
                 <div id="main_content" style="margin-left: 50px; margin-top: 30px; ">
                     <div class="row-fluid">
                         <div class="alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
                             <h4>도서 목록</h4>
                         </div>
 
