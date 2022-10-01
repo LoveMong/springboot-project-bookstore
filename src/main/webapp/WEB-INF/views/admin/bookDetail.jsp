@@ -88,7 +88,7 @@
                                 </table>
                             </div>
                             <div class="text-center">
-                                <input type="button" value="수정하기"  class="btn btn-success" onclick="go_update();">
+                                <input type="button" value="수정하기"  class="btn btn-success" onclick="location.href='<c:url value="/admin/bookUpdate?bookNum=${bookDetail.bookNum}"/>' ">
                                 <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList"/>' ">
                                 <input type="button" value="삭제하기"  class="btn btn-danger" onclick="go_delete();">
 
