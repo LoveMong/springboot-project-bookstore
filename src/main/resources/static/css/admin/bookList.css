@@ -148,8 +148,10 @@ a{
 	//background-color:#B7F0B1;
 }
 
-
-
+input{
+	border: none;
+	background: transparent;
+}
 
 
 
