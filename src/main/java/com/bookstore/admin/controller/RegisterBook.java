@@ -119,12 +119,20 @@ public class RegisterBook {
     }
 
 
+    /**
+     * 도서 수정 페이지 출력
+     * @param bookNum 해당 도서 번호
+     * @param model 해당 도서 정보
+     * @return 도서 수정 페이지
+     */
     @GetMapping("/bookUpdate")
     public String bookUpdate(@RequestParam("bookNum") int bookNum, Model model) {
+
         BookDto bookDetail = adminService.searchBookDetailByBookNum(bookNum);
 
         model.addAttribute("bookDetail", bookDetail);
 
         return "/admin/bookUpdate";
+
     }
 }
