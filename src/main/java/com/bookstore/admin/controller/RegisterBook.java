@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,8 +122,9 @@ public class RegisterBook {
 
     /**
      * 도서 수정 페이지 출력
+     *
      * @param bookNum 해당 도서 번호
-     * @param model 해당 도서 정보
+     * @param model   해당 도서 정보
      * @return 도서 수정 페이지
      */
     @GetMapping("/bookUpdate")
@@ -133,6 +135,12 @@ public class RegisterBook {
         model.addAttribute("bookDetail", bookDetail);
 
         return "/admin/bookUpdate";
+
+    }
+
+
+    @PostMapping("/bookUpdate")
+    public String bookUpdate(@Valid BookDto bookDto, @RequestParam("image") MultipartFile file, BindingResult result, Model model) {
 
     }
 }
