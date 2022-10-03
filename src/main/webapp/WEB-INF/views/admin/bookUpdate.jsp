@@ -66,29 +66,30 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="success" style="background-color: #f8f8ff">도서 제목</th>
-                                        <td colspan="5"><input type="text" value="${bookDetail.bookTitle}"></td>
+                                        <th class="success" style="background-color: #f8f8ff">제목</th>
+                                        <td colspan="5"><input type="text" name="bookTitle" id="bookTitle" value="${bookDetail.bookTitle}"></td>
                                     </tr>
                                     <tr>
-                                        <th style="background-color: #f8f8ff">작가</th><td><input type="text" value="${bookDetail.bookAuthor}"></td>
-                                        <th style="background-color: #f8f8ff">출판사</th><td><input type="text" value="${bookDetail.bookPublisher}"></td>
-                                        <th style="background-color: #f8f8ff">출판일</th><td><input type="text" value="${bookDetail.bookPublishingDate}" placeholder="0000-00-00"></td>
+                                        <th style="background-color: #f8f8ff">작가</th><td><input type="text" name="bookAuthor" id="bookAuthor" value="${bookDetail.bookAuthor}"></td>
+                                        <th style="background-color: #f8f8ff">출판사</th><td><input type="text" name="bookPublisher" id="bookPublisher" value="${bookDetail.bookPublisher}"></td>
+                                        <th style="background-color: #f8f8ff">출판일</th><td><input type="text" name="bookPublishingDate" id="bookPublishingDate" value="${bookDetail.bookPublishingDate}" placeholder="0000-00-00"></td>
                                     </tr>
                                     <tr>
-                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><input type="text" value="<fmt:formatNumber value="${bookDetail.bookPrice}" />"></td>
+                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><input type="text" name="bookPrice" id="bookPrice" value="<fmt:formatNumber value="${bookDetail.bookPrice}" />"></td>
                                         <th style="background-color: #f8f8ff">재고<p style="display: inline">(개)</p></th><td colspan="3">
-                                        <input type="text" value="${bookDetail.bookStock}">
+                                        <input type="text" name="bookStock" id="bookStock" value="${bookDetail.bookStock}">
                                     </td>
                                     </tr>
                                     <tr>
-                                        <th style="background-color: #f8f8ff">도서 설명</th>
+                                        <th style="background-color: #f8f8ff">도서 소개</th>
                                         <td colspan="5" style="padding-bottom: 100px">
-                                            <textarea id="bookContent" class="box" style="width:98%;height:200px; border: none; background: transparent" name="bookContent" maxlength="1000">${bookDetail.bookContent}</textarea>
+                                            <textarea id="bookContent" name="bookContent" class="box" style="width:98%;height:200px; border: none; background: transparent" name="bookContent" maxlength="1000">${bookDetail.bookContent}</textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th style="background-color: #f8f8ff">도서 표지</th>
                                         <td colspan="5">
+                                            <input type="file" name="image" id="image">
                                             <img src="/image${bookDetail.bookPictureUrl}" width="200" height="300" class="img-responsive" alt=""/>
                                         </td>
                                     </tr>
