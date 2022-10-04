@@ -140,7 +140,15 @@ public class RegisterBook {
 
 
     @PostMapping("/bookUpdate")
-    public String bookUpdate(@Valid BookDto bookDto, @RequestParam("image") MultipartFile file, BindingResult result, Model model) {
+    public String bookUpdate(@Valid BookDto bookDto, @RequestParam(value = "image", required = false) MultipartFile file, BindingResult result, Model model) throws Exception {
+
+        log.info("bookDto : " + bookDto);
+        log.info("fileGetName : " + file.getOriginalFilename());
+
+        adminService.bookUpdate(bookDto, file);
+
+        return "/admin/bookList";
+
 
     }
 }

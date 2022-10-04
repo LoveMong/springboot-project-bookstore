@@ -41,7 +41,9 @@
                             <h4>도서 수정</h4>
                         </div>
                     <div id="main_content_1">
-                        <form action="MacaronicsServlet" method="post"  name="form1">
+                        <form action="<c:url value='/admin/bookUpdate'/>" enctype="multipart/form-data" method="post"  name="form1">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <input type="hidden" name="bookNum" value="${bookDetail.bookNum}">
                             <div class="table-responsive">
                                 <table class="table" id="book_detail">
                                     <tr>
@@ -75,7 +77,7 @@
                                         <th style="background-color: #f8f8ff">출판일</th><td><input type="text" name="bookPublishingDate" id="bookPublishingDate" value="${bookDetail.bookPublishingDate}" placeholder="0000-00-00"></td>
                                     </tr>
                                     <tr>
-                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><input type="text" name="bookPrice" id="bookPrice" value="<fmt:formatNumber value="${bookDetail.bookPrice}" />"></td>
+                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><input type="text" name="bookPrice" id="bookPrice" value="${bookDetail.bookPrice}"></td>
                                         <th style="background-color: #f8f8ff">재고<p style="display: inline">(개)</p></th><td colspan="3">
                                         <input type="text" name="bookStock" id="bookStock" value="${bookDetail.bookStock}">
                                     </td>
@@ -97,7 +99,7 @@
                                 </table>
                             </div>
                             <div class="text-center">
-                                <input type="button" value="수정하기"  class="btn btn-success" onclick="go_update();">
+                                <input type="submit" value="수정하기"  class="btn btn-success">
                                 <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList"/>' ">
                                 <input type="button" value="삭제하기"  class="btn btn-danger" onclick="go_delete();">
 

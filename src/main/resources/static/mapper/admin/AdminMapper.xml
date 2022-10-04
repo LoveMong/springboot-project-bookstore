@@ -58,5 +58,13 @@
         </choose>
     </sql>
 
+    <update id="bookUpdate" parameterType="com.bookstore.admin.domain.BookDto">
+        UPDATE book
+        SET book_title = #{bookTitle}, book_author = #{bookAuthor}, book_publisher = #{bookPublisher}, book_publishingDate = #{bookPublishingDate},
+            book_price = #{bookPrice}, book_content = #{bookContent}, book_category = #{bookCategory}, book_stock = #{bookStock},
+            book_pictureUrl = #{bookPictureUrl}, book_thumbUrl = #{bookThumbUrl}
+        WHERE book_num = #{bookNum}
+    </update>
+
 
 </mapper>
