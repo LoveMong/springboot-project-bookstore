@@ -22,9 +22,7 @@ public class BookDto {
     @Size(min = 1, max = 15, message = "1~15 사이의 입력 길이만 허용합니다.")
     private String bookTitle; // 제목
 
-    @NotNull(message = "가격을 입력해주세요.")
-    @PositiveOrZero(message = "숫자 입력만 가능합니다.")
-    @Size(min = 1, max = 15, message = "1~15 사이의 입력 길이만 허용합니다.")
+
     private int bookPrice; // 가격
 
     @NotBlank(message = "출판사를 입력해주세요.")

@@ -22,4 +22,7 @@ public interface AdminMapper {
 
     List<BookDto> searchSelectPage(SearchCondition sc);
 
+
+    void bookUpdate(BookDto bookDto);
+
 }

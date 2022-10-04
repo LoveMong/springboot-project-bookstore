@@ -63,6 +63,18 @@ public class AdminService {
     }
 
 
+    public void bookUpdate(BookDto bookDto, MultipartFile file) throws Exception {
+
+        if (file.getOriginalFilename() != null) {
+            UploadResultDto bookPictureUrl = fileStore.uploadFile(file);
+
+            bookDto.setBookPictureUrl(bookPictureUrl.getBookPictureUrl());
+            bookDto.setBookThumbUrl(bookPictureUrl.getBookThumbUrl());
+        }
+
+        adminMapper.bookUpdate(bookDto);
+
+    }
 
 
 
