@@ -44,6 +44,8 @@
                         <form action="<c:url value='/admin/bookUpdate'/>" enctype="multipart/form-data" method="post"  name="form1">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="bookNum" value="${bookDetail.bookNum}">
+                            <input type="hidden" name="bookPictureUrl" value="${bookDetail.bookPictureUrl}">
+                            <input type="hidden" name="bookThumbUrl" value="${bookDetail.bookThumbUrl}">
                             <div class="table-responsive">
                                 <table class="table" id="book_detail">
                                     <tr>
