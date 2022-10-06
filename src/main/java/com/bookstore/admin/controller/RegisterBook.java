@@ -141,7 +141,7 @@ public class RegisterBook {
 
     /**
      * 도서 수정
-     * @param bookDto
+     * @param bookDto 수정 도서 정보
      * @param file
      * @param result
      * @param model
