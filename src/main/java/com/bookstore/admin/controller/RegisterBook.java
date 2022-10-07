@@ -142,14 +142,13 @@ public class RegisterBook {
     /**
      * 도서 수정
      * @param bookDto 수정 도서 정보
-     * @param file
-     * @param result
+     * @param file 도서 표지 이미지 파일
      * @param model
      * @return
      * @throws Exception
      */
     @PostMapping("/bookUpdate")
-    public String bookUpdate(@Valid BookDto bookDto, @RequestParam(value = "image", required = false) MultipartFile file, BindingResult result, Model model) throws Exception {
+    public String bookUpdate(@Valid BookDto bookDto, @RequestParam(value = "image", required = false) MultipartFile file, Model model) throws Exception {
 
         log.info("bookDto : " + bookDto);
         log.info("fileGetName : " + file.getOriginalFilename());
