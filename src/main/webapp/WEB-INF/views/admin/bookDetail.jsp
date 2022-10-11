@@ -117,8 +117,7 @@
 
         window.onload=function () {
 
-            let book_category = '<c:out value="${bookDetail.bookCategory}"/>'
-
+            let book_category = '<c:out value="${bookDetail.bookCategory}"/>';
 
              let result = "";
 

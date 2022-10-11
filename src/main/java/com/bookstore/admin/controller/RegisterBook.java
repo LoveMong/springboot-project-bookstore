@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -141,8 +140,9 @@ public class RegisterBook {
 
     /**
      * 도서 수정
+     *
      * @param bookDto 수정 도서 정보
-     * @param file 도서 표지 이미지 파일
+     * @param file    도서 표지 이미지 파일
      * @param model
      * @return
      * @throws Exception

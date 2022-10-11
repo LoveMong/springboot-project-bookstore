@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/admin/bookList.css">
     <script integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="/css/bootstraps/css/bootstrap.css"></script>
-
+    <script type="text/javascript" src="/js/bookUpdate.js"></script>
 </head>
 
 <body>
@@ -41,7 +41,7 @@
                             <h4>도서 수정</h4>
                         </div>
                     <div id="main_content_1">
-                        <form action="<c:url value='/admin/bookUpdate'/>" enctype="multipart/form-data" method="post"  name="form1">
+                        <form action="<c:url value='/admin/bookUpdate'/>" enctype="multipart/form-data" method="post"  name="book_update">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="bookNum" value="${bookDetail.bookNum}">
                             <input type="hidden" name="bookPictureUrl" value="${bookDetail.bookPictureUrl}">
@@ -93,15 +93,18 @@
                                     <tr>
                                         <th style="background-color: #f8f8ff">도서 표지</th>
                                         <td colspan="5">
-                                            <input type="file" name="image" id="image">
-                                            <img src="/image${bookDetail.bookPictureUrl}" width="200" height="300" class="img-responsive" alt=""/>
+                                            <input type="file" name="image" id="image" style="margin-bottom: 20px">
+                                            <img id="delete" href="" src="/img/btn_delete.png" style="display: inline; margin-left: 200px; width: 20px"/>
+                                            <div>
+                                            <img src="/image${bookDetail.bookPictureUrl}" style="width: 200px" class="img-responsive" id="image_preview" alt=""/>
+                                            </div>
                                         </td>
                                     </tr>
 
                                 </table>
                             </div>
                             <div class="text-center">
-                                <input type="submit" value="수정하기"  class="btn btn-success">
+                                <input type="button" value="수정하기"  class="btn btn-success" id="update">
                                 <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList"/>' ">
                                 <input type="button" value="삭제하기"  class="btn btn-danger" onclick="go_delete();">
 
@@ -124,16 +127,14 @@
 
 <script>
 
-
     $(document).ready(function(){
 
 
         window.onload=function () {
 
-            let book_category = '<c:out value="${bookDetail.bookCategory}"/>'
+            let book_category = '<c:out value="${bookDetail.bookCategory}"/>';
 
-
-             let result = "";
+            let result = "";
 
             switch(book_category){
                 case "1":
@@ -176,11 +177,9 @@
             $('#bookCategory option:checked').text(result);
         }
 
-
     });
 
 </script>
-
 
 </body>
 
