@@ -18,7 +18,7 @@ public class BookDto {
     private int bookNum; // 도서 번호
 
     @NotBlank(message = "제목을 입력해주세요.")
-    @Size(min = 1, max = 15, message = "1~15 사이의 입력 길이만 허용합니다.")
+    @Size(min = 1, max = 30, message = "1~30 사이의 입력 길이만 허용합니다.")
     private String bookTitle; // 제목
 
 

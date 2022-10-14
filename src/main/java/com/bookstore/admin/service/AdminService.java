@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -65,12 +66,16 @@ public class AdminService {
 
     public void bookUpdate(BookDto bookDto, MultipartFile file) throws Exception {
 
-        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) { // 새로운 이미지 파일 등록 요청
+
+            new File(uploadPath + bookDto.getBookPictureUrl()).delete(); // 기존 이미지 삭제
+            new File(uploadPath + bookDto.getBookThumbUrl()).delete(); // 기존 썸네일 이미지 삭제
 
             UploadResultDto bookPictureUrl = fileStore.uploadFile(file);
 
             bookDto.setBookPictureUrl(bookPictureUrl.getBookPictureUrl());
             bookDto.setBookThumbUrl(bookPictureUrl.getBookThumbUrl());
+
         }
 
         adminMapper.bookUpdate(bookDto);
