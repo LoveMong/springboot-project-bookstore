@@ -41,7 +41,7 @@
                             <h4>도서 수정</h4>
                         </div>
                     <div id="main_content_1">
-                        <form action="<c:url value='/admin/bookUpdate'/>" enctype="multipart/form-data" method="post"  name="book_update">
+                        <form action="<c:url value='/admin/bookUpdate'/>" enctype="multipart/form-data" method="post"  id="book_update">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="bookNum" value="${bookDetail.bookNum}">
                             <input type="hidden" name="bookPictureUrl" value="${bookDetail.bookPictureUrl}">
@@ -177,6 +177,64 @@
             $('#bookCategory option:checked').text(result);
         }
 
+    });
+
+
+    $(document).ready(function(){
+
+        let idx = false;
+
+        let imgFile = '<c:out value="${bookDetail.bookPictureUrl}"/>';
+        let fileSize;
+        let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+        let maxSize = 5 * 1024 * 1024;
+
+        $("#image").change(function(){
+            fileSize = document.getElementById("image").files[0].size;
+            imgFile = document.getElementById("image").files[0].name;
+        });
+
+
+
+        $('#update').click(function(){
+            if($.trim($('#bookTitle').val()) === ''){
+                alert("제목을 입력해주세요.");
+                $('#bookTitle').focus();
+                return false;
+            }else if($.trim($('#bookAuthor').val()) === ''){
+                alert("작가를 입력해주세요.");
+                $('#authorName').focus();
+                return false;
+            }else if($.trim($('#bookPublisher').val()) === ''){
+                alert("출판사를 입력해주세요.");
+                $('#publisher').focus();
+                return false;
+            }else if($.trim($('#bookPrice').val()) === ''){
+                alert("도서가격을 입력해주세요.");
+                $('#bookPrice').focus();
+                return false;
+            }else if($.trim($('#bookPublishingDate').val()) === '') {
+                alert("출판일을 입력해주세요.");
+                $('#publeYear').focus();
+                return false;
+            }else if($.trim($('#bookStock').val()) === ''){
+                alert("재고를 입력해주세요.");
+                $('#bookStock').focus();
+                return false;
+            }else if($.trim($('#bookContent').val()) === ''){
+                alert("도서내용을 입력해주세요.");
+                $('#contents').focus();
+                return false;
+            } else if (!imgFile.match(fileForm)) {
+                alert("이미지 파일만 업로드 가능합니다.");
+                return false;
+            } else if (fileSize === maxSize) {
+                alert("파일 사이즈는 5MB까지 가능합니다.")
+                return false;
+            } else {
+                $('#book_update').submit();
+            }
+        });
     });
 
 </script>
