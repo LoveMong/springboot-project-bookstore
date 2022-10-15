@@ -41,7 +41,7 @@
                             <h4>도서 수정</h4>
                         </div>
                     <div id="main_content_1">
-                        <form action="<c:url value='/admin/bookUpdate'/>" enctype="multipart/form-data" method="post"  id="book_update">
+                        <form action="<c:url value='/admin/bookUpdate${searchCondigtion.queryString}'/>" enctype="multipart/form-data" method="post"  id="book_update">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="bookNum" value="${bookDetail.bookNum}">
                             <input type="hidden" name="bookPictureUrl" value="${bookDetail.bookPictureUrl}">

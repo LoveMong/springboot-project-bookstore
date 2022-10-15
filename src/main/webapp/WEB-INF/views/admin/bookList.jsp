@@ -74,7 +74,7 @@
                             <tbody>
                             <c:forEach items="${bookList}" var="list" varStatus="vs">
                                 <tr id="">
-                                    <th><a href="<c:url value="/admin/bookDetail?bookNum=${list.bookNum}"/>" style="color: #00a3d2">${list.bookTitle}</a></th>
+                                    <th><a href="<c:url value="/admin/bookDetail${pageHandler.sc.queryString}&bookNum=${list.bookNum}"/>" style="color: #00a3d2">${list.bookTitle}</a></th>
                                     <th>${list.bookAuthor}</th>
                                     <th>${list.bookPublisher}</th>
                                     <th>${list.bookPublishingDate}</th>
