@@ -108,11 +108,13 @@ public class RegisterBook {
      * @return 도서 상세 페이지
      */
     @GetMapping("/bookDetail")
-    public String bookView(@RequestParam("bookNum") int bookNum, Model model) {
+    public String bookView(@RequestParam("bookNum") int bookNum, SearchCondition sc, Model model) {
 
+        log.info("sc : " + sc);
         BookDto bookDetail = adminService.searchBookDetailByBookNum(bookNum);
 
         model.addAttribute("bookDetail", bookDetail);
+        model.addAttribute("searchCondition", sc);
 
         return "/admin/bookDetail";
 
@@ -127,11 +129,12 @@ public class RegisterBook {
      * @return 도서 수정 페이지
      */
     @GetMapping("/bookUpdate")
-    public String bookUpdate(@RequestParam("bookNum") int bookNum, Model model) {
+    public String bookUpdate(@RequestParam("bookNum") int bookNum, SearchCondition sc, Model model) {
 
         BookDto bookDetail = adminService.searchBookDetailByBookNum(bookNum);
 
         model.addAttribute("bookDetail", bookDetail);
+        model.addAttribute("searchCondition", sc);
 
         return "/admin/bookUpdate";
 
@@ -147,14 +150,15 @@ public class RegisterBook {
      * @throws Exception
      */
     @PostMapping("/bookUpdate")
-    public String bookUpdate(@Valid BookDto bookDto, @RequestParam(value = "image", required = false) MultipartFile file) throws Exception {
+    public String bookUpdate(@Valid BookDto bookDto, SearchCondition sc, @RequestParam(value = "image", required = false) MultipartFile file) throws Exception {
 
         log.info("bookDto : " + bookDto);
         log.info("fileGetName : " + file.getOriginalFilename());
+        log.info("searchCondition sc : " + sc);
 
         adminService.bookUpdate(bookDto, file);
 
-        return "/admin/bookList";
+        return "redirect:/admin/bookList" + sc.getQueryString();
 
 
     }
