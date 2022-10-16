@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Objects;
@@ -103,6 +105,7 @@ public class RegisterBook {
     /**
      * 도서 상세 페이지 출력
      *
+     * @param sc 도서 리스트 페이징 처리 및 검색 조건
      * @param bookNum 해당 도서 번호
      * @param model   해당 도서 정보
      * @return 도서 상세 페이지
@@ -124,6 +127,7 @@ public class RegisterBook {
     /**
      * 도서 수정 페이지 출력
      *
+     * @param sc 도서 리스트 페이징 처리 및 검색 조건
      * @param bookNum 해당 도서 번호
      * @param model   해당 도서 정보
      * @return 도서 수정 페이지
@@ -144,22 +148,35 @@ public class RegisterBook {
     /**
      * 도서 수정
      *
+     * @param sc 도서 리스트 페이징 처리 및 검색 조건
      * @param bookDto 수정 도서 정보
      * @param file 도서 표지 이미지 파일
      * @return 도서 목록 리스트 페이지
      * @throws Exception
      */
     @PostMapping("/bookUpdate")
-    public String bookUpdate(@Valid BookDto bookDto, SearchCondition sc, @RequestParam(value = "image", required = false) MultipartFile file) throws Exception {
+    public String bookUpdate(@Valid BookDto bookDto, BindingResult result, Model model, SearchCondition sc, @RequestParam(value = "image", required = false) MultipartFile file) throws Exception {
 
-        log.info("bookDto : " + bookDto);
-        log.info("fileGetName : " + file.getOriginalFilename());
-        log.info("searchCondition sc : " + sc);
+        if (result.hasErrors()) {
 
-        adminService.bookUpdate(bookDto, file);
+            log.info("result : " + result);
+
+            model.addAttribute("msg", result);
+            model.addAttribute("bookDetail", bookDto);
+
+            return "admin/bookUpdate";
+
+        } else {
+
+            adminService.bookUpdate(bookDto, file);
+
+            String keywordEncode = URLEncoder.encode(sc.getKeyword(), "UTF-8");
+            sc.setKeyword(keywordEncode);
+
+        }
 
         return "redirect:/admin/bookList" + sc.getQueryString();
 
-
     }
+
 }
