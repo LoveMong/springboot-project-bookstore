@@ -2,6 +2,10 @@
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,14 +78,45 @@
                                         <td colspan="5"><input type="text" name="bookTitle" id="bookTitle" value="${bookDetail.bookTitle}"></td>
                                     </tr>
                                     <tr>
-                                        <th style="background-color: #f8f8ff">작가</th><td><input type="text" name="bookAuthor" id="bookAuthor" value="${bookDetail.bookAuthor}"></td>
-                                        <th style="background-color: #f8f8ff">출판사</th><td><input type="text" name="bookPublisher" id="bookPublisher" value="${bookDetail.bookPublisher}"></td>
-                                        <th style="background-color: #f8f8ff">출판일</th><td><input type="text" name="bookPublishingDate" id="bookPublishingDate" value="${bookDetail.bookPublishingDate}" placeholder="0000-00-00"></td>
+                                        <th style="background-color: #f8f8ff">작가</th>
+                                        <td><input type="text" name="bookAuthor" id="bookAuthor" value="${bookDetail.bookAuthor}">
+                                        <div style="color: red; font-size: 12px; margin-top: 2px"><spring:hasBindErrors name="bookDto">
+                                            <c:if test="${errors.hasFieldErrors('bookAuthor') }">
+                                                [ ${errors.getFieldError('bookAuthor').defaultMessage } ]
+                                            </c:if>
+                                        </spring:hasBindErrors></div></td>
+                                        <th style="background-color: #f8f8ff">출판사</th>
+                                        <td><input type="text" name="bookPublisher" id="bookPublisher" value="${bookDetail.bookPublisher}">
+                                        <div style="color: red; font-size: 12px; margin-top: 2px"><spring:hasBindErrors name="bookDto">
+                                            <c:if test="${errors.hasFieldErrors('bookPublisher') }">
+                                                [ ${errors.getFieldError('bookPublisher').defaultMessage } ]
+                                            </c:if>
+                                        </spring:hasBindErrors></div></td>
+                                        <th style="background-color: #f8f8ff">출판일</th>
+                                        <td><input type="text" name="bookPublishingDate" id="bookPublishingDate" value="${bookDetail.bookPublishingDate}" placeholder="yyyy-mm-dd">
+                                        <div style="color: red; font-size: 12px; margin-top: 2px"><spring:hasBindErrors name="bookDto">
+                                            <c:if test="${errors.hasFieldErrors('bookPublishingDate') }">
+                                                [ ${errors.getFieldError('bookPublishingDate').defaultMessage } ]
+                                            </c:if>
+                                        </spring:hasBindErrors></div></td>
                                     </tr>
                                     <tr>
-                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><input type="text" name="bookPrice" id="bookPrice" value="${bookDetail.bookPrice}"></td>
+                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><input type="text" name="bookPrice" id="bookPrice" value="${bookDetail.bookPrice}">
+                                        <div style="color: red; font-size: 12px; margin-top: 2px"><spring:hasBindErrors name="bookDto">
+                                            <c:if test="${errors.hasFieldErrors('bookPrice') }">
+                                                <spring:message code="${errors.getFieldError('bookPrice').codes[0] }"/>
+                                            </c:if>
+                                        </spring:hasBindErrors>
+                                        </div>
+                                        </td>
                                         <th style="background-color: #f8f8ff">재고<p style="display: inline">(개)</p></th><td colspan="3">
                                         <input type="text" name="bookStock" id="bookStock" value="${bookDetail.bookStock}">
+                                        <div style="color: red; font-size: 12px; margin-top: 2px"><spring:hasBindErrors name="bookDto">
+                                            <c:if test="${errors.hasFieldErrors('bookStock') }">
+                                                <spring:message code="${errors.getFieldError('bookStock').codes[0] }"/>
+                                            </c:if>
+                                        </spring:hasBindErrors>
+                                        </div>
                                     </td>
                                     </tr>
                                     <tr>
@@ -236,13 +271,6 @@
             }
         });
     });
-
-    let msg = "${msg}";
-    console.log(msg);
-    if (!msg === null) {
-        alert(msg);
-    }
-
 
 </script>
 
