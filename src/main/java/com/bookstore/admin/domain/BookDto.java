@@ -3,10 +3,7 @@ package com.bookstore.admin.domain;
 
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Builder
 @Getter @Setter
@@ -21,6 +18,7 @@ public class BookDto {
     @Size(min = 1, max = 30, message = "1~30 사이의 입력 길이만 허용합니다.")
     private String bookTitle; // 제목
 
+    @NotNull(message = "가격을 입력해주세요.")
     @PositiveOrZero(message = "숫자 입력만 가능합니다.")
     private int bookPrice; // 가격
 
@@ -33,6 +31,7 @@ public class BookDto {
     private String bookAuthor; // 작가
 
     @NotBlank
+    @Pattern(regexp = "^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$", message = "yyyy-mm-dd 형식으로 입력해주세요.")
     private String bookPublishingDate; // 출판일
 
     @NotNull(message = "카테고리를 입력해주세요.")

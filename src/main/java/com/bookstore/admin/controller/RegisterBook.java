@@ -151,6 +151,7 @@ public class RegisterBook {
      * @param sc 도서 리스트 페이징 처리 및 검색 조건
      * @param bookDto 수정 도서 정보
      * @param file 도서 표지 이미지 파일
+     * @param result 유효성 검사 error 정보
      * @return 도서 목록 리스트 페이지
      * @throws Exception
      */
@@ -159,9 +160,6 @@ public class RegisterBook {
 
         if (result.hasErrors()) {
 
-            log.info("result : " + result);
-
-            model.addAttribute("msg", result);
             model.addAttribute("bookDetail", bookDto);
 
             return "admin/bookUpdate";
