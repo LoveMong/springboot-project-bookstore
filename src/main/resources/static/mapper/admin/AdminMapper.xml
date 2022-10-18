@@ -27,23 +27,23 @@
         WHERE book_num = #{bookNum}
     </select>
 
-    <select id="searchSelectPage" parameterType="com.bookstore.common.utils.SearchCondition" resultType="com.bookstore.admin.domain.BookDto">
+    <select id="searchBookSelectPage" parameterType="com.bookstore.common.utils.SearchCondition" resultType="com.bookstore.admin.domain.BookDto">
         SELECT *
         FROM  book
         WHERE true
-        <include refid="searchCondition"/>
+        <include refid="searchBookCondition"/>
         ORDER BY book_num DESC
         LIMIT #{offset}, #{pageSize}
     </select>
 
-    <select id="searchResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
+    <select id="searchBookResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
         SELECT count(*)
         FROM  book
         WHERE true
-        <include refid="searchCondition"/>
+        <include refid="searchBookCondition"/>
     </select>
 
-    <sql id="searchCondition">
+    <sql id="searchBookCondition">
         <choose>
             <when test='option=="T"'>
                 AND book_title LIKE concat('%', #{keyword}, '%')
@@ -71,6 +71,37 @@
         FROM book
         WHERE book_num = #{bookNum}
     </delete>
+
+    <select id="searchMemberResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM  member
+        WHERE true
+        <include refid="searchMemberCondition"/>
+    </select>
+
+    <sql id="searchMemberCondition">
+        <choose>
+            <when test='option=="E"'>
+                AND member_email LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='option=="N"'>
+                AND member_name LIKE concat('%', #{keyword}, '%')
+            </when>
+            <otherwise>
+                AND (member_email   LIKE concat('%', #{keyword}, '%')
+                OR   member_name LIKE concat('%', #{keyword}, '%'))
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="searchMemberSelectPage" parameterType="com.bookstore.common.utils.SearchCondition" resultType="com.bookstore.member.domain.MemberDto">
+        SELECT *
+        FROM  member
+        WHERE true
+        <include refid="searchMemberCondition"/>
+        ORDER BY member_email DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
 
 
 </mapper>

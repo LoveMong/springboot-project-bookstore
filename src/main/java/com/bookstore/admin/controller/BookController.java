@@ -26,7 +26,7 @@ import java.util.Objects;
 
 
 /**
- * 도서등록기 능을 위한 컨트롤러
+ * 도서 등록, 수정, 삭제 기능을 위한 컨트롤러
  *
  * @author L
  */
@@ -34,7 +34,7 @@ import java.util.Objects;
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 @Slf4j
-public class RegisterBook {
+public class BookController {
 
     private final AdminService adminService;
 
@@ -111,9 +111,9 @@ public class RegisterBook {
     public String bookList(SearchCondition sc, Model model) {
 
         try {
-            int totalCnt = adminService.searchResultCnt(sc);
+            int totalCnt = adminService.searchBookResultCnt(sc);
             PageHandler pageHandler = new PageHandler(totalCnt, sc);
-            List<BookDto> bookDto = adminService.searchSelectPage(sc);
+            List<BookDto> bookDto = adminService.searchBookSelectPage(sc);
 
             model.addAttribute("bookList", bookDto);
             model.addAttribute("pageHandler", pageHandler);

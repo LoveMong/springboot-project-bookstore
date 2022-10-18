@@ -5,6 +5,7 @@ import com.bookstore.admin.domain.UploadResultDto;
 import com.bookstore.admin.mapper.AdminMapper;
 import com.bookstore.common.utils.FileStoreHandler;
 import com.bookstore.common.utils.SearchCondition;
+import com.bookstore.member.domain.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -80,8 +81,8 @@ public class AdminService {
      * @param sc 검색 조건
      * @return 검색된 도서 개수
      */
-    public int searchResultCnt(SearchCondition sc) {
-        return adminMapper.searchResultCnt(sc);
+    public int searchBookResultCnt(SearchCondition sc) {
+        return adminMapper.searchBookResultCnt(sc);
     }
 
 
@@ -90,8 +91,8 @@ public class AdminService {
      * @param sc 검색 조건
      * @return 검색된 도서 객체 리스트
      */
-    public List<BookDto> searchSelectPage(SearchCondition sc) {
-        return adminMapper.searchSelectPage(sc);
+    public List<BookDto> searchBookSelectPage(SearchCondition sc) {
+        return adminMapper.searchBookSelectPage(sc);
     }
 
 
@@ -128,6 +129,25 @@ public class AdminService {
         return adminMapper.bookRemove(bookNum);
     }
 
+
+    /**
+     * 검색 조건에 해당되는 회원 리스트 개수 확인
+     * @param sc 검색 조건
+     * @return 검색된 회원 수
+     */
+    public int searchMemberResultCnt(SearchCondition sc) {
+        return adminMapper.searchMemberResultCnt(sc);
+    }
+
+
+    /**
+     * 검색 조건에 해당되는 도서 리스트 출력
+     * @param sc 검색 조건
+     * @return 검색된 도서 객체 리스트
+     */
+    public List<MemberDto> searchMemberSelectPage(SearchCondition sc) {
+        return adminMapper.searchMemberSelectPage(sc);
+    }
 
 
 
