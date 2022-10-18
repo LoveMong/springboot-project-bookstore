@@ -33,7 +33,7 @@ public class AdminService {
      * @param uploadFile 해당 도서 파일 정보
      * @throws Exception
      */
-    public void enrollBook(BookDto bookDto, MultipartFile uploadFile) throws Exception {
+    public int enrollBook(BookDto bookDto, MultipartFile uploadFile) throws Exception {
 
 
         UploadResultDto bookPictureUrl = fileStore.uploadFile(uploadFile);
@@ -42,7 +42,7 @@ public class AdminService {
         bookDto.setBookPictureUrl(bookPictureUrl.getBookPictureUrl());
         bookDto.setBookThumbUrl(bookPictureUrl.getBookThumbUrl());
 
-        adminMapper.enrollBook(bookDto);
+        return adminMapper.enrollBook(bookDto);
 
     }
 
@@ -124,8 +124,8 @@ public class AdminService {
      * 도서 삭제
      * @param bookNum 해당 도서 번호
      */
-    public void bookRemove(int bookNum) {
-        adminMapper.bookRemove(bookNum);
+    public int bookRemove(int bookNum) {
+        return adminMapper.bookRemove(bookNum);
     }
 
 

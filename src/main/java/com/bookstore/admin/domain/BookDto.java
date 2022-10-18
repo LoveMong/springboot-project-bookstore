@@ -15,7 +15,7 @@ public class BookDto {
     private int bookNum; // 도서 번호
 
     @NotBlank(message = "제목을 입력해주세요.")
-    @Size(min = 1, max = 30, message = "1~30 사이의 입력 길이만 허용합니다.")
+    @Size(min = 1, max = 100, message = "1~100 사이의 입력 길이만 허용합니다.")
     private String bookTitle; // 제목
 
     @NotNull(message = "가격을 입력해주세요.")
@@ -23,11 +23,11 @@ public class BookDto {
     private int bookPrice; // 가격
 
     @NotBlank(message = "출판사를 입력해주세요.")
-    @Size(min = 1, max = 15, message = "1~15 사이의 입력 길이만 허용합니다.")
+    @Size(min = 1, max = 30, message = "1~30 사이의 입력 길이만 허용합니다.")
     private String bookPublisher; // 출판사
 
     @NotBlank(message = "작가를 입력해주세요.")
-    @Size(min = 1, max = 15, message = "1~15 사이의 입력 길이만 허용합니다.")
+    @Size(min = 1, max = 30, message = "1~30 사이의 입력 길이만 허용합니다.")
     private String bookAuthor; // 작가
 
     @NotBlank

@@ -11,7 +11,7 @@ import java.util.Map;
 public interface AdminMapper {
 
     // 도서 등록
-    void enrollBook(BookDto bookDto);
+    int enrollBook(BookDto bookDto);
 
     // 도서 리스트 개수 확인
     int countBookList();
@@ -32,6 +32,6 @@ public interface AdminMapper {
     void bookUpdate(BookDto bookDto);
 
     // 도서 삭제
-    void bookRemove(int bookNum);
+    int bookRemove(int bookNum);
 
 }

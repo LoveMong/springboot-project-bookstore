@@ -14,6 +14,11 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="/js/bookEnroll.js"></script>
+
+	<script>
+		let msg = "${msg}";
+		if(msg=="ENR_ERR")  alert("도서 등록 실패. 다시 시도해주세요.");
+	</script>
 </head>
 <body>
 
