@@ -21,7 +21,7 @@
 			
 			<li id="main_nav_3"><a href="/admin/orderList" class="primary-btn">주문 목록</a></li>
 			
-			<li id="main_nav_4"><a href="/admin/memberList" class="primary-btn">회원 리스트</a></li>
+			<li id="main_nav_4"><a href="/admin/memberList" class="primary-btn">회원 목록</a></li>
 		
 		</ul>
 	</div>

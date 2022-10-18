@@ -94,7 +94,7 @@ $(function (){
                     $('#bookTitle').attr('value',res.documents[0].title);
                     $('input[name=bookPublisher]').attr('value',res.documents[0].publisher);
                     $('input[name=bookAuthor]').attr('value',res.documents[0].authors);
-                    $('input[name=bookPublishingDate]').attr('value',res.documents[0].datetime);
+                    $('input[name=bookPublishingDate]').attr('value',res.documents[0].datetime.substr(0,10));
                     $('#bookContent').val(res.documents[0].contents);
                     $('input[name=bookPrice]').attr('value',res.documents[0].price);
                     $('#imageUrl').attr('src',res.documents[0].thumbnail);

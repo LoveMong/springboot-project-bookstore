@@ -11,15 +11,6 @@
     <link rel="stylesheet" href="/css/admin/bookList.css">
     <script integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="/css/bootstraps/css/bootstrap.css"></script>
-
-    <script>
-        let msg = "${msg}";
-        if(msg=="READ_ERR")  alert("삭제되었거나 없는 게시물입니다.");
-        if(msg=="DEL_ERR")   alert("삭제되었거나 없는 게시물입니다.");
-        if(msg=="DEL_OK")    alert("성공적으로 삭제되었습니다.");
-        if(msg=="ENR_OK")    alert("성공적으로 등록되었습니다.");
-        if(msg=="UPD_OK")    alert("성공적으로 수정되었습니다.");
-    </script>
 </head>
 
 <body>
@@ -46,17 +37,17 @@
                 <div id="main_content" style="margin-left: 50px; margin-top: 30px; ">
                     <div class="row-fluid">
                         <div class="alert alert-success">
-                            <h4>도서 목록</h4>
+                            <h4>회원 목록</h4>
                         </div>
 
                         <div style="margin-left: 430px; margin-top: 50px; margin-bottom: 100px">
                             <div class="w100 float_left" style="padding-right:10px; float:left;">
                                 <div class="search-container" style="margin-left: 350px;">
-                                    <form action="<c:url value="/admin/bookList"/>" class="search-form" method="get">
+                                    <form action="<c:url value="/admin/memberList"/>" class="search-form" method="get">
                                         <select class="form-control form-control-sm" name="option" id="searchType" style="width: 107px; float: left; margin-right: 7px; margin-left: -57px;">
-                                            <option value="A" ${pageHandler.sc.option=='A' || pageHandler.sc.option=='' ? "selected" : ""}>제목+내용</option>
-                                            <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>제목</option>
-                                            <option value="W" ${pageHandler.sc.option=='W' ? "selected" : ""}>작가</option>
+                                            <option value="A" ${pageHandler.sc.option=='A' || pageHandler.sc.option=='' ? "selected" : ""}>이메일+이름</option>
+                                            <option value="T" ${pageHandler.sc.option=='E' ? "selected" : ""}>이메일</option>
+                                            <option value="W" ${pageHandler.sc.option=='N' ? "selected" : ""}>이름</option>
                                         </select>
                                         <div class="w300  float_left" style="padding-right:10px; float:left;">
                                             <input type="text" name="keyword" class="form-control form-control-sm-input" type="text" value="${pageHandler.sc.keyword}" placeholder="검색어를 입력해주세요" style="height: 32px">
@@ -71,23 +62,21 @@
                         <table class="table table-hover">
                             <thead style="background-color: #e9e9e9; border: none; border-bottom: double">
                             <tr class="">
-                                <th scope="col" style="padding-right: 70px">도서 제목</th>
-                                <th scope="col">작가</th>
-                                <th scope="col">출판사</th>
-                                <th scope="col">출판년도</th>
-                                <th scope="col">가격<p style="display: inline">(원)</p></th>
-                                <th scope="col">재고<p style="display: inline">(개)</p></th>
+                                <th scope="col" style="padding-right: 70px">이메일</th>
+                                <th scope="col">이름</th>
+                                <th scope="col">등급</th>
+                                <th scope="col">보유 포인트</th>
+                                <th scope="col">가입일</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${bookList}" var="list" varStatus="vs">
+                            <c:forEach items="${memberList}" var="list" varStatus="vs">
                                 <tr id="">
-                                    <th><a href="<c:url value="/admin/bookDetail${pageHandler.sc.queryString}&bookNum=${list.bookNum}"/>" style="color: #00a3d2">${list.bookTitle}</a></th>
-                                    <th>${list.bookAuthor}</th>
-                                    <th>${list.bookPublisher}</th>
-                                    <th>${list.bookPublishingDate}</th>
-                                    <th><fmt:formatNumber value="${list.bookPrice}" /></th>
-                                    <th>${list.bookStock}</th>
+                                    <th>${list.memberEmail}</th>
+                                    <th>${list.memberName}</th>
+                                    <th>${list.memberRank}</th>
+                                    <th><fmt:formatNumber value="${list.memberPoint}" /></th>
+                                    <th><fmt:formatDate value="${list.memberRegisterDate}" pattern="yyyy-MM-dd" /></th>
                                 </tr>
                             </c:forEach>
                             </tbody>

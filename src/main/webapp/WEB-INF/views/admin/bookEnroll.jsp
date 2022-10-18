@@ -14,6 +14,11 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="/js/bookEnroll.js"></script>
+
+	<script>
+		let msg = "${msg}";
+		if(msg=="ENR_ERR")  alert("도서 등록 실패. 다시 시도해주세요.");
+	</script>
 </head>
 <body>
 
@@ -24,7 +29,7 @@
 	<div id="main" class="categories-section mt-3">
 		<div id="main_wrap" class="container">
 			<div class="book_logo mt-5 mb-2" style="width: 280px;">
-				<a href="/main" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
+				<a href="/" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
 			</div>
 			<div id="main_subject">
 				<p>관리자페이지</p>
@@ -89,17 +94,17 @@
 
 										<tr>
 											<th style="background: #f8f8ff; padding-left: 20px">가격<p style="display: inline">(원)</p></th>
-											<td><input type="text" class="box" name="bookPrice" id="bookPrice"></td>
+											<td><input type="number" class="box" name="bookPrice" id="bookPrice"></td>
 										</tr>
 
 										<tr>
 											<th style="background: #f8f8ff; padding-left: 20px">출판일</th>
-											<td><input type="text" class="box" name="bookPublishingDate" id="bookPublishingDate"></td>
+											<td><input type="text" class="box" name="bookPublishingDate" id="bookPublishingDate" placeholder="yyyy-mm-dd"></td>
 										</tr>
 
 										<tr>
 											<th style="background: #f8f8ff; padding-left: 20px">재고 수량<p style="display: inline">(개)</p></th>
-											<td><input type="text" class="box" name="bookStock" id="bookStock"></td>
+											<td><input type="number" class="box" name="bookStock" id="bookStock"></td>
 										</tr>
 
 

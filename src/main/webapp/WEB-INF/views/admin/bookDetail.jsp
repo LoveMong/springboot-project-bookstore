@@ -24,7 +24,7 @@
     <div id="main" class="categories-section mt-3">
         <div id="main_wrap" class="container">
             <div class="book_logo mt-5 mb-2" style="    width: 280px;">
-                <a href="/main" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
+                <a href="/" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
             </div>
             <div id="main_subject">
                 <p>관리자페이지</p>
@@ -41,7 +41,9 @@
                             <h4>도서 상세보기</h4>
                         </div>
                     <div id="main_content_1">
-                        <form action="MacaronicsServlet" method="post"  name="form1">
+                        <form action="" method=""  name="form1" id="form1">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <input type="hidden" name="bookNum" value="${bookDetail.bookNum}" />
                             <div class="table-responsive">
                                 <table class="table" id="book_detail">
                                     <tr>
@@ -89,8 +91,8 @@
                             </div>
                             <div class="text-center">
                                 <input type="button" value="수정하기"  class="btn btn-success" onclick="location.href='<c:url value="/admin/bookUpdate${searchCondition.queryString}&bookNum=${bookDetail.bookNum}"/>' ">
-                                <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList"/>' ">
-                                <input type="button" value="삭제하기"  class="btn btn-danger" onclick="go_delete();">
+                                <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList${searchCondition.queryString}"/>' ">
+                                <input type="button" value="삭제하기"  class="btn btn-danger" id="removeBtn">
 
                             </div>
                         </form>
@@ -162,8 +164,20 @@
              $('#book_detail td:eq(0)').html(result);
         }
 
+    });
+
+    $("#removeBtn").on("click", function () {
+        if (!confirm("정말로 삭제하시겠습니까?")) {
+            return;
+        }
+
+        let form = $("#form1");
+        form.attr("action", "<c:url value='/admin/bookRemove${searchCondition.queryString}'/>");
+        form.attr("method", "post");
+        form.submit();
 
     });
+
 
 </script>
 
