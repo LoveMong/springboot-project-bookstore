@@ -101,7 +101,8 @@
                                         </spring:hasBindErrors></div></td>
                                     </tr>
                                     <tr>
-                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td><input type="text" name="bookPrice" id="bookPrice" value="${bookDetail.bookPrice}">
+                                        <th style="background-color: #f8f8ff">가격<p style="display: inline">(원)</p></th><td>
+                                        <input type="number" name="bookPrice" id="bookPrice" value="${bookDetail.bookPrice}">
                                         <div style="color: red; font-size: 12px; margin-top: 2px"><spring:hasBindErrors name="bookDto">
                                             <c:if test="${errors.hasFieldErrors('bookPrice') }">
                                                 <spring:message code="${errors.getFieldError('bookPrice').codes[0] }"/>
@@ -110,7 +111,7 @@
                                         </div>
                                         </td>
                                         <th style="background-color: #f8f8ff">재고<p style="display: inline">(개)</p></th><td colspan="3">
-                                        <input type="text" name="bookStock" id="bookStock" value="${bookDetail.bookStock}">
+                                        <input type="number" name="bookStock" id="bookStock" value="${bookDetail.bookStock}">
                                         <div style="color: red; font-size: 12px; margin-top: 2px"><spring:hasBindErrors name="bookDto">
                                             <c:if test="${errors.hasFieldErrors('bookStock') }">
                                                 <spring:message code="${errors.getFieldError('bookStock').codes[0] }"/>
@@ -141,7 +142,7 @@
                             <div class="text-center">
                                 <input type="button" value="수정하기"  class="btn btn-success" id="update">
                                 <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList${searchCondition.queryString}"/>' ">
-                                <input type="button" value="삭제하기"  class="btn btn-danger" onclick="go_delete();">
+                                <input type="button" value="취소하기"  class="btn btn-danger" onclick="history.back()">
 
                             </div>
                         </form>

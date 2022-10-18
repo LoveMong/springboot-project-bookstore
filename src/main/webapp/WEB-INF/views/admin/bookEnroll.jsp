@@ -94,17 +94,17 @@
 
 										<tr>
 											<th style="background: #f8f8ff; padding-left: 20px">가격<p style="display: inline">(원)</p></th>
-											<td><input type="text" class="box" name="bookPrice" id="bookPrice"></td>
+											<td><input type="number" class="box" name="bookPrice" id="bookPrice"></td>
 										</tr>
 
 										<tr>
 											<th style="background: #f8f8ff; padding-left: 20px">출판일</th>
-											<td><input type="text" class="box" name="bookPublishingDate" id="bookPublishingDate"></td>
+											<td><input type="text" class="box" name="bookPublishingDate" id="bookPublishingDate" placeholder="yyyy-mm-dd"></td>
 										</tr>
 
 										<tr>
 											<th style="background: #f8f8ff; padding-left: 20px">재고 수량<p style="display: inline">(개)</p></th>
-											<td><input type="text" class="box" name="bookStock" id="bookStock"></td>
+											<td><input type="number" class="box" name="bookStock" id="bookStock"></td>
 										</tr>
 
 
