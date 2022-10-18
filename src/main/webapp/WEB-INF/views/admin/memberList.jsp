@@ -23,7 +23,7 @@
     <div id="main" class="categories-section mt-3">
         <div id="main_wrap" class="container">
             <div class="book_logo mt-5 mb-2" style="    width: 280px;">
-                <a href="/main" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
+                <a href="/" style="margin-left: -200px"> <img src="/img/bk_store2.png" alt=""></a>
             </div>
             <div id="main_subject">
                 <p>관리자페이지</p>
