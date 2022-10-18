@@ -14,7 +14,7 @@ public interface AdminMapper {
 
     int countBookList();
 
-    BookDto searchBookDetailByBookNum(int num);
+    BookDto searchBookDetailByBookNum(int bookNum);
 
     List<BookDto> bookList(Map<String, Integer> map);
 
@@ -24,5 +24,7 @@ public interface AdminMapper {
 
 
     void bookUpdate(BookDto bookDto);
+
+    void bookRemove(int bookNum);
 
 }

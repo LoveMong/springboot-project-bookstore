@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.List;
@@ -105,7 +106,7 @@ public class RegisterBook {
     /**
      * 도서 상세 페이지 출력
      *
-     * @param sc 도서 리스트 페이징 처리 및 검색 조건
+     * @param sc      도서 리스트 페이징 처리 및 검색 조건
      * @param bookNum 해당 도서 번호
      * @param model   해당 도서 정보
      * @return 도서 상세 페이지
@@ -127,7 +128,7 @@ public class RegisterBook {
     /**
      * 도서 수정 페이지 출력
      *
-     * @param sc 도서 리스트 페이징 처리 및 검색 조건
+     * @param sc      도서 리스트 페이징 처리 및 검색 조건
      * @param bookNum 해당 도서 번호
      * @param model   해당 도서 정보
      * @return 도서 수정 페이지
@@ -148,10 +149,10 @@ public class RegisterBook {
     /**
      * 도서 수정
      *
-     * @param sc 도서 리스트 페이징 처리 및 검색 조건
+     * @param sc      도서 리스트 페이징 처리 및 검색 조건
      * @param bookDto 수정 도서 정보
-     * @param file 도서 표지 이미지 파일
-     * @param result 유효성 검사 error 정보
+     * @param file    도서 표지 이미지 파일
+     * @param result  유효성 검사 error 정보
      * @return 도서 목록 리스트 페이지
      * @throws Exception
      */
@@ -177,4 +178,23 @@ public class RegisterBook {
 
     }
 
+
+    /**
+     * 도서 삭제
+     * @param bookNum 삭제 대상 도서번호
+     * @param sc 도서 리스트 페이징 처리 및 검색 조건
+     * @return 도서 목록 리스트 페이지
+     * @throws Exception
+     */
+    @PostMapping("/bookRemove")
+    public String bookRemove(@RequestParam("bookNum") int bookNum, SearchCondition sc) throws Exception {
+
+        adminService.bookRemove(bookNum);
+
+        String keywordEncode = URLEncoder.encode(sc.getKeyword(), "UTF-8");
+        sc.setKeyword(keywordEncode);
+
+        return "redirect:/admin/bookList" + sc.getQueryString();
+
+    }
 }

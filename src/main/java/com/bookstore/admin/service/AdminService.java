@@ -82,6 +82,10 @@ public class AdminService {
 
     }
 
+    public void bookRemove(int bookNum) {
+        adminMapper.bookRemove(bookNum);
+    }
+
 
 
 
