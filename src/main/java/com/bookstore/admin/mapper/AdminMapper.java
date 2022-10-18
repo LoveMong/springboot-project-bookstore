@@ -10,21 +10,28 @@ import java.util.Map;
 @Mapper
 public interface AdminMapper {
 
+    // 도서 등록
     void enrollBook(BookDto bookDto);
 
+    // 도서 리스트 개수 확인
     int countBookList();
 
+    // 도서 상세 정보 출력
     BookDto searchBookDetailByBookNum(int bookNum);
 
+    // 검색된 조건에 해당하는 도서 리스트
     List<BookDto> bookList(Map<String, Integer> map);
 
+    // 검색된 조건에 해당하는 도서 개수
     int searchResultCnt(SearchCondition sc);
 
+    // 검색된 조건에 해당하는 도서 객체 리스트
     List<BookDto> searchSelectPage(SearchCondition sc);
 
-
+    // 도서 수정
     void bookUpdate(BookDto bookDto);
 
+    // 도서 삭제
     void bookRemove(int bookNum);
 
 }

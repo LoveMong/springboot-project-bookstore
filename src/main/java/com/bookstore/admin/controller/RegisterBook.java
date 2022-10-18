@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.List;
@@ -114,7 +113,6 @@ public class RegisterBook {
     @GetMapping("/bookDetail")
     public String bookView(@RequestParam("bookNum") int bookNum, SearchCondition sc, Model model) {
 
-        log.info("sc : " + sc);
         BookDto bookDetail = adminService.searchBookDetailByBookNum(bookNum);
 
         model.addAttribute("bookDetail", bookDetail);
