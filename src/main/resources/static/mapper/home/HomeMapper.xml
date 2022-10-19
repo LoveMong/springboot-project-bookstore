@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookstore.home.mapper.HomeMapper">
+
+    <select id="searchBookListGrade" resultType="com.bookstore.admin.domain.BookDto">
+        SELECT *
+        FROM book
+        ORDER BY book_grade DESC
+        LIMIT 10
+    </select>
+
+    <select id="searchBookListBest" resultType="com.bookstore.admin.domain.BookDto">
+        SELECT *
+        FROM book
+        ORDER BY book_sellCount DESC, book_grade DESC
+        LIMIT 10
+    </select>
+
+    <select id="searchBookListNew" resultType="com.bookstore.admin.domain.BookDto">
+        SELECT *
+        FROM book
+        ORDER BY book_publishingDate DESC
+        LIMIT 10
+    </select>
+
+    <select id="bookSearchDetail" parameterType="int" resultType="com.bookstore.admin.domain.BookDto">
+        SELECT *
+        FROM book
+        WHERE book_num = #{bookNum}
+    </select>
+
+
+
+</mapper>

@@ -40,10 +40,10 @@
 <header class="header-section">
    <div class="container-fluid">
       <div class="row">
-         <div class="col-lg-12">
+         <div class="col-lg-12" style="margin-bottom: 80px">
          	<div class="row">
 	            <div class="book_logo mt-5 mb-2" style="width: 280px;">
-	               <a href="/main" id="logo"> <img src="/img/bk_store2.png" alt="">
+	               <a href="/" id="logo"> <img src="/img/bk_store2.png" alt="">
 	               </a>
 	            </div>
 	            <form action="/search" method="get" style="margin: 105px 10px 1px 30px;">
@@ -59,7 +59,7 @@
 	                  <div class="clearfix"></div>
 	               </div>
 	            </form>
-            .</div>
+            </div>
 
 				<nav class="nav-menu mobile-menu" id="nav-menu mobile-menu" >
 					<ul>

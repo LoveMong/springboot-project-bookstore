@@ -52,5 +52,7 @@ public class BookDto {
 
     private String bookThumbUrl; // 사진 썸네일 URL
 
+    private int bookSellCount; // 도서 판매 수량
+
 
 }

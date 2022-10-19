@@ -52,37 +52,16 @@
 </head>
 <body>
 
-<jsp:include page="common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"></jsp:include>
 
-
-
-<!-- <div id="top_ad">
-		<div class="top_ad_right"></div>
-		<div id="top_ad_img">
-			<img src="http://image.kyobobook.co.kr/dwas/images/prom/banner/2020/02/13/bnC_pc_ink_950x65.jpg">
-			<button onclick="jQuery('#top_ad').slideUp();"><img src="resources/img/close_button.gif"></button>
-		</div>
-	</div> -->
 
 
 
 <div id="main_contents">
 
-
-    <script>
-        $(document).ready(function(){
-            var grade = ${userinfo.user_rank };
-            var usergrade = user_grade(grade);
-            $('#userrank').text(usergrade);
-        });
-    </script>
-    <div id="main_section" class="mt-3">
-
+    <div id="main_section" class="mt-3" style="width: 60%; margin-left: 300px">
 
         <div id="main_container_">
-
-
-
 
             <section class="hero-section">
                 <div id="slideWrap" class="carousel slide" data-ride="carousel">
@@ -140,16 +119,16 @@
                     </div>
 
                     <div class="categories-slider owl-carousel" id="best_slide">
-                        <c:forEach items="${bestlist}" var="bestlist" varStatus="i">
+                        <c:forEach items="${bookListBest}" var="bestlist" varStatus="i">
                             <div class="cs-item" >
-                                <a href="detail?num=${bestlist.bk_num}">
-                                    <div class="cs-pic set-bg" ><img class="h-100" src="<c:out value="${bestlist.bk_thumbUrl}" />"></div>
+                                <a href="detail?num=${bestlist.bookNum}">
+                                    <div class="cs-pic set-bg" ><img class="h-100" src="<c:out value="/image${bestlist.bookPictureUrl}" />"></div>
                                     <div class="cs-text">
-                                        <h4>${bestlist.bk_name }</h4>
+                                        <h4>${bestlist.bookTitle }</h4>
                                         <span class="main2_1_box_con_cate " id="cate${i.getIndex() }">
-                                                ${cateArray[(bestlist.bk_category - 1 )] }
+                                                ${cateArray[(bestlist.bookCategory - 1 )] }
                                         </span>
-                                        <c:if test="${bestlist.bk_rank!=0}">
+                                        <c:if test="${bestlist.bookGrade!=0}">
                                             <div class="starRev mt-1" id="revStar${i.getIndex() }" style="width:62%; margin:0 auto;">
                                                 <div>
                                                     <span class="starR1 d-inline-block" id="star0" value="0.5">별1_왼쪽</span>
@@ -163,15 +142,15 @@
                                                     <span class="starR1 d-inline-block" id="star8" value="4.5">별5_왼쪽</span>
                                                     <span class="starR2 d-inline-block" id="star9" value="5">별5_오른쪽</span>
                                                 </div>
-                                                <span class="d-inline-block">(${bestlist.bk_rank})</span>
-                                                <input type="hidden" id="star_rank" value="${bestlist.bk_rank}">
+                                                <span class="d-inline-block">(${bestlist.bookGrade})</span>
+                                                <input type="hidden" id="star_rank" value="${bestlist.bookGrade}">
                                             </div>
 
                                         </c:if>
-                                        <c:if test="${bestlist.bk_rank==0}">
+                                        <c:if test="${bestlist.bookGrade==0}">
                                             <span>평점 없음</span>
                                         </c:if>
-                                        <input type="hidden" id="catenum${i.getIndex() }" value="${bestlist.bk_category }">
+                                        <input type="hidden" id="catenum${i.getIndex() }" value="${bestlist.bookCategory }">
                                     </div>
                                 </a>
                             </div>
@@ -201,17 +180,17 @@
                     </div>
 
                     <div class="categories-slider owl-carousel" id="best_slide">
-                        <c:forEach items="${list}" var="list" varStatus="i">
+                        <c:forEach items="${bookListNew}" var="list" varStatus="i">
                             <div class="new_box_list cs-item" >
-                                <a href="detail?num=${list.bk_num}">
-                                    <div class="cs-pic set-bg" ><img class="h-100" src="<c:out value="${list.bk_thumbUrl}" />"></div>
+                                <a href="detail?num=${list.bookNum}">
+                                    <div class="cs-pic set-bg" ><img class="h-100" src="<c:out value="/image${list.bookPictureUrl}" />"></div>
                                     <div class="cs-text">
-                                        <h4>${list.bk_name}</h4>
+                                        <h4>${list.bookTitle}</h4>
                                         <span class="main2_1_box_con_cate"id="newcate${i.getIndex() }" >
-                                                ${cateArray[(list.bk_category - 1 )] }
+                                                ${cateArray[(list.bookCategory - 1 )] }
                                         </span>
-                                        <span class="main2_1_box_con_year mb-2">${list.bk_pdate}</span>
-                                        <input type="hidden" id="newcatenum${i.getIndex() }" value="${list.bk_category }">
+                                        <span class="main2_1_box_con_year mb-2">${list.bookPublishingDate}</span>
+                                        <input type="hidden" id="newcatenum${i.getIndex() }" value="${list.bookCategory }">
                                     </div>
                                 </a>
                             </div>
@@ -239,16 +218,16 @@
                     </div>
 
                     <div class="categories-slider owl-carousel" id="best_slide">
-                        <c:forEach items="${ranklist}" var="ranklist" varStatus="i">
+                        <c:forEach items="${bookListGrade}" var="ranklist" varStatus="i">
                             <div class="new_box_list cs-item" >
-                                <a href="detail?num=${ranklist.bk_num}">
-                                    <div class="cs-pic set-bg" ><img class="h-100" src="<c:out value="${ranklist.bk_thumbUrl}" />"></div>
+                                <a href="detail?num=${ranklist.bookNum}">
+                                    <div class="cs-pic set-bg" ><img class="h-100" src="<c:out value="/image${ranklist.bookPictureUrl}" />"></div>
                                     <div class="cs-text">
-                                        <h4>${ranklist.bk_name }</h4>
-                                        <span class="main2_1_box_con_cate"id="newcate${i.getIndex() }" >
-                                                ${cateArray[(ranklist.bk_category - 1 )] }
+                                        <h4>${ranklist.bookTitle }</h4>
+                                        <span class="main2_1_box_con_cate" id="newcate${i.getIndex() }" >
+                                                ${cateArray[(ranklist.bookCategory - 1 )] }
                                         </span>
-                                        <c:if test="${ranklist.bk_rank!=0}">
+                                        <c:if test="${ranklist.bookGrade!=0}">
                                             <div class="starRev mt-1" id="starRev${i.getIndex() }" style="width:62%; margin:0 auto;">
                                                 <span class="starR1" id="star0" value="0.5">별1_왼쪽</span>
                                                 <span class="starR2" id="star1" value="1">별1_오른쪽</span>
@@ -261,15 +240,15 @@
                                                 <span class="starR1" id="star8" value="4.5">별5_왼쪽</span>
                                                 <span class="starR2" id="star9" value="5">별5_오른쪽</span>
 
-                                                <input type="hidden" id="star_rank" value="${ranklist.bk_rank}">
-                                                <span>(${ranklist.bk_rank})</span>
+                                                <input type="hidden" id="star_rank" value="${ranklist.bookGrade}">
+                                                <span>(${ranklist.bookGrade})</span>
                                             </div>
                                         </c:if>
-                                        <c:if test="${ranklist.bk_rank==0}">
+                                        <c:if test="${ranklist.bookGrade==0}">
                                             <span>평점 없음</span>
                                         </c:if>
 
-                                        <input type="hidden" id="rankcatenum${i.getIndex() }" value="${ranklist.bk_category }">
+                                        <input type="hidden" id="rankcatenum${i.getIndex() }" value="${ranklist.bookCategory }">
                                     </div>
                                 </a>
                             </div>
@@ -284,7 +263,7 @@
         </div>
     </div>
 
-    <jsp:include page="common/footer.jsp"></jsp:include>
+    <jsp:include page="../common/footer.jsp"></jsp:include>
 
 
 
