@@ -12,6 +12,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script type="text/javascript" src="/js/bookSearchDetail.js"></script>
 </head>
 
 <body>
@@ -99,23 +100,7 @@
 						</div>
 					</div>
 				</div>
-				<script>
-					$(document).ready(function() {
-						var cateCodeNum = $('#catenum').val();
-						var cateNum = parseInt(cateCodeNum);
-						var category = cateSwitch(cateNum);
-						$('#cate').text(category);
-					});
-					$(document).ready(function() {
-						var cateCodeNum = $('#catenum').val();
-						var cateNum = parseInt(cateCodeNum);
-						var category = cateSwitch(cateNum);
-						$('#cate2').text(category);
-					});
-				</script>
 				<div class="tabs mt-3 mb-5" id="tab-area">
-					
-					
 						<div id="tab01" class="tab-pane active">
 							<div id="detail_main">
 								<div id="detail_main_container">
@@ -169,21 +154,19 @@
 										<span>평점/리뷰</span>
 									</div>
 									<br />
-									<c:if test="${rank==0 }">
+									<c:if test="${bookDetail.bookGrade==0 }">
 										<div style="text-align: center;">
 											<h2>
-												<strong>등록된 평점이 없습니다.</strong>
+												<strong style="font-size: 25px">등록된 평점이 없습니다.</strong>
 											</h2>
 										</div>
 									</c:if>
-
-									<c:if test="${rank !=0 }">
+									<c:if test="${bookDetail.bookGrade !=0 }">
 										<div style="text-align: center;">
 											<h2 style="display: inline-block; margin: 20px;">
 												<strong>책 평점</strong>
 											</h2>
-											<div class="starRev" id="revStar"
-												style="display: inline-block;">
+											<div class="starRev" id="revStar" style="display: inline-block;">
 												<span class="starR1" id="star0" value="0.5">별1_왼쪽</span> <span
 													class="starR2" id="star1" value="1">별1_오른쪽</span> <span
 													class="starR1" id="star2" value="1.5">별2_왼쪽</span> <span
@@ -196,7 +179,7 @@
 													class="starR2" id="star9" value="5">별5_오른쪽</span> <input
 													type="hidden" id="star_rank" value="${rank}">
 											</div>
-											<h2 style="display: inline-block; margin: 20px;">(${rank })</h2>
+											<h2 style="display: inline-block; margin: 20px;">(${bookDetail.bookGrade })</h2>
 										</div>
 									</c:if>
 									<br />
@@ -505,32 +488,7 @@ function fn_next(page, range, rangeSize) {
          }
       });
    });
-   $(document).ready(function(){
-      //alert("연결");
-      // 이미지 불러오기
-      $("#btn_plus").click(function(e){
-         var value = parseInt($('#cartStock').val());
-         var bkprice=${book.bk_price };
-         value = value + 1;
-         $('#cartStock').val(value);
-         $('#odcount').val(value);
-         var allprice = value*bkprice;
-         $('#allprice').text(comma(allprice));
-      });
-   //수량 감소
-      $("#btn_minus").click(function(e){
-         var value = parseInt($('#cartStock').val());
-         var bkprice=${book.bk_price };
-         if(value <= 0){
-            return;
-         }
-         value = value - 1;
-         $('#cartStock').val(value);
-         $('#odcount').val(value);
-         var allprice = value*bkprice;
-         $('#allprice').text(comma(allprice));
-      });
-   });
+
 </script>
 <script>
    $('#buy_btn').click(function(){
@@ -553,65 +511,6 @@ function fn_next(page, range, rangeSize) {
          
       }
    });
-</script>
-
-<script>
-$(function(){
-   $("#reply_btn").click(function(e){
-   const userid=$('#userid').val();
-   const bknum=$('#bknum').val();
-   const revcomment=$('#revdate').val();
-   const revRank=$('#revRank').val();
-   
-   console.log("userid : "+userid);
-   console.log("bknum : "+bknum);
-   console.log("revcomment : "+revcomment);
-   console.log("revRank : "+revRank);
-      if(userid!=null&&userid!=""&&userid!=0){
-         if(revcomment!=null&&revcomment!=""){
-            $.ajax({
-               type:"POST",
-               url:"/comment",
-               data: {
-                  rev_rank : revRank,
-                  user_id : userid,
-                  bk_num : bknum,
-                  rev_comment : revcomment
-               },
-               dataType: "text",
-               success:function(result){
-                  const resultSet = $.trim(result);
-                  
-                  if(resultSet==="notorder"){
-                     alert('구매 후 리뷰 작성이 가능합니다.')
-                     location.reload();
-                  }
-                  else if(resultSet==="order"){
-                     console.log('성공');
-                     location.reload();
-                  }
-                  
-               }
-            });
-         }
-         else{
-            alert('댓글을 입력해주세요');
-         }
-      }
-      else{
-         alert('로그인 해주세요')
-      }
-   });
-   
-   $('.starRev a').click(function(){ 
-      $(this).parent().children("a").removeClass("on"); 
-      $(this).addClass("on").prevAll("a").addClass("on"); 
-      value=$(this).attr("value");
-      $('#revRank').val(value);
-      console.log($(this).attr("value")); 
-   });
-   
-});
 </script>
 <div class="modal fade" id="myModal" role="dialog">
    <div class="modal-dialog">
@@ -648,86 +547,85 @@ $(function(){
    </div>
 </div>
 <script>
-   $(document).ready(function(){
-      for(var i =0; i <10; i++){
-         var idx = $("#starRev"+i).find("input").val() ; 
-         idx = ( idx - 0.5 )*2
-         idx = Math.floor(idx);
-         $('#starRev'+i).find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');   
-      }
-   });
-</script>
-<script>
-   $(document).ready(function(){
-      var idx = $("#revStar").find("input").val() ; 
-      idx = ( idx - 0.5 )*2
-      idx = Math.floor(idx);
-      $('#revStar').find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
-   });
-</script>
+	$(document).ready(function(){
 
-<script>
-   function cateSwitch(val) {
-      var result = "";
-      switch(val){
-         case 1:
-            result = "소설";
-            break;
-         case 2:
-            result = "시/에세이";
-            break;
-         case 3:
-            result = "경제/경영";
-            break;
-         case 4: 
-            result = "자기계발";
-            break;
-         case 5: 
-            result = "인문";
-            break;
-         case 6: 
-            result = "역사/문화";
-            break;
-         case 7: 
-            result = "종교";
-            break;
-         case 8: 
-            result = "정치/사회";
-            break;
-         case 9: 
-            result = "예술/대중문화";
-            break;
-         case 10: 
-            result = "과학";
-            break;
-         case 11: 
-            result = "기술/공학";
-            break;
-         case 12: 
-            result = "컴퓨터/IT";
-            break;
-      }
-      return result;
-   }
-</script>
-<script>
-		function comma(num){
-	    var len, point, str;  
-	       
-	    num = num + "";  
-	    point = num.length % 3 ;
-	    len = num.length;  
-	   
-	    str = num.substring(0, point);  
-	    while (point < len) {  
-	        if (str != "") str += ",";  
-	        str += num.substring(point, point + 3);  
-	        point += 3;  
-	    }  
-	     
-	    return str;
-	 
+		window.onload=function () {
+
+			let book_category = '<c:out value="${bookDetail.bookCategory}"/>';
+
+			let result = "";
+
+			switch(book_category){
+				case "1":
+					result = "소설";
+					break;
+				case "2":
+					result = "시/에세이";
+					break;
+				case "3":
+					result = "경제/경영";
+					break;
+				case "4":
+					result = "자기계발";
+					break;
+				case "5":
+					result = "인문";
+					break;
+				case "6":
+					result = "역사/문화";
+					break;
+				case "7":
+					result = "종교";
+					break;
+				case "8":
+					result = "정치/사회";
+					break;
+				case "9":
+					result = "예술/대중문화";
+					break;
+				case "10":
+					result = "과학";
+					break;
+				case "11":
+					result = "기술/공학";
+					break;
+				case "12":
+					result = "컴퓨터/IT";
+					break;
+			}
+			$('#cate').html(result);
+			$('#cate2').html(result);
 		}
+
+	});
+
+	$(document).ready(function(){
+		//alert("연결");
+		// 이미지 불러오기
+		$("#btn_plus").click(function(e){
+			var value = parseInt($('#cartStock').val());
+			var bkprice=${book.bk_price };
+			value = value + 1;
+			$('#cartStock').val(value);
+			$('#odcount').val(value);
+			var allprice = value*bkprice;
+			$('#allprice').text(comma(allprice));
+		});
+		//수량 감소
+		$("#btn_minus").click(function(e){
+			var value = parseInt($('#cartStock').val());
+			var bkprice=${book.bk_price };
+			if(value <= 0){
+				return;
+			}
+			value = value - 1;
+			$('#cartStock').val(value);
+			$('#odcount').val(value);
+			var allprice = value*bkprice;
+			$('#allprice').text(comma(allprice));
+		});
+	});
+
 </script>
 
 </body>
