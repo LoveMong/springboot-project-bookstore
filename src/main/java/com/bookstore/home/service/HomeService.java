@@ -2,6 +2,7 @@ package com.bookstore.home.service;
 
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.mapper.HomeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class HomeService {
 
     public BookDto bookSearchDetail(int bookNum) {
         return homeMapper.bookSearchDetail(bookNum);
+    }
+
+    public List<ReviewDto> searchBookReview(int bookNum) {
+        return homeMapper.searchBookReview(bookNum);
     }
 
 
