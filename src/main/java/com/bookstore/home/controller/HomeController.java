@@ -2,6 +2,7 @@ package com.bookstore.home.controller;
 
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,8 +47,10 @@ public class HomeController {
     public String bookSearchDetail(@RequestParam("num") int bookNum, Model model) {
 
         BookDto bookDto = homeService.bookSearchDetail(bookNum);
+        List<ReviewDto> bookReview = homeService.searchBookReview(bookNum);
 
         model.addAttribute("bookDetail", bookDto);
+        model.addAttribute("bookReview", bookReview);
 
         return "/home/bookSearchDetail";
 

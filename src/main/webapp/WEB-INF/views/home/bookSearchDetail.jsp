@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script type="text/javascript" src="/js/bookSearchDetail.js"></script>
+
 </head>
 
 <body>
@@ -32,8 +34,7 @@
 					</div>
 					<div id="title">
 
-						<strong><input type="hidden" id="catenum"
-							value="${bookDetail.bookCategory }"></strong>
+						<strong><input type="hidden" id="catenum" value="${bookDetail.bookCategory }"></strong>
 						<table>
 							<tbody class="detail_intro2">
 								<tr>
@@ -41,7 +42,7 @@
 									<td id="cate"></td>
 								</tr>
 								<tr>
-									<th scope="row">책제목</th>
+									<th scope="row">도서 제목</th>
 									<td>${bookDetail.bookTitle}</td>
 								</tr>
 								<tr>
@@ -106,7 +107,7 @@
 								<div id="detail_main_container">
 									<div id="book_intro_wrapper">
 										<div id="book_intro_subject" style="margin-top: 80px">
-											<span>책소개</span>
+											<span>도서 소개</span>
 										</div>
 										<table class="type02">
 											<tbody class="detail_intro">
@@ -115,7 +116,7 @@
 													<td id="cate2"></td>
 												</tr>
 												<tr>
-													<th scope="row">책제목</th>
+													<th scope="row">도서 제목</th>
 													<td>${bookDetail.bookTitle}</td>
 												</tr>
 												<tr>
@@ -133,15 +134,10 @@
 											</tbody>
 										</table>
 										<div id="book_intro_con">
-											<h2>
-												<strong>INTRO</strong>
-											</h2>
-
+											<h2><strong>INTRO</strong></h2>
 										</div>
 										<div id="book_intro_con2">${bookDetail.bookContent}</div>
 									</div>
-
-
 								</div>
 							</div>
 						</div>
@@ -156,28 +152,26 @@
 									<br />
 									<c:if test="${bookDetail.bookGrade==0 }">
 										<div style="text-align: center;">
-											<h2>
-												<strong style="font-size: 25px">등록된 평점이 없습니다.</strong>
-											</h2>
+											<h2><strong style="font-size: 25px">등록된 평점이 없습니다.</strong></h2>
 										</div>
 									</c:if>
 									<c:if test="${bookDetail.bookGrade !=0 }">
 										<div style="text-align: center;">
 											<h2 style="display: inline-block; margin: 20px;">
-												<strong>책 평점</strong>
+												<strong>도서 평점</strong>
 											</h2>
 											<div class="starRev" id="revStar" style="display: inline-block;">
-												<span class="starR1" id="star0" value="0.5">별1_왼쪽</span> <span
-													class="starR2" id="star1" value="1">별1_오른쪽</span> <span
-													class="starR1" id="star2" value="1.5">별2_왼쪽</span> <span
-													class="starR2" id="star3" value="2">별2_오른쪽</span> <span
-													class="starR1" id="star4" value="2.5">별3_왼쪽</span> <span
-													class="starR2" id="star5" value="3">별3_오른쪽</span> <span
-													class="starR1" id="star6" value="3.5">별4_왼쪽</span> <span
-													class="starR2" id="star7" value="4">별4_오른쪽</span> <span
-													class="starR1" id="star8" value="4.5">별5_왼쪽</span> <span
-													class="starR2" id="star9" value="5">별5_오른쪽</span> <input
-													type="hidden" id="star_rank" value="${rank}">
+												<span class="starR1" id="star0" value="0.5">별1_왼쪽</span>
+												<span class="starR2" id="star1" value="1">별1_오른쪽</span>
+												<span class="starR1" id="star2" value="1.5">별2_왼쪽</span>
+												<span class="starR2" id="star3" value="2">별2_오른쪽</span>
+												<span class="starR1" id="star4" value="2.5">별3_왼쪽</span>
+												<span class="starR2" id="star5" value="3">별3_오른쪽</span>
+												<span class="starR1" id="star6" value="3.5">별4_왼쪽</span>
+												<span class="starR2" id="star7" value="4">별4_오른쪽</span>
+												<span class="starR1" id="star8" value="4.5">별5_왼쪽</span>
+												<span class="starR2" id="star9" value="5">별5_오른쪽</span>
+												<input type="hidden" id="star_rank" value="${bookDetail.bookGrade }">
 											</div>
 											<h2 style="display: inline-block; margin: 20px;">(${bookDetail.bookGrade })</h2>
 										</div>
@@ -185,11 +179,11 @@
 									<br />
 									<hr>
 									<br />
-									<c:forEach items="${comment }" var="com" varStatus="i">
-										<c:if test="${com.rev_rank == 0.0}">
+									<c:forEach items="${bookReview }" var="review" varStatus="i">
+										<c:if test="${review.reviewGrade == 0.0}">
 											<p>등록된 리뷰가 없습니다.</p>
 										</c:if>
-										<c:if test="${com.rev_num!=null }">
+										<c:if test="${review.reviewGrade!=null }">
 											<s_rp_container>
 											<ul class="reply-list">
 												<s_rp_rep>
@@ -209,19 +203,21 @@
 																		<span class="starR2" id="star7" value="4">별4_오른쪽</span>
 																		<span class="starR1" id="star8" value="4.5">별5_왼쪽</span>
 																		<span class="starR2" id="star9" value="5">별5_오른쪽</span>
-																		<span>(${com.rev_rank})</span> <input type="hidden"
-																			id="star_rank" value="${com.rev_rank}">
+																		<span>(${review.reviewGrade})</span> <input type="hidden"
+																			id="star_rank" value="${review.reviewGrade}">
 																	</div>
 																</li>
-																<li class="nickname">${com.user_id }</li>
-																<li class="date">[${ com.rev_date}]</li>
+																<c:set var="name" value="${review.memberEmail}" />
+																<c:set var="first" value="${fn:substring(name, 0, 3) }" />
+																<li class="nickname">${first}***</li>
+																<li class="date">[${review.reviewDate}]</li>
 															</ul>
-															<p class="text">${com.rev_comment}</p>
+															<p class="text">${review.reviewComment}</p>
 															<input type="hidden" id="comment${i.getIndex()}"
-																value="${com.rev_comment }"> <input
+																value="${review.reviewComment }"> <input
 																type="hidden" id="comrank${i.getIndex() }"
-																value="${com.rev_rank }"> <input type="hidden"
-																id="commentnum${i.getIndex()}" value="${com.rev_num }">
+																value="${review.reviewGrade }"> <input type="hidden"
+																id="commentnum${i.getIndex()}" value="${review.reviewNum }">
 															<ul class="control">
 																<c:set var="louserid" value="${login.user_id}" />
 																<c:set var="couserid" value="${com.user_id}" />
@@ -376,142 +372,137 @@
 		</div>
 	</div>
 
-	<script>
-/* $(document).ready(function() {
-    var $tabButtonItem = $('#tab-button li'),
-        $tabSelect = $('#tab-select'),
-        $tabContents = $('.tab-contents'),
-        activeClass = 'is-active';
-
-  $tabButtonItem.first().addClass(activeClass);
-  $tabContents.not(':first').hide();
-
-  // button
-  $tabButtonItem.find('a').on('click', function(e) {
-    var target = $(this).attr('href');
-
-    $tabButtonItem.removeClass(activeClass);
-    $(this).parent().addClass(activeClass);
-    $tabSelect.val(target);
-    $tabContents.hide();
-    $(target).show();
-    e.preventDefault();
-  });
-
-  // select
-  $tabSelect.on('change', function() {
-    var target = $(this).val(),
-        targetSelectNum = $(this).prop('selectedIndex');
-
-    $tabButtonItem.removeClass(activeClass);
-    $tabButtonItem.eq(targetSelectNum).addClass(activeClass);
-    $tabContents.hide();
-    $(target).show();
-  });
-}); */
-</script>
 
 <script>
-function fn_prev(page, range, rangeSize) {
-   var page = ((range - 2) * rangeSize) + 1;
-   var range = range - 1;
-   var url = "/detail";
-   url = url + "?num=" + ${bk_num};
-   url = url + "&page=" + page;
-   url = url + "&range=" + range;
-   location.href = url;
-}
+
+	$(function(){
+
+		$("#cart_btn").click(function(e){
+			const odcount=$('#odcount').val();
+			const bknum=$('#bnum').val();
+			const userid="${login.user_id}";
+			console.log("odcount : "+odcount);
+			console.log("bknum : "+bknum);
+			console.log("userid : "+userid);
+			if(userid!=null&&userid!=""&&userid!=0){
+				if(odcount > 0){
+					console.log("carInfo");
+					$.ajax({
+						type:"POST",
+						url:"/addcart",
+						data: {
+							od_num : odcount,
+							bk_num : bknum,
+							user_id : userid
+						},
+						dataType:"text",
+						success:function(result){
+							const resultSet = $.trim(result);
+							if(result==="success"){
+								var msg='장바구니에 담겼습니다.'
+								location.reload();
+								alert(msg);
+							}
+							else if(result==="fail"){
+								var msg='실패했습니다.'
+								alert(msg);
+							}
+						}
+					});
+				}
+				else{
+					alert('수량을 선택해주세요');
+				}
+			}
+			else{
+				alert('로그인 해주세요')
+			}
+		});
+	});
+
+	function fn_prev(page, range, rangeSize) {
+	   var page = ((range - 2) * rangeSize) + 1;
+	   var range = range - 1;
+	   var url = "/detail";
+	   url = url + "?num=" + ${bk_num};
+	   url = url + "&page=" + page;
+	   url = url + "&range=" + range;
+	   location.href = url;
+	}
 
 
-function fn_pagination(page, range, rangeSize) {
-   var url = "/detail";
-   url = url + "?num=" + ${bk_num};
-   url = url + "&page=" + page;
-   url = url + "&range=" + range;
-   
-   location.href = url;
-}
-function fn_next(page, range, rangeSize) {
-   var page = parseInt((range * rangeSize)) + 1;
-   var range = parseInt(range) + 1;
-   var url = "/detail";
-   url = url + "?num=" + ${bk_num};
-   url = url + "&page=" + page;
-   url = url + "&range=" + range;
-   location.href = url;
-}
+	function fn_pagination(page, range, rangeSize) {
+	   var url = "/detail";
+	   url = url + "?num=" + ${bk_num};
+	   url = url + "&page=" + page;
+	   url = url + "&range=" + range;
+
+	   location.href = url;
+	}
+
+	function fn_next(page, range, rangeSize) {
+	   var page = parseInt((range * rangeSize)) + 1;
+	   var range = parseInt(range) + 1;
+	   var url = "/detail";
+	   url = url + "?num=" + ${bk_num};
+	   url = url + "&page=" + page;
+	   url = url + "&range=" + range;
+	   location.href = url;
+	}
+
+	$("#btn_plus").click(function(e){
+		var value = parseInt($('#cartStock').val());
+		var bkprice=${book.bk_price };
+		value = value + 1;
+		$('#cartStock').val(value);
+		$('#odcount').val(value);
+		var allprice = value*bkprice;
+		$('#allprice').text(comma(allprice));
+	});
+
+	$("#btn_minus").click(function(e){
+		var value = parseInt($('#cartStock').val());
+		var bkprice=${book.bk_price };
+		if(value <= 0){
+			return;
+		}
+		value = value - 1;
+		$('#cartStock').val(value);
+		$('#odcount').val(value);
+		var allprice = value*bkprice;
+		$('#allprice').text(comma(allprice));
+	});
+
+	$('#buy_btn').click(function(){
+		var user = "${login.user_id}"
+		console.log(user);
+		if(user===null){
+			alert('로그인해주세요');
+		}
+		else{
+			var bkprice = parseInt($('#bk_price').val());
+			var odcount = parseInt($('#odcount').val());
+			var bk_totalprice = (bkprice*odcount);
+			$('bk_totalprice').val(bk_totalprice);
+			if(odcount>0){
+				$('#payfrm').submit();
+			}
+			else{
+				alert('수량을 입력하세요')
+			}
+
+		}
+	});
+
 </script>
 
 	<jsp:include page="../common/footer.jsp"/>
 
 <script>
-   $(function(){
-      $("#cart_btn").click(function(e){
-      const odcount=$('#odcount').val();
-      const bknum=$('#bnum').val();
-      const userid="${login.user_id}";
-      console.log("odcount : "+odcount);
-      console.log("bknum : "+bknum);
-      console.log("userid : "+userid);
-         if(userid!=null&&userid!=""&&userid!=0){
-            if(odcount > 0){
-               console.log("carInfo");
-               $.ajax({
-                  type:"POST",
-                  url:"/addcart",
-                  data: {
-                     od_num : odcount,
-                     bk_num : bknum,
-                     user_id : userid
-                  },
-                  dataType:"text",
-                  success:function(result){
-                     const resultSet = $.trim(result);
-                     if(result==="success"){
-                        var msg='장바구니에 담겼습니다.'
-                        location.reload();
-                        alert(msg);
-                     }
-                     else if(result==="fail"){
-                        var msg='실패했습니다.'
-                           alert(msg);
-                     }
-                  }
-               });
-            }
-            else{
-               alert('수량을 선택해주세요');
-            }
-         }
-         else{
-            alert('로그인 해주세요')
-         }
-      });
-   });
+
 
 </script>
-<script>
-   $('#buy_btn').click(function(){
-      var user = "${login.user_id}"
-      console.log(user);
-      if(user===null){
-         alert('로그인해주세요');
-      }
-      else{
-         var bkprice = parseInt($('#bk_price').val());
-         var odcount = parseInt($('#odcount').val());
-         var bk_totalprice = (bkprice*odcount);
-         $('bk_totalprice').val(bk_totalprice);
-         if(odcount>0){
-            $('#payfrm').submit();
-         }
-         else{
-            alert('수량을 입력하세요')
-         }
-         
-      }
-   });
-</script>
+
 <div class="modal fade" id="myModal" role="dialog">
    <div class="modal-dialog">
       <div class="modal-content">
@@ -546,84 +537,57 @@ function fn_next(page, range, rangeSize) {
       </div>
    </div>
 </div>
+
 <script>
+
 	$(document).ready(function(){
 
-		window.onload=function () {
+		let book_category = '<c:out value="${bookDetail.bookCategory}"/>';
+		console.log("카테고리 : "+ book_category);
+		let result = "";
 
-			let book_category = '<c:out value="${bookDetail.bookCategory}"/>';
-
-			let result = "";
-
-			switch(book_category){
-				case "1":
-					result = "소설";
-					break;
-				case "2":
-					result = "시/에세이";
-					break;
-				case "3":
-					result = "경제/경영";
-					break;
-				case "4":
-					result = "자기계발";
-					break;
-				case "5":
-					result = "인문";
-					break;
-				case "6":
-					result = "역사/문화";
-					break;
-				case "7":
-					result = "종교";
-					break;
-				case "8":
-					result = "정치/사회";
-					break;
-				case "9":
-					result = "예술/대중문화";
-					break;
-				case "10":
-					result = "과학";
-					break;
-				case "11":
-					result = "기술/공학";
-					break;
-				case "12":
-					result = "컴퓨터/IT";
-					break;
-			}
-			$('#cate').html(result);
-			$('#cate2').html(result);
+		switch(book_category){
+			case "1":
+				result = "소설";
+				break;
+			case "2":
+				result = "시/에세이";
+				break;
+			case "3":
+				result = "경제/경영";
+				break;
+			case "4":
+				result = "자기계발";
+				break;
+			case "5":
+				result = "인문";
+				break;
+			case "6":
+				result = "역사/문화";
+				break;
+			case "7":
+				result = "종교";
+				break;
+			case "8":
+				result = "정치/사회";
+				break;
+			case "9":
+				result = "예술/대중문화";
+				break;
+			case "10":
+				result = "과학";
+				break;
+			case "11":
+				result = "기술/공학";
+				break;
+			case "12":
+				result = "컴퓨터/IT";
+				break;
 		}
+		$('#cate').html(result);
+		$('#cate2').html(result);
 
-	});
 
-	$(document).ready(function(){
-		//alert("연결");
-		// 이미지 불러오기
-		$("#btn_plus").click(function(e){
-			var value = parseInt($('#cartStock').val());
-			var bkprice=${book.bk_price };
-			value = value + 1;
-			$('#cartStock').val(value);
-			$('#odcount').val(value);
-			var allprice = value*bkprice;
-			$('#allprice').text(comma(allprice));
-		});
-		//수량 감소
-		$("#btn_minus").click(function(e){
-			var value = parseInt($('#cartStock').val());
-			var bkprice=${book.bk_price };
-			if(value <= 0){
-				return;
-			}
-			value = value - 1;
-			$('#cartStock').val(value);
-			$('#odcount').val(value);
-			var allprice = value*bkprice;
-			$('#allprice').text(comma(allprice));
-		});
 	});
 
 </script>
