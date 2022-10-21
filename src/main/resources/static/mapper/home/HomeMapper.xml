@@ -37,6 +37,21 @@
         WHERE book_num = #{bookNum}
     </select>
 
+    <!-- 리뷰 삭제   -->
+    <delete id="deleteReview" parameterType="int">
+        DELETE
+        FROM review
+        WHERE review_num = #{reviewNum}
+    </delete>
+
+    <!-- 리뷰 수정  -->
+    <update id="updateReview" parameterType="com.bookstore.home.domain.ReviewDto">
+        UPDATE review
+        SET review_grade = #{reviewGrade},
+            review_comment = #{reviewComment}
+        WHERE review_num = #{reviewNum}
+    </update>
+
 
 
 </mapper>

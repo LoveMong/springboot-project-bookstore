@@ -37,6 +37,14 @@ public class HomeService {
         return homeMapper.searchBookReview(bookNum);
     }
 
+    public int deleteReview(int reviewNum) {
+        return homeMapper.deleteReview(reviewNum);
+    }
+
+    public int updateReview(ReviewDto reviewDto) {
+        return homeMapper.updateReview(reviewDto);
+    }
+
 
 
 }

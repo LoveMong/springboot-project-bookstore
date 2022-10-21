@@ -2,48 +2,9 @@ $(function (){
 
 
 
-
-
-
-
-
-});
-
-$(document).ready(function(){
-    for(var i =0; i <10; i++){
-        var idx = $("#starRev"+i).find("input").val() ;
-        idx = ( idx - 0.5 )*2
-        idx = Math.floor(idx);
-        $('#starRev'+i).find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
-    }
 });
 
 
-$(document).ready(function(){
-    var idx = $("#revStar").find("input").val() ;
-    idx = ( idx - 0.5 )*2
-    idx = Math.floor(idx);
-    $('#revStar').find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
-});
-
-function comma(num){
-    var len, point, str;
-
-    num = num + "";
-    point = num.length % 3 ;
-    len = num.length;
-
-    str = num.substring(0, point);
-
-    while (point < len) {
-        if (str != "") str += ",";
-        str += num.substring(point, point + 3);
-        point += 3;
-    }
-
-    return str;
-
-}
 
 
 $(function(){
@@ -93,13 +54,7 @@ $(function(){
         }
     });
 
-    $('.starRev a').click(function(){
-        $(this).parent().children("a").removeClass("on");
-        $(this).addClass("on").prevAll("a").addClass("on");
-        value=$(this).attr("value");
-        $('#revRank').val(value);
-        console.log($(this).attr("value"));
-    });
+
 
 });
 

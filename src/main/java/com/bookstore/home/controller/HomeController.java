@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,6 +51,49 @@ public class HomeController {
         model.addAttribute("bookReview", bookReview);
 
         return "/home/bookSearchDetail";
+
+    }
+
+    @GetMapping("/deleteReview")
+    @ResponseBody
+    public String deleteReview(@RequestParam("reviewNum") int reviewNum) {
+
+        String resultConfirm = "DEL_OK";
+
+        try {
+            if (homeService.deleteReview(reviewNum) != 1) {
+                throw new Exception("Delete failed.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultConfirm = "DEL_ERR";
+            return resultConfirm;
+        }
+
+        return resultConfirm;
+
+    }
+
+
+    @PostMapping("/updateReview")
+    @ResponseBody
+    public String updateReview(ReviewDto reviewDto) {
+
+        String resultConfirm = "UPD_OK";
+
+        try {
+            if (homeService.updateReview(reviewDto) != 1) {
+                throw new Exception("Update failed.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultConfirm = "UPD_ERR";
+            return resultConfirm;
+        }
+
+        return resultConfirm;
+
+
 
     }
 }

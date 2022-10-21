@@ -13,7 +13,7 @@ public class ReviewDto {
 
     private int reviewNum;
 
-    private int reviewGrade;
+    private double reviewGrade;
 
     private String memberEmail;
 
