@@ -19,4 +19,8 @@ public interface HomeMapper {
 
     List<ReviewDto> searchBookReview(int bookNum);
 
+    int deleteReview(int reviewNum);
+
+    int updateReview(ReviewDto reviewDto);
+
 }
