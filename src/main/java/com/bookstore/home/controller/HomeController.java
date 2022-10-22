@@ -2,6 +2,7 @@ package com.bookstore.home.controller;
 
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.common.utils.ReivewPageHandler;
 import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.service.HomeService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -42,17 +44,28 @@ public class HomeController {
 
 
     @GetMapping("/bookSearchDetail")
-    public String bookSearchDetail(@RequestParam("num") int bookNum, Model model) {
+    public String bookSearchDetail(@RequestParam("num") int bookNum,
+                                   @RequestParam(value = "page", defaultValue = "1") int page,
+                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, Model model) {
+
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("bookNum", bookNum);
+        map.put("offset", (page - 1) * pageSize);
+        map.put("pageSize", pageSize);
 
         BookDto bookDto = homeService.bookSearchDetail(bookNum);
-        List<ReviewDto> bookReview = homeService.searchBookReview(bookNum);
+        List<ReviewDto> bookReview = homeService.searchBookReview(map);
+        int countReview = homeService.countReview();
+        ReivewPageHandler pageHandler = new ReivewPageHandler(countReview, page, pageSize);
 
         model.addAttribute("bookDetail", bookDto);
         model.addAttribute("bookReview", bookReview);
+        model.addAttribute("pageHandler", pageHandler);
 
         return "/home/bookSearchDetail";
 
     }
+
 
     @GetMapping("/deleteReview")
     @ResponseBody

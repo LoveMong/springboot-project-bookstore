@@ -232,7 +232,6 @@
 											</s_rp_container>
 										</c:if>
 										<script>
-
 											// 도서 리뷰 삭제
 										   $("#comment_delete${i.getIndex()}").click(function(){
 
@@ -266,19 +265,51 @@
 												 })
 
 										   });
+										</script>
+
+										<script>
+
+
+										   //
+										   $('#comment_update${i.getIndex()}').click(function(e){
+											   let reviewNum = $('#comment_update${i.getIndex()}').val();
+											   let reviewComment = $('#reviewComment${i.getIndex()}').val();
+											   let reviewGrade = $('#reviewGrade${i.getIndex() }').val();
+
+											   console.log("modal reviewNum : " + reviewNum);
+											   console.log("modal reviewComment : " + reviewComment);
+											   console.log("modal reviewGrade : " + reviewGrade);
+
+											   let contentLength = reviewComment.length;
+											   $('#counter').html("("+ contentLength +" / 최대 800자)");    //글자수 실시간 카운팅
+
+											   $('#reviewNumModal').val(reviewNum);
+											   $('#reviewCommentModal').text(reviewComment);
+											   $('#reviewGradeModal').val(reviewGrade);
+										   });
 
 										   $(document).ready(function() {
 
-										      let token = $("meta[name='_csrf']").attr("content");
-											  let header = $("meta[name='_csrf_header']").attr("content");
 
-											  $('#myModal').on('show.bs.modal', function(event) {
+										   $('#myModal').on('show.bs.modal', function(event) {
 											     let idx = $("#rankStar").find("input").val() ;
 												 idx = ( idx - 0.5 ) * 2
 												 idx = Math.floor(idx);
 
+												 console.log("modal idx : " + idx);
+
 												 $('#rankStar').find('#star'+idx).addClass(' on').prevAll('a').addClass(' on');
+
+
+
 													$('#reviewUpdate').click(function(e){
+														e.stopPropagation();
+														e.preventDefault();
+
+
+													   let token = $("meta[name='_csrf']").attr("content");
+													   let header = $("meta[name='_csrf_header']").attr("content");
+
 													   let reviewGrade = $('#reviewGradeModal').val();
 													   let reviewNum = $('#reviewNumModal').val();
 													   let reviewComment = $('#reviewCommentModal').val();
@@ -303,28 +334,14 @@
 																 if (result !== "UPD_OK") {
 																	 alert("삭제되었거나 없는 게시물입니다.");
 																 }
+
 																 alert("수정 완료");
-																 location.reload();
+
+																 location.reload()
+
 															 }
 														  });
 													});
-
-											  });
-
-
-											  //
-											   $('#comment_update${i.getIndex()}').click(function(e){
-												   let reviewNum = $('#comment_update${i.getIndex()}').val();
-												   let reviewComment = $('#reviewComment${i.getIndex()}').val();
-												   let reviewGrade = $('#reviewGrade${i.getIndex() }').val();
-
-												   let contentLength = reviewComment.length;
-												   $('#counter').html("("+ contentLength +" / 최대 800자)");    //글자수 실시간 카운팅
-
-												   $('#reviewNumModal').val(reviewNum);
-												   $('#reviewCommentModal').text(reviewComment);
-												   $('#reviewGradeModal').val(reviewGrade);
-											   });
 
 												// 도서 리뷰 comment 줄수 제한
 											   $('#reviewCommentModal').keydown(function(){
@@ -349,35 +366,39 @@
 													   $('#counter').html("(100 / 최대 800자)");
 												   }
 											   });
-										   });
 
+										   });
+										   });
 										</script>
 
 								</c:forEach>
 
-									<div id="paginationBox">
+									<nav aria-label="Page navigation example" style="margin-top: 100px">
 										<ul class="pagination justify-content-center">
-											<c:if test="${pagination.prev}">
-												<li class="page-item"><a class="page-link" href="#"
-													onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">Previous</a>
-												</li>
-											</c:if>
-											<c:forEach begin="${pagination.startPage}"
-												end="${pagination.endPage}" var="idx">
-												<li
-													class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-													<a class="page-link" href="#"
-													onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')">
-														${idx} </a>
-												</li>
+											<li class="page-item">
+												<c:if test="${pageHandler.showPrev}">
+													<a class="page-link" href="<c:url value='/bookSearchDetail?page=${pageHandler.beginPage-1}&pageSize=${pageHandler.pageSize}&num=${bookDetail.bookNum}'/>" tabindex="-1">Previous</a>
+												</c:if>
+											</li>
+											<c:forEach begin="${pageHandler.beginPage}" end="${pageHandler.endPage}" step="1" var="i">
+												<c:choose>
+													<c:when test="${pageHandler.page == i}">
+														<li class="page-item"><a class="page-link" style="background-color: #cce5ff" href="#">${i}</a></li>
+													</c:when>
+													<c:otherwise>
+														<li class="page-item"><a class="page-link" id="page" href="<c:url value='/bookSearchDetail?page=${i}&pageSize=${pageHandler.pageSize}&num=${bookDetail.bookNum}'/>#detail_reply" >${i}</a></li>
+
+													</c:otherwise>
+												</c:choose>
 											</c:forEach>
-											<c:if test="${pagination.next}">
-												<li class="page-item"><a class="page-link" href="#"
-													onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}')">Next</a>
-												</li>
-											</c:if>
+											<li class="page-item">
+												<c:if test="${pageHandler.showNext}">
+													<a class="page-link" href="<c:url value='/bookSearchDetail?page=${pageHandler.endPage+1}&pageSize=${pageHandler.pageSize}&num=${bookDetail.bookNum}'/>">Next</a>
+												</c:if>
+											</li>
 										</ul>
-									</div>
+									</nav>
+
 									<sec:authorize access="isAnonymous()">
 										<div id="replyWarning" style="margin-top: 60px">
 											<div id="replyWarning_subject">평점/리뷰 등록</div>
@@ -536,38 +557,6 @@
 			}
 		});
 	});
-
-	function fn_prev(page, range, rangeSize) {
-	   let page = ((range - 2) * rangeSize) + 1;
-	   let range = range - 1;
-	   let url = "/detail";
-	   url = url + "?num=" + ${bk_num};
-	   url = url + "&page=" + page;
-	   url = url + "&range=" + range;
-	   location.href = url;
-	}
-
-
-	function fn_pagination(page, range, rangeSize) {
-	   let url = "/detail";
-	   url = url + "?num=" + ${bk_num};
-	   url = url + "&page=" + page;
-	   url = url + "&range=" + range;
-
-	   location.href = url;
-	}
-
-	function fn_next(page, range, rangeSize) {
-	   let page = parseInt((range * rangeSize)) + 1;
-	   let range = parseInt(range) + 1;
-	   let url = "/detail";
-	   url = url + "?num=" + ${bk_num};
-	   url = url + "&page=" + page;
-	   url = url + "&range=" + range;
-	   location.href = url;
-	}
-
-
 
 	$('#buy_btn').click(function(){
 		let user = "${login.user_id}"

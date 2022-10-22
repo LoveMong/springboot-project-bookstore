@@ -5,6 +5,7 @@ import com.bookstore.home.domain.ReviewDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface HomeMapper {
@@ -17,10 +18,12 @@ public interface HomeMapper {
 
     BookDto bookSearchDetail(int bookNum);
 
-    List<ReviewDto> searchBookReview(int bookNum);
+    List<ReviewDto> searchBookReview(Map map);
 
     int deleteReview(int reviewNum);
 
     int updateReview(ReviewDto reviewDto);
+
+    int countReview();
 
 }

@@ -31,10 +31,12 @@
         WHERE book_num = #{bookNum}
     </select>
 
-    <select id="searchBookReview" parameterType="int" resultType="com.bookstore.home.domain.ReviewDto">
+    <select id="searchBookReview" parameterType="map" resultType="com.bookstore.home.domain.ReviewDto">
         SELECT *
         FROM review
         WHERE book_num = #{bookNum}
+        ORDER BY review_date DESC , review_num DESC
+        LIMIT #{offset}, #{pageSize}
     </select>
 
     <!-- 리뷰 삭제   -->
@@ -51,6 +53,11 @@
             review_comment = #{reviewComment}
         WHERE review_num = #{reviewNum}
     </update>
+
+    <select id="countReview" resultType="int">
+        SELECT COUNT(*)
+        FROM review
+    </select>
 
 
 
