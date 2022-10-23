@@ -300,12 +300,7 @@
 
 												 $('#rankStar').find('#star'+idx).addClass(' on').prevAll('a').addClass(' on');
 
-
-
-													$('#reviewUpdate').click(function(e){
-														e.stopPropagation();
-														e.preventDefault();
-
+													$('#reviewUpdate').click(function(event){
 
 													   let token = $("meta[name='_csrf']").attr("content");
 													   let header = $("meta[name='_csrf_header']").attr("content");
@@ -334,11 +329,9 @@
 																 if (result !== "UPD_OK") {
 																	 alert("삭제되었거나 없는 게시물입니다.");
 																 }
-
 																 alert("수정 완료");
 
 																 location.reload()
-
 															 }
 														  });
 													});
@@ -366,7 +359,6 @@
 													   $('#counter').html("(100 / 최대 800자)");
 												   }
 											   });
-
 										   });
 										   });
 										</script>

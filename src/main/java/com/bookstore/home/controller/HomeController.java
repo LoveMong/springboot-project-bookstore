@@ -88,6 +88,11 @@ public class HomeController {
     }
 
 
+    /**
+     * 도서 구매 리뷰 수정
+     * @param reviewDto 수정된 리뷰 정보
+     * @return 리뷰 수정 성공 여부
+     */
     @PostMapping("/updateReview")
     @ResponseBody
     public String updateReview(ReviewDto reviewDto) {
