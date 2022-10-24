@@ -17,7 +17,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script type="text/javascript" src="/js/bookSearchDetail.js"></script>
-
+<script>
+	let mong;
+</script>
 </head>
 
 <body>
@@ -268,17 +270,11 @@
 										</script>
 
 										<script>
-
-
 										   //
 										   $('#comment_update${i.getIndex()}').click(function(e){
 											   let reviewNum = $('#comment_update${i.getIndex()}').val();
 											   let reviewComment = $('#reviewComment${i.getIndex()}').val();
 											   let reviewGrade = $('#reviewGrade${i.getIndex() }').val();
-
-											   console.log("modal reviewNum : " + reviewNum);
-											   console.log("modal reviewComment : " + reviewComment);
-											   console.log("modal reviewGrade : " + reviewGrade);
 
 											   let contentLength = reviewComment.length;
 											   $('#counter').html("("+ contentLength +" / 최대 800자)");    //글자수 실시간 카운팅
@@ -290,13 +286,11 @@
 
 										   $(document).ready(function() {
 
+											   $('#myModal').on('show.bs.modal', function(event) {
 
-										   $('#myModal').on('show.bs.modal', function(event) {
 											     let idx = $("#rankStar").find("input").val() ;
 												 idx = ( idx - 0.5 ) * 2
 												 idx = Math.floor(idx);
-
-												 console.log("modal idx : " + idx);
 
 												 $('#rankStar').find('#star'+idx).addClass(' on').prevAll('a').addClass(' on');
 
@@ -309,9 +303,6 @@
 													   let reviewNum = $('#reviewNumModal').val();
 													   let reviewComment = $('#reviewCommentModal').val();
 
-													   console.log("reviewNum : "+reviewNum);
-													   console.log("reviewGrade : "+reviewGrade);
-													   console.log("reviewComment : "+reviewComment);
 
 														  $.ajax({
 															 type:"POST",
@@ -325,14 +316,14 @@
 													             reviewComment : reviewComment
 															 },
 															 dataType: "text",
-															 success:function(result){
-																 if (result !== "UPD_OK") {
-																	 alert("삭제되었거나 없는 게시물입니다.");
+															 success:function(result) {
+																 if (result !== "수정 완료!") {
+																	 resultAlert(result);
 																 }
-																 alert("수정 완료");
-
-																 location.reload()
+																 resultAlert(result);
+																 location.reload();
 															 }
+
 														  });
 													});
 
@@ -360,7 +351,7 @@
 												   }
 											   });
 										   });
-										   });
+									   });
 										</script>
 
 								</c:forEach>
@@ -469,6 +460,24 @@
 		</div>
 
 
+<script>
+	<%-- 도서 리뷰 수정(modal) 성공 여부 alert script	--%>
+
+	let is_action = false;
+
+	function resultAlert(result) { // alert 한번만 실행되게 하기 위한 함수
+
+		if (is_action === true) {
+			return false;
+		}
+
+		is_action = true;
+
+		alert(result);
+
+	}
+
+</script>
 
 <script>
 	<%-- 도서 리뷰 별점 관련 script	--%>
@@ -478,7 +487,6 @@
 		for(let i =0; i <10; i++){
 			let idx = $("#starRev"+i).find("input").val() ;
 			idx = ( idx - 0.5 ) * 2 //
-			console.log("idx : " + idx);
 			$('#starRev'+i).find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
 		}
 	});
@@ -487,7 +495,6 @@
 	$(document).ready(function(){
 		let idx = $("#revStar").find("input").val();
 		idx = ( idx - 0.5 ) * 2 //
-		console.log("평균 idx : " + idx);
 
 		$('#revStar').find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
 	});
@@ -497,8 +504,8 @@
 		$(this).parent().children("a").removeClass("on");
 		$(this).addClass("on").prevAll("a").addClass("on");
 		let value = $(this).attr("value");
-		$('#reviewNumModal').val(value);
-		console.log("reviewNumModal : "+$(this).attr("value"));
+
+		$('#reviewGradeModal').val(value);
 	});
 
 </script>
@@ -511,12 +518,9 @@
 			const odcount=$('#odcount').val();
 			const bknum=$('#bnum').val();
 			const userid="${login.user_id}";
-			console.log("odcount : "+odcount);
-			console.log("bknum : "+bknum);
-			console.log("userid : "+userid);
+
 			if(userid!=null&&userid!=""&&userid!=0){
 				if(odcount > 0){
-					console.log("carInfo");
 					$.ajax({
 						type:"POST",
 						url:"/addcart",
@@ -643,7 +647,6 @@
 	$(document).ready(function(){
 
 		let book_category = '<c:out value="${bookDetail.bookCategory}"/>';
-		console.log("카테고리 : "+ book_category);
 		let result = "";
 
 		switch(book_category){

@@ -97,7 +97,7 @@ public class HomeController {
     @ResponseBody
     public String updateReview(ReviewDto reviewDto) {
 
-        String resultConfirm = "UPD_OK";
+        String resultConfirm = "수정 완료!";
 
         try {
             if (homeService.updateReview(reviewDto) != 1) {
@@ -105,7 +105,7 @@ public class HomeController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            resultConfirm = "UPD_ERR";
+            resultConfirm = "수정 실패!";
             return resultConfirm;
         }
 
