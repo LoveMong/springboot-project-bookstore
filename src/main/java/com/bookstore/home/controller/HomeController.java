@@ -27,6 +27,11 @@ public class HomeController {
     private final HomeService homeService;
 
 
+    /**
+     * 메인 홈 출력
+     * @param model 신간 도서 , 베스트셀러 도서, 인기 도서 정보
+     * @return 메인 홈 화면
+     */
     @GetMapping("/")
     public String mainHome(Model model) {
 
@@ -43,6 +48,14 @@ public class HomeController {
     }
 
 
+    /**
+     * 도서 검색 상세 페이지 출력
+     * @param bookNum 해당 도서 번호
+     * @param page 페이징 처리 -> 출력 시작 번호
+     * @param pageSize 페이징 처리 -> 출력할 개수
+     * @param model 도서 정보, 도서 리뷰 정보, 페이징 정보
+     * @return 도서 검색 상세 페이지 화면
+     */
     @GetMapping("/bookSearchDetail")
     public String bookSearchDetail(@RequestParam("num") int bookNum,
                                    @RequestParam(value = "page", defaultValue = "1") int page,
@@ -67,6 +80,11 @@ public class HomeController {
     }
 
 
+    /**
+     * 도서 리뷰 삭제
+     * @param reviewNum 해당 도서 번호
+     * @return 도서 리뷰 삭제 성공 여부
+     */
     @GetMapping("/deleteReview")
     @ResponseBody
     public String deleteReview(@RequestParam("reviewNum") int reviewNum) {

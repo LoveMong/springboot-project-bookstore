@@ -4,6 +4,7 @@
 
 <mapper namespace="com.bookstore.home.mapper.HomeMapper">
 
+    <!-- 인기 도서 출력 -->
     <select id="searchBookListGrade" resultType="com.bookstore.admin.domain.BookDto">
         SELECT *
         FROM book
@@ -11,6 +12,7 @@
         LIMIT 10
     </select>
 
+    <!-- 베스트셀러 도서 출력 -->
     <select id="searchBookListBest" resultType="com.bookstore.admin.domain.BookDto">
         SELECT *
         FROM book
@@ -18,6 +20,7 @@
         LIMIT 10
     </select>
 
+    <!-- 신간 도서 출력 -->
     <select id="searchBookListNew" resultType="com.bookstore.admin.domain.BookDto">
         SELECT *
         FROM book
@@ -25,12 +28,14 @@
         LIMIT 10
     </select>
 
+    <!-- 도서 검색 상세 페이지 출력 -->
     <select id="bookSearchDetail" parameterType="int" resultType="com.bookstore.admin.domain.BookDto">
         SELECT *
         FROM book
         WHERE book_num = #{bookNum}
     </select>
 
+    <!-- 도서 리뷰 출력 -->
     <select id="searchBookReview" parameterType="map" resultType="com.bookstore.home.domain.ReviewDto">
         SELECT *
         FROM review
@@ -54,6 +59,7 @@
         WHERE review_num = #{reviewNum}
     </update>
 
+    <!-- 도서 리뷰 전체 개수 확인 -->
     <select id="countReview" resultType="int">
         SELECT COUNT(*)
         FROM review
@@ -73,17 +79,20 @@
         WHERE book_num = #{bookNum}
     </update>
 
+    <!-- 도서 리뷰 등록   -->
     <insert id="enrollReview" parameterType="com.bookstore.home.domain.ReviewDto">
         INSERT INTO review(review_grade, member_email, book_num, review_comment)
         VALUES (#{reviewGrade}, #{memberEmail}, #{bookNum}, #{reviewComment})
     </insert>
 
+    <!-- 도서 구매 여부 확인 -->
     <select id="purchaseConfirm" parameterType="com.bookstore.home.domain.ReviewDto" resultType="int">
         select COUNT(*)
         FROM `order`
         WHERE member_email = #{memberEmail} AND book_num = #{bookNum}
     </select>
-    
+
+    <!-- 도서 리뷰 중복 등록 여부 확인 -->
     <select id="reviewDuplicateConfirm" parameterType="com.bookstore.home.domain.ReviewDto" resultType="int">
         select COUNT(*)
         FROM review
