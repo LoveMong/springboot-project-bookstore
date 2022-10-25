@@ -59,6 +59,20 @@
         FROM review
     </select>
 
+    <!-- 리뷰 수정 시 해당 도서 평점 평균을 재설정 하기 위해 필요한 쿼리 -->
+    <select id="reviewSumAndCount" parameterType="com.bookstore.home.domain.ReviewDto" resultType="map">
+        SELECT sum(review_grade) as sum, count(*) as count
+        FROM review
+        WHERE book_num = #{bookNum}
+    </select>
+
+    <!-- 도서 평점 수정 -->
+    <update id="updateBookGrade">
+        UPDATE book
+        SET book_grade = #{bookGradeAverage}
+        WHERE book_num = #{bookNum}
+    </update>
+
 
 
 </mapper>

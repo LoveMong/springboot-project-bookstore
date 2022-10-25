@@ -45,6 +45,17 @@ public class HomeService {
 
     // 도서 리뷰 수정
     public int updateReview(ReviewDto reviewDto) {
+
+        Map<String, Object> reviewSumAndCount = homeMapper.reviewSumAndCount(reviewDto);
+
+        float sum = Float.parseFloat(String.valueOf(reviewSumAndCount.get("sum")));
+        int count = Integer.parseInt(String.valueOf(reviewSumAndCount.get("count")));
+
+        double bookGradeAverage = sum / count;
+
+
+        homeMapper.updateBookGrade(reviewDto.getBookNum(), bookGradeAverage);
+
         return homeMapper.updateReview(reviewDto);
     }
 

@@ -302,6 +302,7 @@
 													   let reviewGrade = $('#reviewGradeModal').val();
 													   let reviewNum = $('#reviewNumModal').val();
 													   let reviewComment = $('#reviewCommentModal').val();
+													   let bookNum = ${bookDetail.bookNum };
 
 
 														  $.ajax({
@@ -313,7 +314,8 @@
 															 data: {
 																 reviewNum : reviewNum,
 																 reviewGrade : reviewGrade,
-													             reviewComment : reviewComment
+													             reviewComment : reviewComment,
+																 bookNum : bookNum
 															 },
 															 dataType: "text",
 															 success:function(result) {
@@ -482,21 +484,20 @@
 <script>
 	<%-- 도서 리뷰 별점 관련 script	--%>
 
-	// 도서 사용자 리뷰 평점 -> 뱔점 표시
+	// 도서 평균 평점 -> 별점 표시
+	$(document).ready(function(){
+		let idx = $("#revStar").find("input").val();
+		idx = (Math.round(idx) - 0.5) * 2 // 평점 반올림 적용 -> ex) 평점 3.6 이면 별 4개 표시
+		$('#revStar').find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
+	});
+
+	// 도서 사용자 개별 리뷰 평점 -> 뱔점 표시
 	$(document).ready(function(){
 		for(let i =0; i <10; i++){
 			let idx = $("#starRev"+i).find("input").val() ;
 			idx = ( idx - 0.5 ) * 2 //
 			$('#starRev'+i).find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
 		}
-	});
-
-	// 도서 평균 평점 -> 별점 표시
-	$(document).ready(function(){
-		let idx = $("#revStar").find("input").val();
-		idx = ( idx - 0.5 ) * 2 //
-
-		$('#revStar').find('#star'+idx).addClass(' on').prevAll('span').addClass(' on');
 	});
 
 	// 리뷰 수정 -> 별점 적용
