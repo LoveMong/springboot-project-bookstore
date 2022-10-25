@@ -32,5 +32,11 @@ public interface HomeMapper {
 
     int updateBookGrade(@Param("bookNum") int bookNum, @Param("bookGradeAverage") double bookGradeAverage);
 
+    int enrollReview(ReviewDto reviewDto);
+
+    int purchaseConfirm(ReviewDto reviewDto);
+
+    int reviewDuplicateConfirm(ReviewDto reviewDto);
+
 
 }

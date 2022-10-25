@@ -159,8 +159,9 @@
 									<c:if test="${bookDetail.bookGrade !=0 }">
 										<div style="text-align: center;">
 											<h2 style="display: inline-block; margin: 20px;">
-												<strong>도서 평점</strong>
+												<div style="display: inline-block; color: dodgerblue">${pageHandler.totalCnt}</div><strong>명의 BookStore 회원이 평가한 평균 평점</strong>
 											</h2>
+											<br />
 											<div class="starRev" id="revStar" style="display: inline-block;">
 												<span class="starR1" id="star0" value="0.5">별1_왼쪽</span>
 												<span class="starR2" id="star1" value="1">별1_오른쪽</span>
@@ -174,7 +175,7 @@
 												<span class="starR2" id="star9" value="5">별5_오른쪽</span>
 												<input type="hidden" id="star_rank" value="${bookDetail.bookGrade }">
 											</div>
-											<h2 style="display: inline-block; margin: 20px;">(${bookDetail.bookGrade })</h2>
+											<h2 style="display: inline-block; margin: 20px;">(${bookDetail.bookGrade }</h2><h4 style="display: inline-block; color: grey">/ 5.0</h4><h2 style="display: inline-block">)</h2>
 										</div>
 									</c:if>
 									<br />
@@ -203,7 +204,7 @@
 																		<span class="starR2" id="star7" value="4">별4_오른쪽</span>
 																		<span class="starR1" id="star8" value="4.5">별5_왼쪽</span>
 																		<span class="starR2" id="star9" value="5">별5_오른쪽</span>
-																		<span>(${review.reviewGrade})</span>
+																		<span style="margin-left: 10px">[${review.reviewGrade}]</span>
 																		<input type="hidden" id="star_rank" value="${review.reviewGrade}">
 																	</div>
 																</li>
@@ -259,7 +260,7 @@
 														if (result === "DEL_ERR") {
 															alert("삭제되었거나 없는 게시물입니다.");
 														} else {
-															alert('댓글이 삭제되었습니다.');
+															alert('리뷰가 삭제되었습니다.');
 															location.reload();
 														}
 
@@ -387,14 +388,14 @@
 									<sec:authorize access="isAnonymous()">
 										<div id="replyWarning" style="margin-top: 60px">
 											<div id="replyWarning_subject">평점/리뷰 등록</div>
-											<div id="replyWarning_content">로그인후 리뷰 등록 가능합니다.</div>
+											<div id="replyWarning_content">로그인 후 리뷰 등록이 가능합니다.</div>
 										</div>
 									</sec:authorize>
 									<sec:authorize access="isAuthenticated()">
 										<div id="replyRegist">
 											<div id="replyRegist_content">
-												<div id="replyRegist_content_likeStar">
-													평점 :
+												<div id="replyRegist_content_likeStar" style="border: 1px solid lightgray; background-color: ghostwhite; padding: 25px; margin-top: 100px; height: 194pt">
+													<span style="float: left; font-size: 20px; font-weight: bold; margin-right: 5px">평점</span>
 													<div class="starRev">
 														<a class="starR1 on" value="0.5">별1_왼쪽</a>
 														<a class="starR2" value="1">별1_오른쪽</a>
@@ -407,13 +408,12 @@
 														<a class="starR1" value="4.5">별5_왼쪽</a>
 														<a class="starR2" value="5">별5_오른쪽</a>
 													</div>
-													<br /> <span>리뷰 : </span> <br>
-													<span style="float: left; width: 660px;"> <label for="revdate"></label>
-														<textarea rows="3px" cols="140px" name="repCon" id="revdate"></textarea>
-														<input type="hidden" name="user_id" id="userid" value="${login.user_id }">
-														<input type="hidden" name="bknum" id="bknum" value="${book.bk_num }">
-														<input type="button" id="reply_btn" value="등록" class="btn btn-success">
-													</span>
+													<br />
+													<textarea rows="3px" cols="115px" name="repCon" id="regiReviewComment" style="float: left; margin-right: 10px; margin-top: 5px; padding: 8px" ></textarea>
+													<sec:authentication property="principal" var="member"/>
+													<input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberDto.memberEmail }">
+													<input type="button" id="regiReviewCommentBtn" value="등록" class="btn btn-success" style="height: 104pt; width: 65pt; margin-top: 5px">
+													<div style="color:#aaa; float: right; margin-right: 120px" id="reviewCommentCount">(0 / 최대 800자)</div>
 												</div>
 											</div>
 										</div>
@@ -446,11 +446,11 @@
 							<a class="starR1" id="star8" value="4.5">별5_왼쪽</a>
 							<a class="starR2" id="star9" value="5">별5_오른쪽</a>
 
-							<input type="hidden" id="reviewGradeModal" value="">
+							<input type="hidden" id="reviewGradeModal" value="0.5">
 						</div>
 						<br/><br/>
 						<textarea rows="7px" cols="55px" id="reviewCommentModal" required style="height: 191px; padding: 15px; line-height: 25px"></textarea>
-						<span style="color:#aaa;" id="counter">(0 / 최대 800자)</span>
+						<span style="color:#aaa; float: right" id="counter">(0 / 최대 800자)</span>
 						<input type="hidden" id="reviewNumModal" value="">
 					</div>
 					<div class="modal-footer">
@@ -461,6 +461,37 @@
 			</div>
 		</div>
 
+
+
+<script>
+	<%-- 도서 구매 후 리뷰 등록 시 글자 줄/수 제한 script --%>
+
+	$(document).ready(function(){
+	// 도서 리뷰 comment 줄수 제한
+		$('#regiReviewComment').keydown(function(){
+			let rows = $('#regiReviewComment').val().split('\n').length;
+			let maxRows = 10;
+			if( rows > maxRows){
+				alert('10줄 까지만 가능합니다');
+				modifiedText = $('#regiReviewComment').val().split("\n").slice(0, maxRows);
+				$('#regiReviewComment').val(modifiedText.join("\n"));
+			}
+		});
+
+		// 도서 리뷰 comment 글자 수 제한
+		$('#regiReviewComment').keyup(function (e){
+			let content = $(this).val();
+			let contentLength = content.length;
+			$('#reviewCommentCount').html("("+ contentLength +" / 최대 800자)");    //글자수 실시간 카운팅
+
+			if (content.length > 800){
+				alert("최대 800자까지 입력 가능합니다.");
+				$(this).val(content.substring(0, 800));
+				$('#reviewCommentCount').html("(100 / 최대 800자)");
+			}
+		});
+	});
+</script>
 
 <script>
 	<%-- 도서 리뷰 수정(modal) 성공 여부 alert script	--%>
@@ -500,7 +531,7 @@
 		}
 	});
 
-	// 리뷰 수정 -> 별점 적용
+	// 리뷰 수정, 리뷰 등록 -> 별점 적용(로직 공유)
 	$('.starRev a').click(function(){
 		$(this).parent().children("a").removeClass("on");
 		$(this).addClass("on").prevAll("a").addClass("on");
@@ -508,6 +539,54 @@
 
 		$('#reviewGradeModal').val(value);
 	});
+
+</script>
+
+<script>
+
+	$("#regiReviewCommentBtn").click(function(e){
+
+		let token = $("meta[name='_csrf']").attr("content");
+		let header = $("meta[name='_csrf_header']").attr("content");
+
+		let memberEmail = $('#memberEmail').val();
+		let reviewGrade = $('#reviewGradeModal').val();
+		let reviewComment = $('#regiReviewComment').val(); // 리뷰 수정(modal) 로직 공유
+		let bookNum = ${bookDetail.bookNum };
+
+
+		if (reviewComment === null || reviewComment === "") {
+			alert("내용을 입력해주세요.");
+			return false;
+		}
+
+		$.ajax({
+			type:"POST",
+			url:"/enrollReview",
+			beforeSend : function (xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			data: {
+				memberEmail : memberEmail,
+				reviewGrade : reviewGrade,
+				reviewComment : reviewComment,
+				bookNum : bookNum
+			},
+			dataType: "text",
+			success:function(result) {
+				if (result !== "등록 완료!") {
+					resultAlert(result);
+				}
+				resultAlert(result);
+				location.reload();
+			}
+
+		});
+
+
+	});
+
+
 
 </script>
 
@@ -637,11 +716,6 @@
 
 </script>
 
-	<jsp:include page="../common/footer.jsp"/>
-
-
-
-
 <script>
 	<%-- 도서 카테고리 화면 출력 설정 --%>
 
@@ -695,6 +769,8 @@
 	});
 
 </script>
+
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Getter
 @Setter
-public class ReivewPageHandler {
+public class ReviewPageHandler {
 
     private int totalCnt; // 총 개시물 갯수
 
@@ -30,11 +30,11 @@ public class ReivewPageHandler {
     private boolean showNext; // 다음 페이지로 이동하는 링크를 보여주 것인지의 여부
 
 
-    public ReivewPageHandler(int totalCnt, int page) {
+    public ReviewPageHandler(int totalCnt, int page) {
         this(totalCnt, page, 10);
     }
 
-    public ReivewPageHandler(int totalCnt, int page, int pageSize) {
+    public ReviewPageHandler(int totalCnt, int page, int pageSize) {
         this.totalCnt = totalCnt;
         this.page = page;
         this.pageSize = pageSize;

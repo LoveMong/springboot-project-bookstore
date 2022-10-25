@@ -59,11 +59,31 @@ public class HomeService {
         return homeMapper.updateReview(reviewDto);
     }
 
+
+    /**
+     *
+     * @return
+     */
     public int countReview() {
         return homeMapper.countReview();
     }
 
 
+    /**
+     * 도서 리뷰 등록
+     * @param reviewDto 등록할 리뷰 정보
+     * @return 등록 성공 여부 정보
+     */
+    public int enrollReview(ReviewDto reviewDto) {
+
+        if (homeMapper.purchaseConfirm(reviewDto) != 1) {
+            return 2; // 2 -> "구매 후 리뷰 등록이 가능합니다."
+        } else if (homeMapper.reviewDuplicateConfirm(reviewDto) != 0) {
+            return 3; // 3 -> "구매 후 리뷰는 한번만 등록 가능합니다."
+        }
+
+        return homeMapper.enrollReview(reviewDto);
+    }
 
 
 

@@ -2,7 +2,7 @@ package com.bookstore.home.controller;
 
 
 import com.bookstore.admin.domain.BookDto;
-import com.bookstore.common.utils.ReivewPageHandler;
+import com.bookstore.common.utils.ReviewPageHandler;
 import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.service.HomeService;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +56,7 @@ public class HomeController {
         BookDto bookDto = homeService.bookSearchDetail(bookNum);
         List<ReviewDto> bookReview = homeService.searchBookReview(map);
         int countReview = homeService.countReview();
-        ReivewPageHandler pageHandler = new ReivewPageHandler(countReview, page, pageSize);
+        ReviewPageHandler pageHandler = new ReviewPageHandler(countReview, page, pageSize);
 
         model.addAttribute("bookDetail", bookDto);
         model.addAttribute("bookReview", bookReview);
@@ -90,6 +90,7 @@ public class HomeController {
 
     /**
      * 도서 구매 리뷰 수정
+     *
      * @param reviewDto 수정된 리뷰 정보
      * @return 리뷰 수정 성공 여부
      */
@@ -111,7 +112,37 @@ public class HomeController {
 
         return resultConfirm;
 
+    }
 
+
+    /**
+     * 도서 리뷰 등록
+     * @param reviewDto 등록할 리뷰 내용
+     * @return 리뷰 등록 성공 여부
+     */
+    @PostMapping("/enrollReview")
+    @ResponseBody
+    public String enrollReview(ReviewDto reviewDto) {
+
+        String resultConfirm;
+
+        int confirm = homeService.enrollReview(reviewDto);
+
+        switch (confirm) {
+            case 1:
+                resultConfirm = "등록 완료!";
+                break;
+            case 2:
+                resultConfirm = "구매 후 리뷰 등록이 가능합니다.";
+                break;
+            case 3:
+                resultConfirm = "구매 후 리뷰는 한번만 등록 가능합니다.";
+                break;
+            default:
+                resultConfirm = "등록 실패";
+        }
+
+        return resultConfirm;
 
     }
 }
