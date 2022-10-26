@@ -88,16 +88,15 @@
 							<br /> <br /> <br />
 							<form method="post" action="/pay/payment" id="payfrm">
 								<input type="hidden" name="Orderlist[0].chkBox" value="on">
-								<input type="hidden" name="Orderlist[0].bk_price" id="bk_price" value="${bookDetail.bookPrice }">
-								<input type="hidden" name="Orderlist[0].bk_num" id="bnum" value="${bookDetail.bookNum}">
-								<input type="hidden" name="Orderlist[0].bk_ordercnt" id="odcount" value="cartStock">
-								<input type="hidden" name="Orderlist[0].bk_totalprice" id="bk_totalprice" value="">
+								<input type="hidden" name="Orderlist[0].order_bookPrice" id="order_bookPrice" value="${bookDetail.bookPrice }">
+								<input type="hidden" name="Orderlist[0].order_bookNum" id="order_bookNum" value="${bookDetail.bookNum}">
+								<input type="hidden" name="Orderlist[0].order_bookCount" id="order_bookCount" value="cartStock">
+								<input type="hidden" name="Orderlist[0].order_totalPrice" id="order_totalPrice" value="">
 								<span id="purchase_money3">합계금액&nbsp;<span style="color: red;" id="totalPrice">0</span>원 <%-- <fmt:formatNumber var="allprice2" value="0" pattern="#,###"/> --%>
 								</span>
 								<div style="float: right;" class="detail_btn">
-									<input class="btn btn-success" type="button" id="cart_btn"
-										value="장바구니"> <input class="btn btn-success"
-										type="button" id="buy_btn" value="바로구매">
+									<input class="btn btn-success" type="button" id="cart_btn" value="장바구니">
+									<input class="btn btn-success" type="button" id="buy_btn" value="바로구매">
 								</div>
 							</form>
 						</div>
@@ -197,7 +196,7 @@
 																		<span class="starR1" id="star0" value="0.5">별1_왼쪽</span>
 																		<span class="starR2" id="star1" value="1">별1_오른쪽</span>
 																		<span class="starR1" id="star2" value="1.5">별2_왼쪽</span>
-																		<span class="starR2" id="star3" value="2">별2_오른쪽</span>
+																:		<span class="starR2" id="star3" value="2">별2_오른쪽</span>
 																		<span class="starR1" id="star4" value="2.5">별3_왼쪽</span>
 																		<span class="starR2" id="star5" value="3">별3_오른쪽</span>
 																		<span class="starR1" id="star6" value="3.5">별4_왼쪽</span>
@@ -592,46 +591,52 @@
 
 <script>
 
-	$(function(){
 
-		$("#cart_btn").click(function(e){
-			const odcount=$('#odcount').val();
-			const bknum=$('#bnum').val();
-			const userid="${login.user_id}";
+	$("#cart_btn").click(function(e){
 
-			if(userid!=null&&userid!=""&&userid!=0){
-				if(odcount > 0){
-					$.ajax({
-						type:"POST",
-						url:"/addcart",
-						data: {
-							od_num : odcount,
-							bk_num : bknum,
-							user_id : userid
-						},
-						dataType:"text",
-						success:function(result){
-							const resultSet = $.trim(result);
-							if(result==="success"){
-								let msg='장바구니에 담겼습니다.'
-								location.reload();
-								alert(msg);
-							}
-							else if(result==="fail"){
-								let msg='실패했습니다.'
-								alert(msg);
-							}
+		let token = $("meta[name='_csrf']").attr("content");
+		let header = $("meta[name='_csrf_header']").attr("content");
+
+		let order_bookCount = $('#order_bookCount').val();
+		let bookNum = $('#order_bookNum').val();
+		let memberEmail = "${member.memberDto.memberEmail }";
+
+		if(memberEmail !== "" && memberEmail !== 0){
+
+			if(order_bookCount > 0){
+
+				$.ajax({
+					type:"POST",
+					url:"/order/addCart",
+					beforeSend : function (xhr){
+						xhr.setRequestHeader(header, token);
+					},
+					data: {
+						bookCount : order_bookCount,
+						bookNum : bookNum,
+						memberEmail : memberEmail
+					},
+					dataType:"text",
+					success:function(result){
+						if(result==="등록 성공"){
+							let msg='장바구니에 담겼습니다.'
+							location.reload();
+							alert(msg);
 						}
-					});
-				}
-				else{
-					alert('수량을 선택해주세요');
-				}
+						else if(result==="등록 실패"){
+							let msg='실패했습니다.'
+							alert(msg);
+						}
+					}
+				});
+
+			} else {
+				alert('수량을 선택해주세요');
 			}
-			else{
-				alert('로그인 해주세요')
-			}
-		});
+		}
+		else{
+			alert('로그인 해주세요')
+		}
 	});
 
 	$('#buy_btn').click(function(){
@@ -642,10 +647,10 @@
 		}
 		else{
 			let bkprice = parseInt($('#bk_price').val());
-			let odcount = parseInt($('#odcount').val());
-			let bk_totalprice = (bkprice*odcount);
-			$('bk_totalprice').val(bk_totalprice);
-			if(odcount>0){
+			let order_bookCount = parseInt($('#order_bookCount').val());
+			let order_totalPrice = (bkprice*order_bookCount);
+			$('order_totalPrice').val(order_totalPrice);
+			if(order_bookCount>0){
 				$('#payfrm').submit();
 			}
 			else{
@@ -672,7 +677,7 @@
 			value = value + 1;
 
 			$('#cartStock').val(value);
-			$('#odcount').val(value);
+			$('#order_bookCount').val(value);
 
 			let totalPrice = value * bookPrice; // 합계 금액
 			$('#totalPrice').text(comma(totalPrice)); // 합걔 금액 표시
@@ -687,7 +692,7 @@
 			value = value - 1;
 
 			$('#cartStock').val(value);
-			$('#odcount').val(value);
+			$('#order_bookCount').val(value);
 
 			let totalPrice = value * bookPrice; // 합계 금액
 			$('#totalPrice').text(comma(totalPrice)); // 합걔 금액 표시
