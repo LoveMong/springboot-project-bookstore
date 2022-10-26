@@ -10,6 +10,18 @@
         VALUES (#{memberEmail}, #{bookCount}, #{bookNum})
     </insert>
 
+    <select id="readCartInfo" parameterType="String" resultType="com.bookstore.mypage.domain.CartDto">
+        SELECT *
+        FROM cart
+        WHERE member_email = #{memberEmail}
+    </select>
+
+    <delete id="deleteCartInfo" parameterType="int">
+        DELETE
+        FROM cart
+        WHERE cart_num = ${cartNum}
+    </delete>
+
 
 
 </mapper>

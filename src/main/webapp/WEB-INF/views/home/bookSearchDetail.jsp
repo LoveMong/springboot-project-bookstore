@@ -17,9 +17,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script type="text/javascript" src="/js/bookSearchDetail.js"></script>
-<script>
-	let mong;
-</script>
+
 </head>
 
 <body>
@@ -619,9 +617,11 @@
 					dataType:"text",
 					success:function(result){
 						if(result==="등록 성공"){
-							let msg='장바구니에 담겼습니다.'
-							location.reload();
-							alert(msg);
+							if (confirm("장바구니에 담았습니다. 장바구니로 이동하시겠습니까?")) {
+								location.href = '/order/cart';
+							} else {
+								location.reload();
+							}
 						}
 						else if(result==="등록 실패"){
 							let msg='실패했습니다.'
