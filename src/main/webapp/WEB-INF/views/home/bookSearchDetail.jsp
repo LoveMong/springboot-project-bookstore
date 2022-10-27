@@ -610,7 +610,7 @@
 						xhr.setRequestHeader(header, token);
 					},
 					data: {
-						bookCount : order_bookCount,
+						bookOrderCount : order_bookCount,
 						bookNum : bookNum,
 						memberEmail : memberEmail
 					},

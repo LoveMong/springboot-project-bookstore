@@ -19,4 +19,6 @@ public interface OrderMapper {
     // 장바구니 삭제
     int deleteCartInfo(int cartNum);
 
+    CartDto searchBookByBookNum(int bookNum);
+
 }

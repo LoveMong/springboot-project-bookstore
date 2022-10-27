@@ -6,8 +6,8 @@
 
     <!-- 구매 예정 도서 정보 장바구니 저장 -->
     <insert id="addCart" parameterType="com.bookstore.mypage.domain.CartDto">
-        INSERT INTO cart(member_email, book_count, book_num)
-        VALUES (#{memberEmail}, #{bookCount}, #{bookNum})
+        INSERT INTO cart(member_email, book_orderCount, book_num)
+        VALUES (#{memberEmail}, #{bookOrderCount}, #{bookNum})
     </insert>
 
     <select id="readCartInfo" parameterType="String" resultType="com.bookstore.mypage.domain.CartDto">
@@ -21,6 +21,13 @@
         FROM cart
         WHERE cart_num = ${cartNum}
     </delete>
+
+    <!-- 도서 검색 상세 페이지 출력 -->
+    <select id="searchBookByBookNum" parameterType="int" resultType="com.bookstore.mypage.domain.CartDto">
+        SELECT book_num, book_title, book_price, book_pictureUrl, book_thumbUrl
+        FROM book
+        WHERE book_num = #{bookNum}
+    </select>
 
 
 

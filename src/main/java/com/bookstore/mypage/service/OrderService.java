@@ -45,5 +45,9 @@ public class OrderService {
         return orderMapper.deleteCartInfo(cartNum);
     }
 
+    public CartDto searchBookByBookNum(int bookNum) {
+        return orderMapper.searchBookByBookNum(bookNum);
+    }
+
 
 }

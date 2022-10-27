@@ -5,6 +5,7 @@ import com.bookstore.admin.domain.BookDto;
 import com.bookstore.home.service.HomeService;
 import com.bookstore.member.domain.PrincipalDetails;
 import com.bookstore.mypage.domain.CartDto;
+import com.bookstore.mypage.domain.OrderDto;
 import com.bookstore.mypage.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.print.Book;
-import java.lang.reflect.Member;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -121,6 +121,38 @@ public class OrderController {
         }
 
         return resultConfirm;
+
+    }
+
+
+    @PostMapping("/payInfo")
+    public String payInfo(@ModelAttribute(value = "OrderDto") OrderDto order, Model model) {
+
+        log.info("oder : " + order);
+
+        List<CartDto> cartInfoList = new ArrayList<>();
+
+        for (int i = 0; i < order.getCartInfoList().size(); i++) {
+
+            String checkBox = order.getCartInfoList().get(i).getCheckBox();
+
+            if (checkBox != null) {
+
+                int bookNum = order.getCartInfoList().get(i).getBookNum();
+
+                CartDto cartInfo = orderService.searchBookByBookNum(bookNum);
+                cartInfo.setBookOrderCount(order.getCartInfoList().get(i).getBookOrderCount());
+                cartInfo.setCartNum(order.getCartInfoList().get(i).getCartNum());
+
+                cartInfoList.add(cartInfo);
+
+            }
+
+        }
+
+        model.addAttribute("list", cartInfoList);
+
+        return "/mypage/payment";
 
     }
 }

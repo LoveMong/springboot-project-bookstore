@@ -47,13 +47,13 @@
 			</div>
 				<div id="nav_main">
 					<div id="nav_main_1">
-						<form role="form" action="/pay/payment" method="post">
-						
+						<form role="form" action="/order/payInfo" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<div id="nav_main_1_cart">
-							<div id="nav_main_1_cart_check" class="allCheck">
-								<input type="checkbox" id="allCheck" checked="checked"> 전체선택 </div>
+							<div id="nav_main_1_cart_check₩" class="allCheck">
+								<input type="checkbox" id="allCheck" checked="checked">전체선택</div>
 								<div id="del_btn">
-									<button type="button" class="btn btn-secondary">선택삭제</button></div>
+									<button type="button" class="btn btn-secondary" id="selectDeleteBtn">선택삭제</button></div>
 								<div id="nav_main_1_cart_info" class="mt-3">
 									<table>
 										<thead>
@@ -68,13 +68,13 @@
 											<c:forEach items="${cartList}" var="cartInfo" varStatus="i">
 											<tr>
 												<td id="r_cproduct_check">
-													<input type="checkbox" id="chkBox${i.getIndex()}" name="Orderlist[${i.getIndex()}].chkBox" class="chkBox" data-cartId="${cartInfo.cartNum}" checked="checked">
+													<input type="checkbox" id="checkBox${i.getIndex()}" name="cartInfoList[${i.getIndex()}].checkBox" class="checkBox" data-cartId="${cartInfo.cartNum}" checked="checked">
 													<input type="hidden" id="cartId${i.getIndex()}" value="${cartInfo.cartNum}" checked="checked">
-													<input type="hidden" id="cart_num${i.getIndex()}" name="Orderlist[${i.getIndex()}].cart_num" value="${cartInfo.cartNum}">
+													<input type="hidden" id="cart_num${i.getIndex()}" name="cartInfoList[${i.getIndex()}].cartNum" value="${cartInfo.cartNum}">
 													체크
 												</td>
 												<td id="r_cproduct_image${i.getIndex() }" class="r_cproduct_image">
-													<input type="hidden" id="bookId${i.getIndex()}" value="${cartInfo.bookNum }" name="Orderlist[${i.getIndex()}].bk_num">
+													<input type="hidden" id="bookId${i.getIndex()}" value="${cartInfo.bookNum }" name="cartInfoList[${i.getIndex()}].bookNum">
 													<img src="/image${cartInfo.bookThumbUrl}">
 												</td>
 												<td id="r_cproduct_info">
@@ -86,71 +86,68 @@
 												</td>
 												<td id="r_cprice">
 													판매가 :	<strong id="r_cprice${i.getIndex() }" class="bookPrice"><fmt:formatNumber value="${cartInfo.bookPrice}" pattern="#,###"/></strong> 원
-													<input type="hidden" value="${cartInfo.bookPrice}" name="Orderlist[${i.getIndex()}].bookPrice">
+													<input type="hidden" value="${cartInfo.bookPrice}" name="cartInfoList[${i.getIndex()}].bookPrice">
 												</td>
 												<td id="r_camount">수량 : 
-													<input type="hidden" value="${cartInfo.bookCount}" maxlength="3" id="origin_qty${i.getIndex()}" class="odNum_input" name="Orderlist[${i.getIndex()}].bk_ordercnt">
+													<input type="hidden" value="${cartInfo.bookOrderCount}" maxlength="3" id="origin_qty${i.getIndex()}" class="odNum_input" name="cartInfoList[${i.getIndex()}].bookOrderCount">
 													<div class="qty_change">
-														<input type="text" value="${cartInfo.bookCount}" maxlength="3" id="qty${i.getIndex()}" class="input_style02 od_input" name="Orderlist[${i.getIndex()}].cartStock" readonly="readonly">
+														<input type="text" value="${cartInfo.bookOrderCount}" maxlength="3" id="qty${i.getIndex()}" class="input_style02 od_input" name="cartInfoList[${i.getIndex()}].cartStock" readonly="readonly">
 														<a class="btn_plus" id="btn_plus${i.getIndex()}">수량 더하기</a>
 														<a class="btn_minus" id="btn_minus${i.getIndex()}">수량 빼기</a>
 													</div>
 												</td>
-												<c:set var="cartInfo_sum_price" value="${cartInfo.bookPrice * cartInfo.bookCount}" />
-												<input type="hidden" value="${cartInfo.bookPrice * cartInfo.bookCount}" id="price_sum_input${i.getIndex()}" class="price_sum_input" name="Orderlist[${i.getIndex()}].bookPrice">
+												<c:set var="cartInfo_sum_price" value="${cartInfo.bookPrice * cartInfo.bookOrderCount}" />
+												<input type="hidden" value="${cartInfo.bookPrice * cartInfo.bookOrderCount}" id="price_sum_input${i.getIndex()}" class="price_sum_input" name="cartInfoList[${i.getIndex()}].bookPrice">
 												<td id="r_csum" class="price_sum"><span class="price_sum${i.getIndex()}">
 													<fmt:formatNumber value="${cartInfo_sum_price}" pattern="#,###"/></span>원
 												</td>
 											</tr>
 												<script>
-														let prSum = ${cartInfo.bookPrice};
-															
-														$("#btn_plus${i.getIndex()}").click(function(){
-															
-															let odNum = document.getElementById("origin_qty${i.getIndex()}").value;
+												<%-- 구매 도서 수량 조절 script --%>
 
-															odNum = Number(odNum) + 1;
-																
-															document.getElementById('origin_qty${i.getIndex()}').value = odNum;
-															document.getElementById('qty${i.getIndex()}').value = odNum;
-															
-															$('.price_sum${i.getIndex()}').text(comma(prSum * odNum));
-															$('#price_sum_input${i.getIndex()}').val(prSum * odNum);
-															
-															callPriceSum();
-				
-														});
-														
-														$("#btn_minus${i.getIndex()}").click(function(){
-															
-															let odNum = document.getElementById("origin_qty${i.getIndex()}").value;
-															if(odNum <= 1) {
-																return;
-															}
-															odNum = Number(odNum) - 1;
-																
-															document.getElementById("origin_qty${i.getIndex()}").value = odNum;
-															document.getElementById('qty${i.getIndex()}').value = odNum;
-															
-															$('.price_sum${i.getIndex()}').text(comma(prSum * odNum));
-															$('#price_sum_input${i.getIndex()}').val(prSum * odNum);
-															
-															callPriceSum();
-														});
+													var prSum = ${cartInfo.bookPrice};
+
+													$("#btn_plus${i.getIndex()}").click(function(){
+
+														let odNum = document.getElementById("origin_qty${i.getIndex()}").value;
+
+														odNum = Number(odNum) + 1;
+
+														document.getElementById('origin_qty${i.getIndex()}').value = odNum;
+														document.getElementById('qty${i.getIndex()}').value = odNum;
+
+														$('.price_sum${i.getIndex()}').text(comma(prSum * odNum));
+														$('#price_sum_input${i.getIndex()}').val(prSum * odNum);
+
+														callPriceSum();
+
+													});
+
+													$("#btn_minus${i.getIndex()}").click(function(){
+
+														let odNum = document.getElementById("origin_qty${i.getIndex()}").value;
+														if(odNum <= 1) {
+															return;
+														}
+														odNum = Number(odNum) - 1;
+
+														document.getElementById("origin_qty${i.getIndex()}").value = odNum;
+														document.getElementById('qty${i.getIndex()}').value = odNum;
+
+														$('.price_sum${i.getIndex()}').text(comma(prSum * odNum));
+														$('#price_sum_input${i.getIndex()}').val(prSum * odNum);
+
+														callPriceSum();
+													});
 												</script>
-
 											</c:forEach>
 										</tbody>
 									</table>
 								</div>
 						</div>
+
 						<div id="nav_main_1_result">
-							<!-- <div id="nav_main_1_result_head">
-								<input type="checkbox"><h1>전체선택</h1>
-							</div> -->
-			
-							<form id="buy_form" method="post" action="pay/payment">
-			
+<%--							<form id="buy_form" method="post" action="pay/payment">--%>
 							<div id="nav_main_1_result_info">
 								<div id="nav_main_1_result_info_hidden"></div>
 								<table>
@@ -162,43 +159,26 @@
 									<tbody>
 										<tr>
 											<td id="result_info_price">
-											<input type="hidden" id="priceTotal_input" name="Orderlist.od_totalprice">
+											<input type="hidden" id="priceTotal_input" name="cartInfoList.orderTotalPrice">
 												<h1><span id="priceTotal"> 0 </span></h1><h3>원</h3>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-						
 							<div id="nav_main_1_result_btn">
 								<input type="submit" value="결제하기" id="pay_button" class="btn btn-secondary mt-3">
-								
 							</div>
+							</form>
 						</div>
-
-
-						
-						
-						
-									
-						
-						</form>
+<%--						</form>--%>
 					</div>
 				</div>
-
-				
-				
-				</div>
-
-		
+			</div>
 		</div>
-	
-		
 	</div>
-	</div>
-	</div>
-
 </div>
+
 
 
 <script>
@@ -222,12 +202,12 @@
 </script>
 <script>
 	<%-- 선택된 항목(구매 예정 도서) 삭제 --%>
-	$(".btn-secondary").click(function(){
+	$("#selectDeleteBtn").click(function(){
 
 		let token = $("meta[name='_csrf']").attr("content");
 		let header = $("meta[name='_csrf_header']").attr("content");
 
-		let selectCheck = $("input[class='chkBox']:checked").length; // 선택 checkbox -> check 적용된 항목 수
+		let selectCheck = $("input[class='checkBox']:checked").length; // 선택 checkbox -> check 적용된 항목 수
 
 		if (selectCheck === 0) {
 			alert("삭제할 품목을 선택해주세요.");
@@ -238,7 +218,7 @@
 
 		if(confirm_val){
 			let checkArr = [];
-			$("input[class='chkBox']:checked").each(function(){ // 선택된 품목 모두 포함
+			$("input[class='checkBox']:checked").each(function(){ // 선택된 품목 모두 포함
 				checkArr.push($(this).attr("data-cartId")); // 선택된 각 품목의 고유 번호(.attr -> 해당 요소의 속성의 값)을 배열에 저장(.push -> 배열에 저장)
 			});
 
@@ -270,11 +250,11 @@
 	$("#allCheck").click(function(){
 		let check = $('#allCheck').prop("checked");
 		if(check){
-			//alert($('.chkBox').length);
-			$(".chkBox").prop("checked", true);
+			//alert($('.checkBox').length);
+			$(".checkBox").prop("checked", true);
 		} else{
-			//alert($('.chkBox').length);
-			$(".chkBox").prop("checked", false);
+			//alert($('.checkBox').length);
+			$(".checkBox").prop("checked", false);
 		}
 		callPriceSum();
 	});
@@ -284,14 +264,14 @@
 	function callPriceSum() {
 
 		let bookCount = 0;
-		let number = $("input[class='chkBox']:checked").length; // 선택 checkbox -> check 적용된 항목 수
+		let number = $("input[class='checkBox']:checked").length; // 선택 checkbox -> check 적용된 항목 수
 
 		if(number <= 0) { // 체크된 항목이 없을 경우
 			$('#priceTotal').text("0");
 			return;
 		}
 
-		$("input[class='chkBox']:checked").each(function(){ // ().each -> 선택된 도서 모두 포함
+		$("input[class='checkBox']:checked").each(function(){ // ().each -> 선택된 도서 모두 포함
 
 			let bookPrice = $(this).closest("tr").find(".bookPrice").text(); // 도서 가격
 			bookPrice = bookPrice.replace(/,/g, ""); // 도서 가격 콤마 제거
@@ -310,7 +290,7 @@
 		callPriceSum();
 	}
 
-	$(".chkBox").click(function(){
+	$(".checkBox").click(function(){
 		callPriceSum();
 	});
 
