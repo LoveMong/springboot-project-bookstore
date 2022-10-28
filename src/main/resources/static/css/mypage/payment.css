@@ -1,0 +1,196 @@
+* {
+    margin: 0;
+    padding: 0
+}
+.allWrap {
+    width: 1100px;
+    margin: 0 auto;
+}
+.tabBox {
+    margin: 20px 0;
+}
+.tab-link {
+    width: 47%;
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    background-color: #929090;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+.tab-link.current {
+    background-color: #de4c4c;
+    font-weight: 600;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.current {
+    display: block;
+    width: 100%;
+    height: 600px;
+    background-color: white;
+    font-size: 30px;
+    text-align: left;
+    line-height: 30px;
+}
+/* 구매품 리스트 */
+#main_list {
+
+}
+#main_list>table {
+    width: 100%;
+    border-bottom: #ddd solid 2px;
+    border-top: black solid 2px;
+    border-collapse: collapse;
+}
+#main_list>table>thead>tr {
+    border-bottom: 1px solid #e7e7e7;
+    background: #fbfbfb;
+    height: 50px;
+}
+#main_list>table>tbody>tr {
+    border-bottom: 1px solid #e7e7e7;
+    height: 110px;
+}
+#main_list>table>tbody>tr {
+    border-top: 1px solid #e7e7e7r;
+}
+.main_list_head_col1 {
+    width: 60%;
+}
+main_list_head_col2 {
+    width: 40%;
+}
+.main_list_col1 {
+    width: 15%;
+}
+.main_list_col2 {
+    width: 45%;
+    border-right: 1px solid #e7e7e7;
+}
+.main_list_col3 {
+    width: 40%;
+    text-align: center;
+}
+/* 할인적립 */
+#main_buy_point {
+    margin-top: 50px;
+}
+#main_buy_point>table {
+    width: 100%;
+    height: 130px;
+    border-top: solid black 2px;
+    border-bottom: solid #ddd 1px;
+}
+#main_buy_point>table>tr>th {
+    border-right: 1px solid #ddd;
+    background-color: #fbfbfb;
+}
+/* 마일리지 모두사용/ 취소버튼 */
+#point_btn1 {
+    display: inline-block;
+    width: 85px;
+    border: 1.5px solid black;
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 900;
+    border-radius: 4px;
+    background-color: #eae2e2;
+    cursor: pointer;
+}
+#point_btn2 {
+    display: inline-block;
+    width: 85px;
+    border: 1.5px solid black;
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 900;
+    border-radius: 4px;
+    background-color: #eae2e2;
+    cursor: pointer;
+}
+/* 결제수단 선택 */
+#main_buy {
+    margin-top: 50px;
+}
+/* 최종결제 div */
+#main_right {
+    width: 536px; //
+height: 500px;
+    margin: auto;
+    /* 	position : absolute; */
+    right: 0;
+    top: 0; //
+background-color: blue;
+    border: black 1px solid;
+    right: 0
+}
+#main_right ul {
+    list-style: none;
+}
+#final_buy_info {
+    padding: 15px 20px;
+}
+#final_buy_info>ul>li {
+    margin-top: 13px;
+}
+#label {
+    float: left;
+}
+#label_result {
+    float: right;
+}
+.total_li {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+.total_li strong>#number {
+    font-size: 30px;
+    color: red;
+}
+#final_buy_point {
+    border-top: 1px solid #ddd;
+}
+#point_btn2 {
+    display: none;
+}
+#final_buy_point {
+    padding: 20px 20px;
+    border-top: 1px solid #ddd;
+}
+#final_buy_check {
+    padding: 20px 20px;
+    border-top: 1px solid #ddd;
+}
+#final_buy_check>input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+#final_buy_check>strong {
+    color: #c33838;
+    font-size: 25px;
+}
+#final_buy_button {
+    padding: 20px 20px;
+    border-top: 1px solid #ddd;
+}
+.liston {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+.order_cli {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#main_buy_info {
+    margin-top: 100px;
+}
+.btn-outline-primary {
+    margin-bottom: 5px;
+}

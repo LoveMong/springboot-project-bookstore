@@ -4,6 +4,7 @@ package com.bookstore.mypage.controller;
 import com.bookstore.admin.domain.BookDto;
 import com.bookstore.home.service.HomeService;
 import com.bookstore.member.domain.PrincipalDetails;
+import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.domain.OrderDto;
 import com.bookstore.mypage.service.OrderService;
@@ -126,9 +127,14 @@ public class OrderController {
 
 
     @PostMapping("/payInfo")
-    public String payInfo(@ModelAttribute(value = "OrderDto") OrderDto order, Model model) {
+    public String payInfo(@ModelAttribute(value = "OrderDto") OrderDto order, Model model,
+                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        log.info("oder : " + order);
+
+        String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+
+        List<AddressDto> addressList =  orderService.searchAddressByMemberEmail(memberEmail);
+
 
         List<CartDto> cartInfoList = new ArrayList<>();
 
@@ -150,6 +156,7 @@ public class OrderController {
 
         }
 
+        model.addAttribute("addList", addressList);
         model.addAttribute("list", cartInfoList);
 
         return "/mypage/payment";

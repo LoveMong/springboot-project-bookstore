@@ -1,6 +1,7 @@
 package com.bookstore.member.domain;
 
 
+import com.bookstore.mypage.domain.AddressDto;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -38,6 +39,6 @@ public class MemberDto {
 
     private String memberRole; // 일반 or 관리자
 
-
+    private AddressDto memberAddress; // 기본 배송 주소
 
 }

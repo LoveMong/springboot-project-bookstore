@@ -1,6 +1,7 @@
 package com.bookstore.mypage.mapper;
 
 
+import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,5 +21,7 @@ public interface OrderMapper {
     int deleteCartInfo(int cartNum);
 
     CartDto searchBookByBookNum(int bookNum);
+
+    List<AddressDto> searchAddressByMemberEmail(String memberEmail);
 
 }

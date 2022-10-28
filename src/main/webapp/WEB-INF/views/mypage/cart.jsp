@@ -47,11 +47,11 @@
 			</div>
 				<div id="nav_main">
 					<div id="nav_main_1">
-						<form role="form" action="/order/payInfo" method="post">
+						<form role="form" action="/order/payInfo" method="post" id="payInfo">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						<div id="nav_main_1_cart">
-							<div id="nav_main_1_cart_check₩" class="allCheck">
-								<input type="checkbox" id="allCheck" checked="checked">전체선택</div>
+						<div id="nav_main_1_cart" style="margin-top: 27px">
+							<div id="nav_main_1_cart_check" class="allCheck">
+								<input type="checkbox" id="allCheck" checked="checked" style="margin-right: 5px">전체선택</div>
 								<div id="del_btn">
 									<button type="button" class="btn btn-secondary" id="selectDeleteBtn">선택삭제</button></div>
 								<div id="nav_main_1_cart_info" class="mt-3">
@@ -71,7 +71,6 @@
 													<input type="checkbox" id="checkBox${i.getIndex()}" name="cartInfoList[${i.getIndex()}].checkBox" class="checkBox" data-cartId="${cartInfo.cartNum}" checked="checked">
 													<input type="hidden" id="cartId${i.getIndex()}" value="${cartInfo.cartNum}" checked="checked">
 													<input type="hidden" id="cart_num${i.getIndex()}" name="cartInfoList[${i.getIndex()}].cartNum" value="${cartInfo.cartNum}">
-													체크
 												</td>
 												<td id="r_cproduct_image${i.getIndex() }" class="r_cproduct_image">
 													<input type="hidden" id="bookId${i.getIndex()}" value="${cartInfo.bookNum }" name="cartInfoList[${i.getIndex()}].bookNum">
@@ -167,7 +166,7 @@
 								</table>
 							</div>
 							<div id="nav_main_1_result_btn">
-								<input type="submit" value="결제하기" id="pay_button" class="btn btn-secondary mt-3">
+								<input type="button" value="결제하기" id="pay_button" class="btn btn-secondary mt-3">
 							</div>
 							</form>
 						</div>
@@ -292,6 +291,24 @@
 
 	$(".checkBox").click(function(){
 		callPriceSum();
+	});
+
+</script>
+
+
+<script>
+	<%-- 주문/결제 페이지로 넘어가긴전 유효성 검사 script --%>
+	$("#pay_button").click(function(){
+
+		let number = $("input[class='checkBox']:checked").length; // 선택 checkbox -> check 적용된 항목 수
+
+		if (number === 0) {
+			alert("1개 이상의 상품을 선택해주세요.");
+			return false;
+		} else {
+			$('#payInfo').submit();
+		}
+
 	});
 
 </script>

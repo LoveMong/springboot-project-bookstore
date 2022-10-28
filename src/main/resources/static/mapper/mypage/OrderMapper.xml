@@ -29,6 +29,13 @@
         WHERE book_num = #{bookNum}
     </select>
 
+    <select id="searchAddressByMemberEmail" parameterType="String" resultType="com.bookstore.mypage.domain.AddressDto">
+        SELECT *
+        FROM address
+        WHERE memberEmail = #{memberEmail}
+        ORDER BY IFNULL(address_registerDate, 0) DESC
+    </select>
+
 
 
 </mapper>

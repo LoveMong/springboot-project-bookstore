@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -8,207 +9,10 @@
     <meta charset="UTF-8">
     <meta name="_csrf" content="${_csrf.token}">
     <meta name="_csrf_header" content="${_csrf.headerName}">
+    <link rel="stylesheet" href="/css/mypage/payment.css">
     <title>Welcome! SJBook Store!</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0
-        }
-        .allWrap {
-            width: 1100px;
-            margin: 0 auto;
-        }
-        .tabBox {
-            margin: 20px 0;
-        }
-        .tab-link {
-            width: 47%;
-            display: inline-block;
-            padding: 10px;
-            text-align: center;
-            background-color: #929090;
-            border-radius: 20px;
-            color: #fff;
-            cursor: pointer;
-        }
-        .tab-link.current {
-            background-color: #de4c4c;
-            font-weight: 600;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.current {
-            display: block;
-            width: 100%;
-            height: 600px;
-            background-color: white;
-            font-size: 30px;
-            text-align: left;
-            line-height: 30px;
-        }
-        /* 구매품 리스트 */
-        #main_list {
-
-        }
-        #main_list>table {
-            width: 100%;
-            border-bottom: #ddd solid 2px;
-            border-top: black solid 2px;
-            border-collapse: collapse;
-        }
-        #main_list>table>thead>tr {
-            border-bottom: 1px solid #e7e7e7;
-            background: #fbfbfb;
-            height: 50px;
-        }
-        #main_list>table>tbody>tr {
-            border-bottom: 1px solid #e7e7e7;
-            height: 110px;
-        }
-        #main_list>table>tbody>tr {
-            border-top: 1px solid #e7e7e7r;
-        }
-        .main_list_head_col1 {
-            width: 60%;
-        }
-        main_list_head_col2 {
-            width: 40%;
-        }
-        .main_list_col1 {
-            width: 15%;
-        }
-        .main_list_col2 {
-            width: 45%;
-            border-right: 1px solid #e7e7e7;
-        }
-        .main_list_col3 {
-            width: 40%;
-            text-align: center;
-        }
-        /* 할인적립 */
-        #main_buy_point {
-            margin-top: 50px;
-        }
-        #main_buy_point>table {
-            width: 100%;
-            height: 130px;
-            border-top: solid black 2px;
-            border-bottom: solid #ddd 1px;
-        }
-        #main_buy_point>table>tr>th {
-            border-right: 1px solid #ddd;
-            background-color: #fbfbfb;
-        }
-        /* 마일리지 모두사용/ 취소버튼 */
-        #point_btn1 {
-            display: inline-block;
-            width: 85px;
-            border: 1.5px solid black;
-            height: 30px;
-            text-align: center;
-            line-height: 28px;
-            font-weight: 900;
-            border-radius: 4px;
-            background-color: #eae2e2;
-            cursor: pointer;
-        }
-        #point_btn2 {
-            display: inline-block;
-            width: 85px;
-            border: 1.5px solid black;
-            height: 30px;
-            text-align: center;
-            line-height: 28px;
-            font-weight: 900;
-            border-radius: 4px;
-            background-color: #eae2e2;
-            cursor: pointer;
-        }
-        /* 결제수단 선택 */
-        #main_buy {
-            margin-top: 50px;
-        }
-        /* 최종결제 div */
-        #main_right {
-            width: 536px; //
-        height: 500px;
-            margin: auto;
-            /* 	position : absolute; */
-            right: 0;
-            top: 0; //
-        background-color: blue;
-            border: black 1px solid;
-            right: 0
-        }
-        #main_right ul {
-            list-style: none;
-        }
-        #final_buy_info {
-            padding: 15px 20px;
-        }
-        #final_buy_info>ul>li {
-            margin-top: 13px;
-        }
-        #label {
-            float: left;
-        }
-        #label_result {
-            float: right;
-        }
-        .total_li {
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-        }
-        .total_li strong>#number {
-            font-size: 30px;
-            color: red;
-        }
-        #final_buy_point {
-            border-top: 1px solid #ddd;
-        }
-        #point_btn2 {
-            display: none;
-        }
-        #final_buy_point {
-            padding: 20px 20px;
-            border-top: 1px solid #ddd;
-        }
-        #final_buy_check {
-            padding: 20px 20px;
-            border-top: 1px solid #ddd;
-        }
-        #final_buy_check>input[type="checkbox"] {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-        }
-        #final_buy_check>strong {
-            color: #c33838;
-            font-size: 25px;
-        }
-        #final_buy_button {
-            padding: 20px 20px;
-            border-top: 1px solid #ddd;
-        }
-        .liston {
-            width: 20px;
-            height: 20px;
-            margin-left: 5px;
-        }
-        .order_cli {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        #main_buy_info {
-            margin-top: 100px;
-        }
-        .btn-outline-primary {
-            margin-bottom: 5px;
-        }
-    </style>
 </head>
 <body>
 <!-- header -->
@@ -216,28 +20,27 @@
 
 <div id="main_wrap">
     <form action="/pay/LastPayment" method="post" onsubmit="return submitCheck();">
+        <sec:authentication property="principal" var="member"/>
         <div class="allWrap">
             <div id="main_buy_info">
                 <div>
-                    <strong>구매자 정보</strong>
+                    <strong style="font-size: 25px">구매자정보</strong>
                 </div>
-                <!-- 구매자 정보 출력(유저 아이디 / 유저 전화번호) -->
+                <!-- 구매자 정보 출력(이름/이메일) -->
                 <div class="order_cli">
-                    <h2>주문자</h2>
                     <hr />
-                    <h3>${login.user_name}[${login.user_phone }]</h3>
+                    <h3>${member.memberDto.memberName} [${member.memberDto.memberEmail}]</h3>
                 </div>
                 <div>
-                    <input type="hidden" id="userId" value="${login.user_id}">
-                    <input type="hidden" id="userPoint" value="${login.user_point}">
+                    <input type="hidden" id="memberEmail" value="${member.memberDto.memberEmail}">
+                    <input type="hidden" id="memberPoint" value="${member.memberDto.memberPoint}">
                 </div>
             </div>
 
-
             <!-- 배송지 선택 및 입력 -->
             <div id="main_buy_addr">
-                <div>
-                    <strong>배송정보</strong>
+                <div style="margin-top: 40px">
+                    <strong style="font-size: 25px">배송정보</strong>
                 </div>
                 <hr />
                 <div class="tabBox">
@@ -246,23 +49,43 @@
                 </div>
                 <!-- 저장된 배송지 선택 TAP -->
                 <div id="tab-1" class="tab-content current">
-                    <p>배송지 선택(최근 배송지)</p>
-                    <c:forEach var="addrList" items="${addList}" varStatus="vs">
-                        <br />
-                        <div class="arrdGroup alert alert-dismissible alert-warning">
-                            <div>
-                                <input type="radio" name="addrconfirm" id="liston${vs.getIndex()}" class="liston" value="click${vs.getIndex()}">
-                                <span>받는 사람 : ${addrList.rec_name }</span>
-                                <hr />
-                                <input type="hidden" name="receiver_name" id="receiver_name${vs.getIndex()}" value="${addrList.rec_name }" class="nameValue">
-                                <h4>주소 : ${addrList.rec_addr }</h4>
-                                <input type="hidden" name="rec_addr" id="rec_addr${vs.getIndex()}" value="${addrList.rec_addr }" class="addrValue">
-                                <hr />
-                                <h4>휴대전화 : ${addrList.rec_phone }</h4>
-                                <input type="hidden" name="user_phone" id="user_phone${vs.getIndex()}" value="${addrList.rec_phone }" class="phoneValue">
-                            </div>
-                        </div>
-                    </c:forEach>
+
+                    <div style="border: 1px solid black">
+                        <c:choose>
+                            <c:when test="${member.memberDto.memberAddress == null}">
+                                <p>기본 배송지가 등록되어있지않습니다.</p>
+                                <button type="button" data-toggle="modal" data-target="#myModal" id="comment_update" value="" class="btn btn-danger">배송지 등록</button>
+                            </c:when>
+                            <c:otherwise>
+
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+
+                    <c:choose>
+                        <c:when test="empty addrList">
+                            <p>배송지를 등록해주세요.</p>
+                        </c:when>
+                        <c:otherwise>
+                            <p>배송지 선택(최근 배송지)</p>
+                            <c:forEach var="addressList" items="${addList}" varStatus="vs">
+                                <br />
+                                <div class="arrdGroup alert alert-dismissible alert-warning">
+                                    <div>
+                                        <input type="radio" name="addrconfirm" id="liston${vs.getIndex()}" class="liston" value="click${vs.getIndex()}">
+                                        <span>받는 사람 : ${addressList.receiverName }</span>
+                                        <hr />
+                                        <input type="hidden" name="receiver_name" id="receiver_name${vs.getIndex()}" value="${addressList.receiverName }" class="nameValue">
+                                        <h4>주소 : ${addressList.receiverAddress }</h4>
+                                        <input type="hidden" name="rec_addr" id="rec_addr${vs.getIndex()}" value="${addressList.receiverAddress }" class="addrValue">
+                                        <hr />
+                                        <h4>휴대전화 : ${addressList.receiverPhone }</h4>
+                                        <input type="hidden" name="user_phone" id="user_phone${vs.getIndex()}" value="${addressList.receiverPhone }" class="phoneValue">
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <!-- 배송지 직접 입력 TAP -->
@@ -432,8 +255,102 @@
     <div class="clearfix"></div>
 </div>
 
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 108%">
+            <div class="modal-header">
+                <h4 class="modal-title">배송지 등록</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="addAddress">
+
+                    <table class="table" style="margin-top: 25px; margin-bottom: 0px">
+                    <tr style="border-top: 0.09em solid black">
+                        <th class="success" style="font-weight: bold; background-color: lightgray;"> 우편 번호 </th>
+                            <td>
+                                <input class="address_input_1" id="addAddressModal1" readonly="readonly" style="border: none" size=20>
+                            </td>
+                    </tr>
+                    <tr>
+                        <th style="font-weight: bold; background-color: lightgray"> 기본 주소 </th>
+                            <td>
+                                <input class="address_input_2" id="addAddressModal2" readonly="readonly" style="border: none" maxlength=45 size=45>
+                            </td>
+                    </tr>
+                    <tr style="border-bottom: 0.05em solid black">
+                        <th style="font-weight: bold; background-color: lightgray; "> 상세 주소 </th>
+                            <td>
+                                <input class="address_input_3" id="addAddressModal3" readonly="readonly" style="border: none" maxlength=45 size=45>
+                            </td>
+                    </tr>
+                    </table>
+                        <div style="margin-bottom: 50px; float: right" class="address_button" onclick="execution_daum_address()">
+                            <br /> <span type="text" class="btn btn-outline-primary">주소 찾기</span>
+                            <div class="clearfix"></div>
+                        </div>
+                    <div style="margin-top: 100px">
+                          <table style="height: 100px" class="table">
+                            <tr style="border-top: 0.065em solid black">
+                                <th style="font-weight: bold; background-color: lightgray">이름</th>
+                                <td><input type="text" id="addAddressModal_name" style="border: none" maxlength=45 size=45>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 0.05em solid black">
+                                <th style="font-weight: bold; background-color: lightgray; ">휴대전화</th>
+                                <td><input type="number" id="addAddressModal_phone" style="border: none" maxlength=45 size=45>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br/><br/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="addAddressModalBtn">등록</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <jsp:include page="../common/footer.jsp"/>
+
+
+<script>
+
+    $(document).ready(function(){
+
+    $('#myModal').on('show.bs.modal', function(event) {
+
+        $('#addAddressModalBtn').click(function () {
+            alert("ddd");
+
+            let address = $('#addAddressModal2').val();
+            let addressDetail = = $('#addAddressModal3').val();
+            let name = $('addAddressModal_name').val();
+            let phone = $('addAddressModal_phone').val();
+
+            if (address === null) {
+                alert("주소를 입력해주세요.");
+                return false;
+            } else if (addressDetail === null || addressDetail === "") {
+                alert("상세주소를 입력해주세요.");
+                return false;
+            } else if (name === null || name === "") {
+                alert("이름을 입력해주세요.");
+                return false;
+            } else if (phone === null) {
+                alert("핸드폰 번호를 입력해주세요.");
+                return false;
+            }
+
+
+        });
+    });
+    });
+</script>
 
 <script>
     // 배송 정보 [기본/입력] 설정

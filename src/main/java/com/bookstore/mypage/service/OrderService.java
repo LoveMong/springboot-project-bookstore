@@ -1,6 +1,7 @@
 package com.bookstore.mypage.service;
 
 import com.bookstore.member.domain.MemberDto;
+import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
@@ -45,9 +46,26 @@ public class OrderService {
         return orderMapper.deleteCartInfo(cartNum);
     }
 
+
+    /**
+     *
+     * @param bookNum
+     * @return
+     */
     public CartDto searchBookByBookNum(int bookNum) {
         return orderMapper.searchBookByBookNum(bookNum);
     }
+
+
+    /**
+     *
+     * @param memberEmail
+     * @return
+     */
+    public List<AddressDto> searchAddressByMemberEmail(String memberEmail) {
+        return orderMapper.searchAddressByMemberEmail(memberEmail);
+    }
+
 
 
 }
