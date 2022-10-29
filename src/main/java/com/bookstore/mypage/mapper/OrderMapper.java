@@ -20,8 +20,10 @@ public interface OrderMapper {
     // 장바구니 삭제
     int deleteCartInfo(int cartNum);
 
+    // 도서 정보 검색
     CartDto searchBookByBookNum(int bookNum);
 
+    // 고객 주소 정보 검색
     List<AddressDto> searchAddressByMemberEmail(String memberEmail);
 
 }

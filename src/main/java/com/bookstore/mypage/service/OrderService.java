@@ -1,13 +1,11 @@
 package com.bookstore.mypage.service;
 
-import com.bookstore.member.domain.MemberDto;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.naming.ldap.SortResponseControl;
 import java.util.List;
 
 @Service
@@ -48,9 +46,9 @@ public class OrderService {
 
 
     /**
-     *
-     * @param bookNum
-     * @return
+     * 도서 정보 검색
+     * @param bookNum 해당 도서 번호
+     * @return 도서 정보
      */
     public CartDto searchBookByBookNum(int bookNum) {
         return orderMapper.searchBookByBookNum(bookNum);
@@ -58,9 +56,9 @@ public class OrderService {
 
 
     /**
-     *
-     * @param memberEmail
-     * @return
+     * 고객 주소 정보 검색
+     * @param memberEmail 고객 아이디(이메일)
+     * @return 등록된 주소리스트
      */
     public List<AddressDto> searchAddressByMemberEmail(String memberEmail) {
         return orderMapper.searchAddressByMemberEmail(memberEmail);
