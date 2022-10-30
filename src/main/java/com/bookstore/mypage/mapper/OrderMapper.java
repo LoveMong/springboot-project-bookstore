@@ -26,4 +26,6 @@ public interface OrderMapper {
     // 고객 주소 정보 검색
     List<AddressDto> searchAddressByMemberEmail(String memberEmail);
 
+    int registerAddress(AddressDto addressDto);
+
 }

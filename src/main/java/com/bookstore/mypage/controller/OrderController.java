@@ -133,7 +133,7 @@ public class OrderController {
 
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
 
-        List<AddressDto> addressList =  orderService.searchAddressByMemberEmail(memberEmail);
+        List<AddressDto> addressList = orderService.searchAddressByMemberEmail(memberEmail);
 
 
         List<CartDto> cartInfoList = new ArrayList<>();
@@ -160,6 +160,27 @@ public class OrderController {
         model.addAttribute("list", cartInfoList);
 
         return "/mypage/payment";
+
+    }
+
+
+    @PostMapping("registerAddress")
+    @ResponseBody
+    public String registerAddress(AddressDto addressDto) {
+
+        String resultConfirm = "등록 성공";
+
+        try {
+            if (orderService.registerAddress(addressDto) != 1) {
+                throw new Exception("failed register");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultConfirm = "등록 실패";
+        }
+
+        return resultConfirm;
 
     }
 }

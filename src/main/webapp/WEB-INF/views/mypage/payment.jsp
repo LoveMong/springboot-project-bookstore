@@ -298,7 +298,7 @@
                             </tr>
                             <tr style="border-bottom: 0.05em solid black">
                                 <th style="font-weight: bold; background-color: lightgray; ">휴대전화</th>
-                                <td><input type="number" id="addAddressModal_phone" style="border: none" maxlength=45 size=45>
+                                <td><input type="text" id="addAddressModal_phone" style="border: none" maxlength=45 size=45>
                                 </td>
                             </tr>
                         </table>
@@ -307,7 +307,7 @@
                 <br/><br/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="addAddressModalBtn">등록</button>
+                <button type="button" class="btn btn-default" onclick="registerAddress()">등록</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -318,39 +318,7 @@
 <jsp:include page="../common/footer.jsp"/>
 
 
-<script>
 
-    $(document).ready(function(){
-
-    $('#myModal').on('show.bs.modal', function(event) {
-
-        $('#addAddressModalBtn').click(function () {
-            alert("ddd");
-
-            let address = $('#addAddressModal2').val();
-            let addressDetail = = $('#addAddressModal3').val();
-            let name = $('addAddressModal_name').val();
-            let phone = $('addAddressModal_phone').val();
-
-            if (address === null) {
-                alert("주소를 입력해주세요.");
-                return false;
-            } else if (addressDetail === null || addressDetail === "") {
-                alert("상세주소를 입력해주세요.");
-                return false;
-            } else if (name === null || name === "") {
-                alert("이름을 입력해주세요.");
-                return false;
-            } else if (phone === null) {
-                alert("핸드폰 번호를 입력해주세요.");
-                return false;
-            }
-
-
-        });
-    });
-    });
-</script>
 
 <script>
     // 배송 정보 [기본/입력] 설정
@@ -415,6 +383,8 @@
 
     }
 </script>
+
+
 
 <script>
 
@@ -541,6 +511,68 @@
     }
 </script>
 
+<script>
+    <%-- 주소 등록 script--%>
+
+    function registerAddress() {
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let address = $('#addAddressModal2').val();
+        let addressDetail = $('#addAddressModal3').val();
+        let name = $('#addAddressModal_name').val();
+        let phone = $('#addAddressModal_phone').val();
+        let receiverAddress = address + addressDetail;
+        let memberEmail = "${member.memberDto.memberEmail }";
+
+
+        if (address === null) {
+            alert("주소를 입력해주세요.");
+            return false;
+        } else if (addressDetail === null || addressDetail === "") {
+            alert("상세주소를 입력해주세요.");
+            return false;
+        } else if (name === null || name === "") {
+            alert("이름을 입력해주세요.");
+            return false;
+        } else if (phone === null) {
+            alert("핸드폰 번호를 입력해주세요.");
+            return false;
+        } else {
+            $.ajax({
+                type:"POST",
+                url:"/order/registerAddress",
+                beforeSend : function (xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                data: {
+                    memberEmail : memberEmail,
+                    receiverAddress : receiverAddress,
+                    receiverName : name,
+                    receiverPhone : phone
+                },
+                dataType:"text",
+                success:function(result){
+                    if(result==="등록 성공"){
+                        alert("주소 등록 완료");
+                        $('#myModal').modal('hide');
+                        // location.href = '/order/cart';
+                        location.reload();
+                    }
+                    else if(result==="등록 실패"){
+                        let msg='실패했습니다.'
+                        alert(msg);
+                    }
+                }
+            });
+
+        }
+
+
+    }
+
+</script>
 
 
 </html>

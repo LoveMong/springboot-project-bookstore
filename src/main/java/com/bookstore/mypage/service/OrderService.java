@@ -64,6 +64,14 @@ public class OrderService {
         return orderMapper.searchAddressByMemberEmail(memberEmail);
     }
 
+    public int registerAddress(AddressDto addressDto) {
+
+        String checkMAinAddress = "MAIN"; // 기본 배송지
+        addressDto.setCheckMainAddress(checkMAinAddress); // 기본 배송지로 설정
+
+        return orderMapper.registerAddress(addressDto);
+    }
+
 
 
 }

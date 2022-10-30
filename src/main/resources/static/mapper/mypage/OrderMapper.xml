@@ -36,6 +36,11 @@
         ORDER BY IFNULL(address_registerDate, 0) DESC
     </select>
 
+    <insert id="registerAddress" parameterType="com.bookstore.mypage.domain.AddressDto">
+        INSERT INTO address(memberEmail, receiver_address, receiver_name, receiver_phone, address_checkMain)
+        VALUES (#{memberEmail}, #{receiverAddress}, #{receiverName}, #{receiverPhone}, #{checkMainAddress})
+    </insert>
+
 
 
 </mapper>
