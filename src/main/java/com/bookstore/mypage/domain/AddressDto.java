@@ -15,6 +15,6 @@ public class AddressDto {
     private String receiverAddress;	// 수령인 주소
     private String receiverName; // 수령인 이름
     private String receiverPhone; // 수령인 연락처
-    private String checkMainAddress; // 기본 배송지(MAIN)/ 추가 배송지(ADDITION) 구분
+    private String addressCheckMain; // 기본 배송지(MAIN)/ 추가 배송지(ADDITION) 구분
 
 }

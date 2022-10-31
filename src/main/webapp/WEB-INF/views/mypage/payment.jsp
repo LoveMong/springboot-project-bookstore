@@ -45,31 +45,46 @@
                 <hr />
                 <div class="tabBox">
                     <p class="tab-link current" data-tab="tab-1">저장 정보</p>
-                    <p class="tab-link" data-tab="tab-2">직접 입력</p>
+                    <p class="tab-link" data-tab="tab-2">배송지 추가</p>
                 </div>
                 <!-- 저장된 배송지 선택 TAP -->
                 <div id="tab-1" class="tab-content current">
-
-                    <div style="border: 1px solid black">
-                        <c:choose>
-                            <c:when test="${member.memberDto.memberAddress == null}">
-                                <p>기본 배송지가 등록되어있지않습니다.</p>
-                                <button type="button" data-toggle="modal" data-target="#myModal" id="comment_update" value="" class="btn btn-danger">배송지 등록</button>
-                            </c:when>
-                            <c:otherwise>
-
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-
                     <c:choose>
-                        <c:when test="empty addrList">
-                            <p>배송지를 등록해주세요.</p>
+                        <c:when test="${member.memberDto.memberAddress.addressNum == null && addList[0].addressCheckMain != 'MAIN'}">
+                            <p style="float: left">기본 배송지</p>
+                            <br/>
+                            <h4 style="text-align: center; margin-top: 65px"><strong>배송지를 등록해주세요.</strong></h4>
+                            <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-default" style="font-weight: bold; color: darkgreen; padding: 3px; border: 2px outset; margin-left: 510px; margin-top: 20px">등록 하기</button>
+<%--                            <button type="button" data-toggle="modal" data-target="#myModal" id="comment_update" value="" class="btn btn-danger">배송지 등록</button>--%>
                         </c:when>
                         <c:otherwise>
-                            <p>배송지 선택(최근 배송지)</p>
+                            <p style="float: left">기본 배송지</p>
+                            <div style="margin-left: 1000px; margin-bottom: 10px">
+                            <button type="button" id="mainAddressUpdateBtn" class="btn btn-default" style="font-weight: bold; color: darkgreen; padding: 3px; border: 2px outset">수정</button>
+                            </div>
+                            <div class="arrdGroup alert alert-dismissible alert-warning">
+                                <div>
+                                    <input type="radio" name="addrconfirm" id="liston" class="liston" value="click">
+                                    <span>받는 사람 : ${addList[0].receiverName }</span>
+                                    <hr />
+                                    <input type="hidden" name="receiver_name" id="receiver_name" value="${member.memberDto.memberAddress.receiverName }" class="nameValue">
+                                    <h4>주소 : ${addList[0].receiverAddress }</h4>
+                                    <input type="hidden" name="receiver_address" id="receiver_address" value="${member.memberDto.memberAddress.receiverAddress }" class="addrValue">
+                                    <hr />
+                                    <h4>휴대전화 : ${addList[0].receiverPhone }</h4>
+                                    <input type="hidden" name="receiver_phone" id="receiver_phone" value="${member.memberDto.memberAddress.receiverPhone }" class="phoneValue">
+                                </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:choose>
+                        <c:when test="${empty addList}">
+                        </c:when>
+                        <c:otherwise>
+                            <br />
+                            <p>최근 배송지(추가된 배송지)</p>
                             <c:forEach var="addressList" items="${addList}" varStatus="vs">
-                                <br />
                                 <div class="arrdGroup alert alert-dismissible alert-warning">
                                     <div>
                                         <input type="radio" name="addrconfirm" id="liston${vs.getIndex()}" class="liston" value="click${vs.getIndex()}">
@@ -523,7 +538,7 @@
         let addressDetail = $('#addAddressModal3').val();
         let name = $('#addAddressModal_name').val();
         let phone = $('#addAddressModal_phone').val();
-        let receiverAddress = address + addressDetail;
+        let receiverAddress = address + " " + addressDetail;
         let memberEmail = "${member.memberDto.memberEmail }";
 
 
@@ -557,7 +572,6 @@
                     if(result==="등록 성공"){
                         alert("주소 등록 완료");
                         $('#myModal').modal('hide');
-                        // location.href = '/order/cart';
                         location.reload();
                     }
                     else if(result==="등록 실패"){
@@ -571,6 +585,45 @@
 
 
     }
+
+</script>
+
+<script>
+    $("#mainAddressUpdateBtn").click(function(){
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let address = $('#receiver_address').val();
+        let name = $('#receiver_name').val();
+        let phone = $('#receiver_phone').val();
+        let memberEmail = "${member.memberDto.memberEmail }";
+
+        $.ajax({
+            type:"POST",
+            url:"/order/updateAddress",
+            beforeSend : function (xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            data: {
+                memberEmail : memberEmail,
+                receiverAddress : address,
+                receiverName : name,
+                receiverPhone : phone
+            },
+            dataType:"text",
+            success:function(result){
+                if(result==="수정 성공"){
+                    alert("주소 수정 완료");
+                    location.reload();
+                }
+                else if(result==="수정 실패"){
+                    alert("주소 수정 실패");
+                }
+            }
+        });
+    });
+
 
 </script>
 

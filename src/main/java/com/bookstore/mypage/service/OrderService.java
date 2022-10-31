@@ -66,10 +66,15 @@ public class OrderService {
 
     public int registerAddress(AddressDto addressDto) {
 
-        String checkMAinAddress = "MAIN"; // 기본 배송지
-        addressDto.setCheckMainAddress(checkMAinAddress); // 기본 배송지로 설정
+        String addressCheckMain = "MAIN"; // 기본 배송지
+        addressDto.setAddressCheckMain(addressCheckMain); // 기본 배송지로 설정
 
         return orderMapper.registerAddress(addressDto);
+    }
+
+    public int updateAddress(AddressDto addressDto) {
+
+        return orderMapper.updateAddress(addressDto);
     }
 
 

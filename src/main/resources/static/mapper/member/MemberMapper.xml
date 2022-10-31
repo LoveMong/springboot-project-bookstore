@@ -9,11 +9,32 @@
         VALUES (#{memberName}, #{memberEmail}, #{memberPassword})
     </insert>
 
-    <select id="selectMemberByEmail" parameterType="String" resultType="com.bookstore.member.domain.MemberDto">
+    <select id="selectMemberByEmail" parameterType="String" resultMap="SelectMember">
         SELECT *
-        FROM member
-        WHERE member_email = #{email}
+        FROM member a
+                 LEFT OUTER JOIN address b
+                                 ON a.member_email = b.memberEmail AND address_checkMain = 'MAIN'
+        WHERE a.member_email = #{email}
     </select>
+
+    <resultMap id="SelectMember" type="com.bookstore.member.domain.MemberDto">
+        <result column="member_email" property="memberEmail"/>
+        <result column="member_name" property="memberName"/>
+        <result column="member_password" property="memberPassword"/>
+        <result column="member_role" property="memberRole"/>
+        <result column="member_rank" property="memberRank"/>
+        <result column="member_registerDate" property="memberRegisterDate"/>
+        <result column="member_point" property="memberPoint"/>
+        <collection property="memberAddress" resultMap="addressDto"/>
+    </resultMap>
+
+    <resultMap id="addressDto" type="com.bookstore.mypage.domain.AddressDto">
+        <result column="receiver_address" property="receiverAddress"/>
+        <result column="receiver_name" property="receiverName"/>
+        <result column="receiver_phone" property="receiverPhone"/>
+    </resultMap>
+
+
 
     <update id="updatePassword" parameterType="String">
         UPDATE member

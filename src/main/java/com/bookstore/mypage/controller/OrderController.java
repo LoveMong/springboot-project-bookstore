@@ -183,4 +183,26 @@ public class OrderController {
         return resultConfirm;
 
     }
+
+
+    @PostMapping("updateAddress")
+    @ResponseBody
+    public String updateAddress(AddressDto addressDto) {
+
+        String resultConfirm = "수정 성공";
+
+        try {
+            if (orderService.updateAddress(addressDto) != 1) {
+                throw new Exception("failed update");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultConfirm = "수정 실패";
+        }
+
+        return resultConfirm;
+
+    }
+
 }

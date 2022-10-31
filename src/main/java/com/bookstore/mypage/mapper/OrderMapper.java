@@ -28,4 +28,6 @@ public interface OrderMapper {
 
     int registerAddress(AddressDto addressDto);
 
+    int updateAddress(AddressDto addressDto);
+
 }

@@ -33,13 +33,19 @@
         SELECT *
         FROM address
         WHERE memberEmail = #{memberEmail}
-        ORDER BY IFNULL(address_registerDate, 0) DESC
+        ORDER BY IFNULL(address_checkMain, 0) DESC
     </select>
 
     <insert id="registerAddress" parameterType="com.bookstore.mypage.domain.AddressDto">
         INSERT INTO address(memberEmail, receiver_address, receiver_name, receiver_phone, address_checkMain)
-        VALUES (#{memberEmail}, #{receiverAddress}, #{receiverName}, #{receiverPhone}, #{checkMainAddress})
+        VALUES (#{memberEmail}, #{receiverAddress}, #{receiverName}, #{receiverPhone}, #{addressCheckMain})
     </insert>
+
+    <update id="updateAddress" parameterType="com.bookstore.mypage.domain.AddressDto">
+        UPDATE address
+        SET receiver_name = #{receiverName}, receiver_address = #{receiverAddress}, receiver_phone = #{receiverPhone}
+        WHERE memberEmail = #{memberEmail}
+    </update>
 
 
 
