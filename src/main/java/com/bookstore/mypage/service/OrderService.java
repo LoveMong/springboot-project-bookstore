@@ -76,9 +76,6 @@ public class OrderService {
 
     public int registerAddress(AddressDto addressDto) {
 
-        String addressCheckMain = "MAIN"; // 기본 배송지
-        addressDto.setAddressCheckMain(addressCheckMain); // 기본 배송지로 설정
-
         return orderMapper.registerAddress(addressDto);
     }
 

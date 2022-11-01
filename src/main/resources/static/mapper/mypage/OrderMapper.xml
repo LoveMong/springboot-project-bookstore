@@ -41,7 +41,7 @@
         SELECT *
         FROM address
         WHERE memberEmail = #{memberEmail} AND address_checkMain = 'ADDITION'
-        ORDER BY IFNULL(address_checkMain, 0) DESC
+        ORDER BY IFNULL(address_registerDate, 0) DESC
     </select>
 
     <insert id="registerAddress" parameterType="com.bookstore.mypage.domain.AddressDto">

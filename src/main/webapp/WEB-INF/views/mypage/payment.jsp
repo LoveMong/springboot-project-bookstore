@@ -103,52 +103,58 @@
                     </c:choose>
                 </div>
             </div>
-            <!-- 배송지 직접 입력 TAP -->
+
+            <!-- 배송지 추가 입력 TAP -->
             <div id="tab-2" class="tab-content">
 
-                <div style="margin-top: 50px" class="address_imput_1_wrap">
-                    <div class="address_input_1_box">
-                        <input class="address_input_1" name="memberAddr1"
-                               id="memberAddr1" readonly="readonly">
+                <div class="" style=" display: inline-table; margin-left: 224px;">
+                    <div class="addAddress">
+
+                        <table class="" style="margin-top: 25px; margin-bottom: 0px">
+                            <tr style="border-top: 0.02em solid black; border-bottom: 0.01em solid darkgray">
+                                <th class="success" style="font-weight: bold; background-color: lightgray; font-size: 20px; text-align: center; padding: 12px"> 우편 번호 </th>
+                                <td>
+                                    <input class="address_input_1" id="addedAddressCode" readonly="readonly" style="border: none; font-size: 20px; margin-left: 10px" size=20>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 0.01em solid darkgray">
+                                <th style="font-weight: bold; background-color: lightgray; font-size: 20px; text-align: center; padding: 12px"> 기본 주소 </th>
+                                <td>
+                                    <input class="address_input_2" id="addedAddress" readonly="readonly" style="border: none; font-size: 20px; margin-left: 10px" maxlength=45 size=45>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 0.05em solid black">
+                                <th style="font-weight: bold; background-color: lightgray; font-size: 20px; text-align: center; padding: 12px "> 상세 주소 </th>
+                                <td>
+                                    <input class="address_input_3" id="addedAddressDetail" readonly="readonly" style="border: none; margin-left: 10px; font-size: 20px" maxlength=45 size=45>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="margin-bottom: 50px; float: right" class="address_button" onclick="execution_daum_address()">
+                            <br /> <span type="text" class="btn btn-outline-primary">주소 찾기</span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div style="margin-top: 100px">
+                            <table style="height: 100px" class="">
+                                <tr style="border-top: 0.065em solid black; border-bottom: 0.01em solid darkgray">
+                                    <th style="font-weight: bold; background-color: lightgray; font-size: 20px; text-align: center; padding: 12px; ">이름</th>
+                                    <td><input type="text" id="addedAddressName" style="border: none; font-size: 20px; margin-left: 10px" maxlength=45 size=45>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 0.05em solid black">
+                                    <th style="font-weight: bold; background-color: lightgray; font-size: 20px; text-align: center; padding: 12px">휴대전화</th>
+                                    <td><input type="text" id="addedAddressPhone" style="border: none; font-size: 20px; margin-left: 10px" maxlength=45 size=45>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
+                    <br/><br/>
                 </div>
-
-                <div style="margin-top: 5px" class="address_imput_2_wrap">
-                    <div class="address_input_2_box">
-                        <input class="address_input_2" name="memberAddr2"
-                               id="memberAddr2" readonly="readonly">
-                    </div>
+                <div class="modal-footer" style=" width: 53%; margin-left: 225px;">
+                    <button type="button" class="btn btn-default" onclick="registerAddedAddress()">등록</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                 </div>
-
-                <div style="margin-top: 5px" class="address_imput_3_wrap">
-                    <div class="address_input_3_box">
-                        <input class="address_input_3" name="memberAddr3"
-                               id="memberAddr3" readonly="readonly">
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 50px" class="address_button" onclick="execution_daum_address()">
-                    <br /> <span type="text" class="btn btn-outline-primary">주소 찾기</span>
-                    <div class="clearfix"></div>
-                </div>
-
-                <table style="height: 100px">
-                    <colgroup>
-                        <col width="30%">
-                        <col width="*">
-                    </colgroup>
-                    <tr class="">
-                        <td>받는이</td>
-                        <td><input type="text" name="orderRec" id="orderRec">
-                        </td>
-                    </tr>
-                    <tr class="">
-                        <td>휴대전화</td>
-                        <td><input type="text" name="orderPhone" id="orderPhone">
-                        </td>
-                    </tr>
-                </table>
-                <div style="margin-top: 30px"><input type="button" class="btn btn-outline-primary" id="addAddr" value="등록"></div>
             </div>
 
             <div id="main_list" style="margin-top: 200px; margin-bottom: 100px">
@@ -615,6 +621,7 @@
         let phone = $('#addAddressModal_phone').val();
         let receiverAddress = address + " " + addressDetail;
         let memberEmail = '<c:out value="${member.memberDto.memberEmail }"/>';
+        let addressCheckMain = 'MAIN';
         <%--"${member.memberDto.memberEmail }";--%>
 
 
@@ -641,7 +648,74 @@
                     memberEmail : memberEmail,
                     receiverAddress : receiverAddress,
                     receiverName : name,
-                    receiverPhone : phone
+                    receiverPhone : phone,
+                    addressCheckMain : addressCheckMain
+                },
+                dataType:"text",
+                success:function(result){
+                    if(result==="등록 성공"){
+                        alert("주소 등록 완료");
+                        $('#myModal').modal('hide');
+                        location.reload();
+                    }
+                    else if(result==="등록 실패"){
+                        let msg='실패했습니다.'
+                        alert(msg);
+                    }
+                }
+            });
+
+        }
+
+
+    }
+
+</script>
+
+<script>
+    <%-- 주소 추가 등록 script--%>
+
+    function registerAddedAddress() {
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let postCode = $('#addedAddressCode').val(); // 우편 번호
+        let address = $('#addedAddress').val(); // 기본 주소
+        let addressDetail = $('#addedAddressDetail').val(); // 상세 주소
+        let name = $('#addedAddressName').val();
+        let phone = $('#addedAddressPhone').val();
+        let receiverAddress = address + " " + addressDetail;
+        let memberEmail = '<c:out value="${member.memberDto.memberEmail }"/>';
+        let addressCheckMain = 'ADDITION';
+        <%--"${member.memberDto.memberEmail }";--%>
+
+
+        if (address === null) {
+            alert("주소를 입력해주세요.");
+            return false;
+        } else if (addressDetail === null || addressDetail === "") {
+            alert("상세주소를 입력해주세요.");
+            return false;
+        } else if (name === null || name === "") {
+            alert("이름을 입력해주세요.");
+            return false;
+        } else if (phone === null) {
+            alert("핸드폰 번호를 입력해주세요.");
+            return false;
+        } else {
+            $.ajax({
+                type:"POST",
+                url:"/order/registerAddress",
+                beforeSend : function (xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                data: {
+                    memberEmail : memberEmail,
+                    receiverAddress : receiverAddress,
+                    receiverName : name,
+                    receiverPhone : phone,
+                    addressCheckMain : addressCheckMain
                 },
                 dataType:"text",
                 success:function(result){
