@@ -23,11 +23,15 @@ public interface OrderMapper {
     // 도서 정보 검색
     CartDto searchBookByBookNum(int bookNum);
 
-    // 고객 주소 정보 검색
-    List<AddressDto> searchAddressByMemberEmail(String memberEmail);
+    // 기본 배송주소 정보 검색
+    AddressDto searchMainAddressByMemberEmail(String memberEmail);
+
+    // 추가된 배송주소 정보 검색
+    List<AddressDto> searchAddedAddressByMemberEmail(String memberEmail);
 
     int registerAddress(AddressDto addressDto);
 
+    // 기본 배송주소 수정
     int updateAddress(AddressDto addressDto);
 
 }

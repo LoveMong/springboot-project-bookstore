@@ -133,8 +133,8 @@ public class OrderController {
 
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
 
-        List<AddressDto> addressList = orderService.searchAddressByMemberEmail(memberEmail);
-
+        AddressDto mainAddress = orderService.searchMainAddressByMemberEmail(memberEmail); // 메인 배송주소 검색
+        List<AddressDto> AddedAddressList = orderService.searchAddedAddressByMemberEmail(memberEmail); // 추가된 배송주소 검색
 
         List<CartDto> cartInfoList = new ArrayList<>();
 
@@ -156,7 +156,8 @@ public class OrderController {
 
         }
 
-        model.addAttribute("addList", addressList);
+        model.addAttribute("mainAddress", mainAddress);
+        model.addAttribute("addedAddress", AddedAddressList);
         model.addAttribute("list", cartInfoList);
 
         return "/mypage/payment";
@@ -185,6 +186,11 @@ public class OrderController {
     }
 
 
+    /**
+     * 기본 배송주소 수정
+     * @param addressDto 수정할 주소 정보
+     * @return 수정 성공 여부
+     */
     @PostMapping("updateAddress")
     @ResponseBody
     public String updateAddress(AddressDto addressDto) {

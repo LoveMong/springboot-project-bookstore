@@ -50,7 +50,7 @@
                 <!-- 저장된 배송지 선택 TAP -->
                 <div id="tab-1" class="tab-content current">
                     <c:choose>
-                        <c:when test="${member.memberDto.memberAddress.addressNum == null && addList[0].addressCheckMain != 'MAIN'}">
+                        <c:when test="${mainAddress == null}">
                             <p style="float: left">기본 배송지</p>
                             <br/>
                             <h4 style="text-align: center; margin-top: 65px"><strong>배송지를 등록해주세요.</strong></h4>
@@ -59,32 +59,32 @@
                         </c:when>
                         <c:otherwise>
                             <p style="float: left">기본 배송지</p>
-                            <div style="margin-left: 1000px; margin-bottom: 10px">
-                            <button type="button" id="mainAddressUpdateBtn" class="btn btn-default" style="font-weight: bold; color: darkgreen; padding: 3px; border: 2px outset">수정</button>
+                            <div style="margin-left: 80px; margin-bottom: 10px">
+                            <button type="button" id="mainAddressUpdateBtn" class="btn btn-default" style="font-weight: bold; color: darkgreen; padding: 3px; border: 2px outset" data-toggle="modal" data-target="#updateAddressModal">수정</button>
                             </div>
                             <div class="arrdGroup alert alert-dismissible alert-warning">
                                 <div>
                                     <input type="radio" name="addrconfirm" id="liston" class="liston" value="click">
-                                    <span>받는 사람 : ${addList[0].receiverName }</span>
+                                    <span>받는 사람 : ${mainAddress.receiverName }</span>
                                     <hr />
-                                    <input type="hidden" name="receiver_name" id="receiver_name" value="${member.memberDto.memberAddress.receiverName }" class="nameValue">
-                                    <h4>주소 : ${addList[0].receiverAddress }</h4>
-                                    <input type="hidden" name="receiver_address" id="receiver_address" value="${member.memberDto.memberAddress.receiverAddress }" class="addrValue">
+                                    <input type="hidden" name="receiver_name" id="receiver_name" value="${mainAddress.receiverName }" class="nameValue">
+                                    <h4>주소 : ${mainAddress.receiverAddress }</h4>
+                                    <input type="hidden" name="receiver_address" id="receiver_address" value="${mainAddress.receiverAddress }" class="addrValue">
                                     <hr />
-                                    <h4>휴대전화 : ${addList[0].receiverPhone }</h4>
-                                    <input type="hidden" name="receiver_phone" id="receiver_phone" value="${member.memberDto.memberAddress.receiverPhone }" class="phoneValue">
+                                    <h4>휴대전화 : ${mainAddress.receiverPhone }</h4>
+                                    <input type="hidden" name="receiver_phone" id="receiver_phone" value="${mainAddress.receiverPhone }" class="phoneValue">
                                 </div>
                             </div>
                         </c:otherwise>
                     </c:choose>
 
                     <c:choose>
-                        <c:when test="${empty addList}">
+                        <c:when test="${empty addedAddress}">
                         </c:when>
                         <c:otherwise>
                             <br />
                             <p>최근 배송지(추가된 배송지)</p>
-                            <c:forEach var="addressList" items="${addList}" varStatus="vs">
+                            <c:forEach var="addressList" items="${addedAddress}" varStatus="vs">
                                 <div class="arrdGroup alert alert-dismissible alert-warning">
                                     <div>
                                         <input type="radio" name="addrconfirm" id="liston${vs.getIndex()}" class="liston" value="click${vs.getIndex()}">
@@ -270,11 +270,13 @@
     <div class="clearfix"></div>
 </div>
 
+
+<%-- 배송지 등록 Form Modal --%>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content" style="width: 108%">
             <div class="modal-header">
-                <h4 class="modal-title">배송지 등록</h4>
+                <h4 class="modal-title" id="modalName">배송지 등록</h4>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
             <div class="modal-body">
@@ -323,6 +325,78 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" onclick="registerAddress()">등록</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%-- 기본 배송주소 변경 Form Modal --%>
+<div class="modal fade" id="updateAddressModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 108%">
+            <div class="modal-header">
+                <h4 class="modal-title" id="">배송지 수정</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="addAddress">
+
+
+                    <table >
+                        <tr style="border-top: 0.09em solid black;">
+                            <th class="success" style="font-weight: bold; background-color: lightgray;  padding: 8px; border-bottom: 0.01em solid black;"> 이전 주소 </th>
+                            <td style="border: none; width: 426px; border-bottom: 0.01em solid; height: 40px; padding: 5px;">
+                                <input class="address_input_1" id="beforeAddress" readonly="readonly" style="border: none; width: 410px" size=20 value="">
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <p style="margin-bottom: 5px">새로운 주소 입력</p>
+                    <table class="table" style="margin-bottom: 0px">
+                        <tr style="border-top: 0.09em solid black">
+                            <th class="success" style="font-weight: bold; background-color: lightgray;"> 우편 번호 </th>
+                            <td>
+                                <input class="address_input_1" id="updateAddressModal1" readonly="readonly" style="border: none" size=20>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: bold; background-color: lightgray"> 기본 주소 </th>
+                            <td>
+                                <input class="address_input_2" id="updateAddressModal2" readonly="readonly" style="border: none" maxlength=45 size=45>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 0.05em solid black">
+                            <th style="font-weight: bold; background-color: lightgray; "> 상세 주소 </th>
+                            <td>
+                                <input class="address_input_3" id="updateAddressModal3" readonly="readonly" style="border: none" maxlength=45 size=45>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="margin-bottom: 50px; float: right" class="address_button" onclick="execution_daum_address()">
+                        <br /> <span type="text" class="btn btn-outline-primary">주소 찾기</span>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div style="margin-top: 100px">
+                        <table style="height: 100px" class="table">
+                            <tr style="border-top: 0.065em solid black">
+                                <th style="font-weight: bold; background-color: lightgray">이름</th>
+                                <td><input type="text" id="updateAddressModal_name" style="border: none" maxlength=45 size=45>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 0.05em solid black">
+                                <th style="font-weight: bold; background-color: lightgray; ">휴대전화</th>
+                                <td><input type="text" id="updateAddressModal_phone" style="border: none" maxlength=45 size=45>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br/><br/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="updateMainAddressBtn">수정</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -534,12 +608,14 @@
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
 
-        let address = $('#addAddressModal2').val();
-        let addressDetail = $('#addAddressModal3').val();
+        let postCode = $('#addAddressModal1').val(); // 우편 번호
+        let address = $('#addAddressModal2').val(); // 기본 주소
+        let addressDetail = $('#addAddressModal3').val(); // 상세 주소
         let name = $('#addAddressModal_name').val();
         let phone = $('#addAddressModal_phone').val();
         let receiverAddress = address + " " + addressDetail;
-        let memberEmail = "${member.memberDto.memberEmail }";
+        let memberEmail = '<c:out value="${member.memberDto.memberEmail }"/>';
+        <%--"${member.memberDto.memberEmail }";--%>
 
 
         if (address === null) {
@@ -588,44 +664,78 @@
 
 </script>
 
+
 <script>
-    $("#mainAddressUpdateBtn").click(function(){
+    <%-- 기본 배송주소 변경 script --%>
 
-        let token = $("meta[name='_csrf']").attr("content");
-        let header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ready(function(){
 
-        let address = $('#receiver_address').val();
-        let name = $('#receiver_name').val();
-        let phone = $('#receiver_phone').val();
-        let memberEmail = "${member.memberDto.memberEmail }";
+        let beforeAddress = '<c:out value="${mainAddress.receiverAddress}"/>';
+        let name = '<c:out value="${mainAddress.receiverName}"/>';
+        let phone = '<c:out value="${mainAddress.receiverPhone}"/>';
 
-        $.ajax({
-            type:"POST",
-            url:"/order/updateAddress",
-            beforeSend : function (xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            data: {
-                memberEmail : memberEmail,
-                receiverAddress : address,
-                receiverName : name,
-                receiverPhone : phone
-            },
-            dataType:"text",
-            success:function(result){
-                if(result==="수정 성공"){
-                    alert("주소 수정 완료");
-                    location.reload();
+        $('#updateAddressModal').on('shown.bs.modal', function (e) {
+
+            $('#beforeAddress').val(beforeAddress);
+            $('#updateAddressModal_name').val(name);
+            $('#updateAddressModal_phone').val(phone);
+
+            $('#updateMainAddressBtn').click(function(){
+
+                let token = $("meta[name='_csrf']").attr("content");
+                let header = $("meta[name='_csrf_header']").attr("content");
+
+                let address = $('#updateAddressModal2').val(); // 기본 주소
+                let addressDetail = $('#updateAddressModal3').val(); // 상세 주소
+                let name = $('#updateAddressModal_name').val();
+                let phone = $('#updateAddressModal_phone').val();
+                let receiverAddress = address + " " + addressDetail;
+                let memberEmail = '<c:out value="${member.memberDto.memberEmail }"/>';
+
+                if (address === null || address === "") {
+                    alert("주소를 입력해주세요.");
+                    return false;
+                } else if (addressDetail === null || addressDetail === "") {
+                    alert("상세주소를 입력해주세요.");
+                    return false;
+                } else if (name === null || name === "") {
+                    alert("이름을 입력해주세요.");
+                    return false;
+                } else if (phone === null) {
+                    alert("핸드폰 번호를 입력해주세요.");
+                    return false;
+                } else {
+                    $.ajax({
+                        type:"POST",
+                        url:"/order/updateAddress",
+                        beforeSend : function (xhr){
+                            xhr.setRequestHeader(header, token);
+                        },
+                        data: {
+                            memberEmail : memberEmail,
+                            receiverAddress : receiverAddress,
+                            receiverName : name,
+                            receiverPhone : phone
+                        },
+                        dataType:"text",
+                        success:function(result){
+                            if(result==="수정 성공"){
+                                alert("주소 수정 완료");
+                                location.reload();
+                            }
+                            else if(result==="수정 실패"){
+                                alert("주소 수정 실패");
+                            }
+                        }
+                    });
+
                 }
-                else if(result==="수정 실패"){
-                    alert("주소 수정 실패");
-                }
-            }
+
+            });
+
         });
     });
 
-
 </script>
-
 
 </html>

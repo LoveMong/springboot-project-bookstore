@@ -56,12 +56,22 @@ public class OrderService {
 
 
     /**
-     * 고객 주소 정보 검색
+     * 기본 배송주소 정보 검색
      * @param memberEmail 고객 아이디(이메일)
      * @return 등록된 주소리스트
      */
-    public List<AddressDto> searchAddressByMemberEmail(String memberEmail) {
-        return orderMapper.searchAddressByMemberEmail(memberEmail);
+    public AddressDto searchMainAddressByMemberEmail(String memberEmail) {
+        return orderMapper.searchMainAddressByMemberEmail(memberEmail);
+    }
+
+
+    /**
+     * 추가된 배송주소 정보 검색
+     * @param memberEmail 고객 아이디(이메일)
+     * @return 등록된 주소리스트
+     */
+    public List<AddressDto> searchAddedAddressByMemberEmail(String memberEmail) {
+        return orderMapper.searchAddedAddressByMemberEmail(memberEmail);
     }
 
     public int registerAddress(AddressDto addressDto) {
@@ -72,6 +82,12 @@ public class OrderService {
         return orderMapper.registerAddress(addressDto);
     }
 
+
+    /**
+     * 기본 배송주소 수정
+     * @param addressDto 수정할 주소 정보
+     * @return 수정 성공 여부
+     */
     public int updateAddress(AddressDto addressDto) {
 
         return orderMapper.updateAddress(addressDto);
