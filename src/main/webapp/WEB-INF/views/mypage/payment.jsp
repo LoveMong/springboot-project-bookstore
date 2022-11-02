@@ -67,12 +67,12 @@
                                     <input type="radio" name="addrconfirm" id="liston" class="liston" value="click">
                                     <span>받는 사람 : ${mainAddress.receiverName }</span>
                                     <hr />
-                                    <input type="hidden" name="receiver_name" id="receiver_name" value="${mainAddress.receiverName }" class="nameValue">
+                                    <input type="hidden" name="receiver_name" id="receiver_name" value="" class="nameValue">
                                     <h4>주소 : ${mainAddress.receiverAddress }</h4>
-                                    <input type="hidden" name="receiver_address" id="receiver_address" value="${mainAddress.receiverAddress }" class="addrValue">
+                                    <input type="hidden" name="receiver_address" id="receiver_address" value="" class="addrValue">
                                     <hr />
                                     <h4>휴대전화 : ${mainAddress.receiverPhone }</h4>
-                                    <input type="hidden" name="receiver_phone" id="receiver_phone" value="${mainAddress.receiverPhone }" class="phoneValue">
+                                    <input type="hidden" name="receiver_phone" id="receiver_phone" value="" class="phoneValue">
                                 </div>
                             </div>
                         </c:otherwise>
@@ -83,19 +83,17 @@
                         </c:when>
                         <c:otherwise>
                             <br />
-                            <p>최근 배송지(추가된 배송지)</p>
+                            <br />
+                            <p style="margin-top: 20px">최근 배송지(추가된 배송지)</p>
                             <c:forEach var="addressList" items="${addedAddress}" varStatus="vs">
                                 <div class="arrdGroup alert alert-dismissible alert-warning">
                                     <div>
                                         <input type="radio" name="addrconfirm" id="liston${vs.getIndex()}" class="liston" value="click${vs.getIndex()}">
                                         <span>받는 사람 : ${addressList.receiverName }</span>
                                         <hr />
-                                        <input type="hidden" name="receiver_name" id="receiver_name${vs.getIndex()}" value="${addressList.receiverName }" class="nameValue">
                                         <h4>주소 : ${addressList.receiverAddress }</h4>
-                                        <input type="hidden" name="rec_addr" id="rec_addr${vs.getIndex()}" value="${addressList.receiverAddress }" class="addrValue">
                                         <hr />
                                         <h4>휴대전화 : ${addressList.receiverPhone }</h4>
-                                        <input type="hidden" name="user_phone" id="user_phone${vs.getIndex()}" value="${addressList.receiverPhone }" class="phoneValue">
                                     </div>
                                 </div>
                             </c:forEach>
@@ -259,16 +257,13 @@
 
 
                     <div class="clearfix"></div>
-                    </li>
                 </ul>
             </div>
             <div id="final_buy_check">
-                <input type="checkbox" name="checkbox" class="btn btn-light" id="agree">
-                주문내역 확인 동의<strong><필수></strong>
+                <input type="checkbox" name="checkbox" class="btn btn-light" id="agree">주문내역 확인 동의<strong><필수></strong>
             </div>
             <div id="final_buy_button">
-                <input type="submit" id="lastPayment"
-                       class="btn btn-outline-danger" value="결제하기" >
+                <input type="submit" id="lastPayment" class="btn btn-outline-danger" value="결제하기" >
             </div>
         </div>
     </form>
@@ -416,7 +411,8 @@
 
 
 <script>
-    // 배송 정보 [기본/입력] 설정
+    <%-- 배송정보 선택 tab[저장정보/배송지 추가] srcript--%>
+
     $('.tab-link').click(function () {
         var tab_id = $(this).attr('data-tab');
 
@@ -430,7 +426,8 @@
 </script>
 
 <script>
-    // daum_주소 검색 api
+    <%-- daum_주소 검색 api script --%>
+
     function execution_daum_address(){
 
         new daum.Postcode({
@@ -482,55 +479,22 @@
 
 
 <script>
+    <%-- 배송지 선택 script --%>
 
-    let phone;
-    let addr;
-    let name;
-
-    // 배송지 등록
-    $("#addAddr").click(function(){
-
-        const userID = $('#user_id').val();
-        const name = $('#orderRec').val();
-        const phone = $('#orderPhone').val();
-        const addr = $('#memberAddr1').val() + $('#memberAddr2').val()
-
-
-        console.log("userID : "+userID);
-        console.log("name : "+name);
-        console.log("phone : "+phone);
-        console.log("addr : "+addr);
-
-        $.ajax({
-            url: "regiaddr",
-            type: "POST",
-            data:{
-                "userID" : userID,
-                "name" : name,
-                "phone" : phone,
-                "addr" : addr
-
-            },
-            success: function(data) {
-                alert("배송지가 등록되었습니다.");
-                location.reload();
-
-            }
-        });
-    });
-
-    // 배송지 선택
     $('.liston').click(function(){
 
         phone = $(this).parent().find('.phoneValue').val();
         name = $(this).parent().find('.nameValue').val();
         addr = $(this).parent().find('.addrValue').val();
 
+        $('#receiver_address').val(addr);
+        $('#receiver_name').val(name);
+        $('#receiver_phone').val(phone);
+
         console.log("name : "+name);
         console.log("phone : "+phone);
 
     });
-
 </script>
 
 

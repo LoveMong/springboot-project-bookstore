@@ -72,6 +72,12 @@ public class OrderController {
     }
 
 
+    /**
+     *
+     * @param model
+     * @param principalDetails
+     * @return
+     */
     @GetMapping("/cart")
     public String cart(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
@@ -98,6 +104,11 @@ public class OrderController {
     }
 
 
+    /**
+     * 장바구니 내 선택품목 삭제
+     * @param list
+     * @return
+     */
     @PostMapping("/deleteCart")
     @ResponseBody
     public String deleteCart(@RequestParam("selectNum") List<Integer> list) {
@@ -126,6 +137,13 @@ public class OrderController {
     }
 
 
+    /**
+     * 결제 정보 확인 및 진행 페이지로 이동
+     * @param order 장바구니 내 주문 선택 품목 정보 리스트
+     * @param model 고객 배송주소지 정보 및 결제 예정 도서 정보
+     * @param principalDetails 로그인된 고객 정보
+     * @return 결제 진행 페이지 화면
+     */
     @PostMapping("/payInfo")
     public String payInfo(@ModelAttribute(value = "OrderDto") OrderDto order, Model model,
                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -134,7 +152,7 @@ public class OrderController {
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
 
         AddressDto mainAddress = orderService.searchMainAddressByMemberEmail(memberEmail); // 메인 배송주소 검색
-        List<AddressDto> AddedAddressList = orderService.searchAddedAddressByMemberEmail(memberEmail); // 추가된 배송주소 검색
+        List<AddressDto> addedAddressList = orderService.searchAddedAddressByMemberEmail(memberEmail); // 추가된 배송주소 검색
 
         List<CartDto> cartInfoList = new ArrayList<>();
 
@@ -157,7 +175,7 @@ public class OrderController {
         }
 
         model.addAttribute("mainAddress", mainAddress);
-        model.addAttribute("addedAddress", AddedAddressList);
+        model.addAttribute("addedAddress", addedAddressList);
         model.addAttribute("list", cartInfoList);
 
         return "/mypage/payment";
@@ -165,6 +183,11 @@ public class OrderController {
     }
 
 
+    /**
+     * 주소 등록(기본 배송지 / 추가 배송지)
+     * @param addressDto 등록할 배송주소 정보
+     * @return 등록 성공 여부
+     */
     @PostMapping("registerAddress")
     @ResponseBody
     public String registerAddress(AddressDto addressDto) {
