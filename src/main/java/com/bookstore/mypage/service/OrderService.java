@@ -4,11 +4,13 @@ import com.bookstore.admin.domain.BookDto;
 import com.bookstore.home.mapper.HomeMapper;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
+import com.bookstore.mypage.domain.OrderDto;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -80,6 +82,38 @@ public class OrderService {
      */
     public CartDto searchBookByBookNum(int bookNum) {
         return orderMapper.searchBookByBookNum(bookNum);
+    }
+
+
+    /**
+     * 장바구니의 도서 중 구매 선택된 도서 정보 확인
+     * @param order 장바구니에 담긴 도서 정보(도서이름, 판매가, 구매 수량 등)
+     * @return 도서 정보 리스트
+     */
+    public List<CartDto> makeCartInfoList(OrderDto order) {
+
+        List<CartDto> cartInfoList = new ArrayList<>();
+
+        for (int i = 0; i < order.getCartInfoList().size(); i++) {
+
+            String checkBox = order.getCartInfoList().get(i).getCheckBox();
+
+            if (checkBox != null) {
+
+                int bookNum = order.getCartInfoList().get(i).getBookNum();
+
+                CartDto cartInfo = orderMapper.searchBookByBookNum(bookNum);
+                cartInfo.setBookOrderCount(order.getCartInfoList().get(i).getBookOrderCount());
+                cartInfo.setCartNum(order.getCartInfoList().get(i).getCartNum());
+
+                cartInfoList.add(cartInfo);
+
+            }
+
+        }
+
+        return cartInfoList;
+
     }
 
 

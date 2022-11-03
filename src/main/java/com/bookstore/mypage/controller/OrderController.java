@@ -114,7 +114,7 @@ public class OrderController {
 
     /**
      * 결제 정보 확인 및 진행 페이지로 이동
-     * @param order 장바구니 내 주문 선택 품목 정보 리스트
+     * @param order 장바구니 내 도서 정보 리스트
      * @param model 고객 배송주소지 정보 및 결제 예정 도서 정보
      * @param principalDetails 로그인된 고객 정보
      * @return 결제 진행 페이지 화면
@@ -123,31 +123,11 @@ public class OrderController {
     public String payInfo(@ModelAttribute(value = "OrderDto") OrderDto order, Model model,
                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
 
         AddressDto mainAddress = orderService.searchMainAddressByMemberEmail(memberEmail); // 메인 배송주소 검색
         List<AddressDto> addedAddressList = orderService.searchAddedAddressByMemberEmail(memberEmail); // 추가된 배송주소 검색
-
-        List<CartDto> cartInfoList = new ArrayList<>();
-
-        for (int i = 0; i < order.getCartInfoList().size(); i++) {
-
-            String checkBox = order.getCartInfoList().get(i).getCheckBox();
-
-            if (checkBox != null) {
-
-                int bookNum = order.getCartInfoList().get(i).getBookNum();
-
-                CartDto cartInfo = orderService.searchBookByBookNum(bookNum);
-                cartInfo.setBookOrderCount(order.getCartInfoList().get(i).getBookOrderCount());
-                cartInfo.setCartNum(order.getCartInfoList().get(i).getCartNum());
-
-                cartInfoList.add(cartInfo);
-
-            }
-
-        }
+        List<CartDto> cartInfoList = orderService.makeCartInfoList(order);
 
         model.addAttribute("mainAddress", mainAddress);
         model.addAttribute("addedAddress", addedAddressList);
