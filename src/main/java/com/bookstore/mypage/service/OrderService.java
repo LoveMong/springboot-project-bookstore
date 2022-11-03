@@ -1,5 +1,7 @@
 package com.bookstore.mypage.service;
 
+import com.bookstore.admin.domain.BookDto;
+import com.bookstore.home.mapper.HomeMapper;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.mapper.OrderMapper;
@@ -14,6 +16,8 @@ import java.util.List;
 public class OrderService {
 
     private final OrderMapper orderMapper;
+
+    private final HomeMapper homeMapper;
 
 
     /**
@@ -32,7 +36,21 @@ public class OrderService {
      * @return 장바구니에 담긴 품목 리스트
      */
     public List<CartDto> readCartInfo(String memberEmail) {
-        return orderMapper.readCartInfo(memberEmail);
+
+        List<CartDto> cartList = orderMapper.readCartInfo(memberEmail);
+
+        for (int i = 0; i < cartList.size(); i++) {
+
+            int boonNum = cartList.get(i).getBookNum();
+
+            BookDto bookInfo = homeMapper.bookSearchDetail(boonNum);
+
+            cartList.get(i).setBookTitle(bookInfo.getBookTitle());
+            cartList.get(i).setBookPrice(bookInfo.getBookPrice());
+            cartList.get(i).setBookThumbUrl(bookInfo.getBookThumbUrl());
+
+        }
+        return cartList;
     }
 
 

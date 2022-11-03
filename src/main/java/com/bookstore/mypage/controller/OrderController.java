@@ -34,7 +34,6 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    private final HomeService homeService;
 
 
     /**
@@ -73,30 +72,15 @@ public class OrderController {
 
 
     /**
-     *
-     * @param model
-     * @param principalDetails
-     * @return
+     * 장바구니 조회
+     * @param model 장바구니에 담긴 도서 정보 리스트
+     * @param principalDetails 로그인된 고객 정보
+     * @return 장바구니 화면
      */
     @GetMapping("/cart")
     public String cart(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        log.info("memberEmail : " + principalDetails.getMemberDto().getMemberEmail());
-
         List<CartDto> cartList = orderService.readCartInfo(principalDetails.getMemberDto().getMemberEmail());
-
-        for (int i = 0; i < cartList.size(); i++) {
-
-            int boonNum = cartList.get(i).getBookNum();
-
-            BookDto bookInfo = homeService.bookSearchDetail(boonNum);
-
-            cartList.get(i).setBookTitle(bookInfo.getBookTitle());
-            cartList.get(i).setBookPrice(bookInfo.getBookPrice());
-            cartList.get(i).setBookThumbUrl(bookInfo.getBookThumbUrl());
-
-        }
-
         model.addAttribute("cartList", cartList);
 
         return "/mypage/cart";
