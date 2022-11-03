@@ -235,8 +235,6 @@
 					} else{
 						alert(result);
 					}
-				},error:function(result){
-					alert("error");
 				}
 			});
 

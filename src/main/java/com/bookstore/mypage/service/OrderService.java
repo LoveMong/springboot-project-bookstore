@@ -5,6 +5,7 @@ import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,11 +38,20 @@ public class OrderService {
 
     /**
      * 장바구니 선택된 품목 삭제
-     * @param cartNum 품목 번호
-     * @return 삭제 성공 여부(성공 시 1 반환)
+     * @param list
+     * @return
+     * @throws Exception
      */
-    public int deleteCartInfo(int cartNum) {
-        return orderMapper.deleteCartInfo(cartNum);
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCartInfo(List<Integer> list) throws Exception {
+
+        for (int num : list) {
+
+            if (orderMapper.deleteCartInfo(num) != 1) {
+                throw new Exception("DEL_ERR");
+            }
+
+        }
     }
 
 

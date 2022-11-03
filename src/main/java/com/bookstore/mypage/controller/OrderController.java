@@ -104,32 +104,23 @@ public class OrderController {
     }
 
 
+
     /**
      * 장바구니 내 선택품목 삭제
-     * @param list
-     * @return
+     * @param list 선택 품목(도서 번호) 리스트
+     * @return 삭제 성공 여부
      */
     @PostMapping("/deleteCart")
     @ResponseBody
-    public String deleteCart(@RequestParam("selectNum") List<Integer> list) {
+    public String deleteCart(@RequestParam("selectNum") List<Integer> list) throws Exception {
 
-        log.info("list : " + list);
+        String resultConfirm = "삭제 성공";
 
-        String resultConfirm = "";
-
-        for (int num : list) {
-
-            try {
-                if (orderService.deleteCartInfo(num) != 1) {
-                    throw new Exception("DEL_ERR");
-                } else {
-                    resultConfirm = "삭제 성공";
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                resultConfirm = "삭제 실패";
-            }
-
+        try {
+            orderService.deleteCartInfo(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultConfirm = "삭제 실패";
         }
 
         return resultConfirm;
