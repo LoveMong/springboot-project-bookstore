@@ -44,16 +44,44 @@
         ORDER BY IFNULL(address_registerDate, 0) DESC
     </select>
 
+    <!-- 배송주소 등록 -->
     <insert id="registerAddress" parameterType="com.bookstore.mypage.domain.AddressDto">
         INSERT INTO address(memberEmail, receiver_address, receiver_name, receiver_phone, address_checkMain)
         VALUES (#{memberEmail}, #{receiverAddress}, #{receiverName}, #{receiverPhone}, #{addressCheckMain})
     </insert>
 
+    <!-- 배송주소 수정 -->
     <update id="updateAddress" parameterType="com.bookstore.mypage.domain.AddressDto">
         UPDATE address
         SET receiver_name = #{receiverName}, receiver_address = #{receiverAddress}, receiver_phone = #{receiverPhone}
         WHERE memberEmail = #{memberEmail}
     </update>
+
+    <!-- 도서 주문 정보 등록   -->
+    <insert id="registerOrderInfo" parameterType="com.bookstore.mypage.domain.OrderDto">
+        INSERT INTO `order`(book_num, book_orderCount, member_email, member_address)
+        VALUES (#{bookNum}, #{bookOrderCount}, #{memberEmail}, #{memberAddress});
+    </insert>
+
+    <!-- 도서 판매량 및 재고 업데이트 -->
+    <update id="updateBookInfo" parameterType="com.bookstore.mypage.domain.OrderDto">
+        UPDATE book
+        SET book_sellCount = book_sellCount + #{bookOrderCount}, book_stock = book_stock - #{bookOrderCount}
+        WHERE book_num = #{bookNum}
+    </update>
+
+    <!-- 고객 포인트 수정 -->
+    <update id="updateMemberPointInfo" parameterType="com.bookstore.mypage.domain.PayInfoDto">
+        UPDATE member
+        SET member_point = member_point - #{totalPrice}
+        WHERE member_email = #{memberEmail}
+    </update>
+
+    <!-- 포인트 사용 내역 등록 -->
+    <insert id="registerPointUse" parameterType="com.bookstore.mypage.domain.PayInfoDto">
+        INSERT INTO point(member_Email, point_use, point_current)
+        VALUES (#{memberEmail}, #{totalPrice}, #{memberPoint})
+    </insert>
 
 
 

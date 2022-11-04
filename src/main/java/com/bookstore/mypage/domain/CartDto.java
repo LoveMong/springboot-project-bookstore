@@ -19,16 +19,16 @@ public class CartDto {
 
     private String memberEmail;
 
-    @NotNull(message = "도서 수량이 입력되지 않음")
-    private int bookOrderCount; // 도서 주문 수량
 
     @NotNull(message = "도서 번호가 입력되지 않음")
     private int bookNum; // 도서 번호
+    private String bookTitle; // 도서 제목
+    private int bookPrice; // 도서 가격
+    @NotNull(message = "도서 수량이 입력되지 않음")
+    private int bookOrderCount; // 도서 주문 수량
 
     private String bookThumbUrl; // 도서 표지 썸네일 URL
     private String bookPictureUrl; // 도서 표지 이미지 URL
-    private String bookTitle; // 도서 제목
-    private int bookPrice; // 도서 가격
 
 
 }

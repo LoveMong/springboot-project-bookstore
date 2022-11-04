@@ -3,6 +3,8 @@ package com.bookstore.mypage.mapper;
 
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
+import com.bookstore.mypage.domain.OrderDto;
+import com.bookstore.mypage.domain.PayInfoDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -33,5 +35,17 @@ public interface OrderMapper {
 
     // 기본 배송주소 수정
     int updateAddress(AddressDto addressDto);
+
+    // 주문된 도서 정보
+    void registerOrderInfo(OrderDto payInfo);
+
+    // 도서 정보 수정(판매 수량, 재고)
+    void updateBookInfo(OrderDto payInfo);
+
+    // 고객 포인트 정보 수정
+    void updateMemberPointInfo(PayInfoDto payInfo);
+
+    // 포인트 사용 내역 등록
+    void registerPointUse(PayInfoDto payInfo);
 
 }

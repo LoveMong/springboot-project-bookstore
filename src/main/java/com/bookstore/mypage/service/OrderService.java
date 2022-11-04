@@ -5,8 +5,10 @@ import com.bookstore.home.mapper.HomeMapper;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.domain.OrderDto;
+import com.bookstore.mypage.domain.PayInfoDto;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderMapper orderMapper;
@@ -150,6 +153,40 @@ public class OrderService {
     public int updateAddress(AddressDto addressDto) {
 
         return orderMapper.updateAddress(addressDto);
+    }
+
+
+    /**
+     * 결제 진행 및 내역 처리
+     * @param payInfoDto 도서 등 걸제 정보
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void proceedPayment(PayInfoDto payInfoDto) throws Exception {
+
+        try {
+
+            for (int i = 0; i < payInfoDto.getPayInfoBook().size(); i++) {
+
+                OrderDto payInfo = new OrderDto();
+                payInfo.setBookNum(payInfoDto.getPayInfoBook().get(i).getBookNum());
+                payInfo.setBookOrderCount(payInfoDto.getPayInfoBook().get(i).getBookOrderCount());
+                payInfo.setMemberEmail(payInfoDto.getMemberEmail());
+                payInfo.setMemberAddress(payInfoDto.getReceiverAddress());
+
+                orderMapper.registerOrderInfo(payInfo); // 주문 내역 등록
+                orderMapper.updateBookInfo(payInfo); // 도서 판매량, 재고등 수정
+                orderMapper.deleteCartInfo(payInfoDto.getPayInfoBook().get(i).getCartNum()); // 장바구니 내 구매한 품목 삭제 처리
+
+            }
+
+            orderMapper.updateMemberPointInfo(payInfoDto); // 고객 포인트 정보 수정
+            orderMapper.registerPointUse(payInfoDto); // 포인트 사용 내역 등록
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("PAYMENT_ERR");
+        }
+
     }
 
 

@@ -1,12 +1,11 @@
 package com.bookstore.mypage.controller;
 
 
-import com.bookstore.admin.domain.BookDto;
-import com.bookstore.home.service.HomeService;
 import com.bookstore.member.domain.PrincipalDetails;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.domain.OrderDto;
+import com.bookstore.mypage.domain.PayInfoDto;
 import com.bookstore.mypage.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +31,6 @@ public class OrderController {
 
 
     private final OrderService orderService;
-
 
 
     /**
@@ -73,7 +70,8 @@ public class OrderController {
 
     /**
      * 장바구니 조회
-     * @param model 장바구니에 담긴 도서 정보 리스트
+     *
+     * @param model            장바구니에 담긴 도서 정보 리스트
      * @param principalDetails 로그인된 고객 정보
      * @return 장바구니 화면
      */
@@ -88,9 +86,9 @@ public class OrderController {
     }
 
 
-
     /**
      * 장바구니 내 선택품목 삭제
+     *
      * @param list 선택 품목(도서 번호) 리스트
      * @return 삭제 성공 여부
      */
@@ -114,8 +112,9 @@ public class OrderController {
 
     /**
      * 결제 정보 확인 및 진행 페이지로 이동
-     * @param order 장바구니 내 도서 정보 리스트
-     * @param model 고객 배송주소지 정보 및 결제 예정 도서 정보
+     *
+     * @param order            장바구니 내 도서 정보 리스트
+     * @param model            고객 배송주소지 정보 및 결제 예정 도서 정보
      * @param principalDetails 로그인된 고객 정보
      * @return 결제 진행 페이지 화면
      */
@@ -140,6 +139,7 @@ public class OrderController {
 
     /**
      * 주소 등록(기본 배송지 / 추가 배송지)
+     *
      * @param addressDto 등록할 배송주소 정보
      * @return 등록 성공 여부
      */
@@ -166,6 +166,7 @@ public class OrderController {
 
     /**
      * 기본 배송주소 수정
+     *
      * @param addressDto 수정할 주소 정보
      * @return 수정 성공 여부
      */
@@ -189,4 +190,18 @@ public class OrderController {
 
     }
 
+
+    /**
+     * 도서 상품 결제 진행
+     * @param payInfoDto 도서 및 결제 정보
+     * @return 주문 내역 화면
+     */
+    @PostMapping("/payment")
+    public String payment(@ModelAttribute(value = "PayInfoDto") PayInfoDto payInfoDto) throws Exception {
+
+        orderService.proceedPayment(payInfoDto);
+
+        return "redirect:/mypage/order";
+
+    }
 }

@@ -19,7 +19,8 @@
 <jsp:include page="../common/header.jsp"/>
 
 <div id="main_wrap">
-    <form action="/pay/LastPayment" method="post" onsubmit="return submitCheck();">
+    <form action="/order/payment" method="post" id="payment">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <sec:authentication property="principal" var="member"/>
         <div class="allWrap">
             <div id="main_buy_info">
@@ -32,8 +33,8 @@
                     <h3>${member.memberDto.memberName} [${member.memberDto.memberEmail}]</h3>
                 </div>
                 <div>
-                    <input type="hidden" id="memberEmail" value="${member.memberDto.memberEmail}">
-                    <input type="hidden" id="memberPoint" value="${member.memberDto.memberPoint}">
+                    <input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberDto.memberEmail}">
+                    <input type="hidden" name="memberPoint" id="memberPoint" value="${member.memberDto.memberPoint}">
                 </div>
             </div>
 
@@ -64,15 +65,18 @@
                             </div>
                             <div class="arrdGroup alert alert-dismissible alert-warning">
                                 <div>
+                                    <input type="hidden" name="receiverName" id="receiver_name" value="" >
+                                    <input type="hidden" name="receiverAddress" id="receiver_address" value="" >
+                                    <input type="hidden" name="receiverPhone" id="receiver_phone" value="" >
                                     <input type="radio" name="addrconfirm" id="liston" class="liston" value="click">
                                     <span>받는 사람 : ${mainAddress.receiverName }</span>
                                     <hr />
-                                    <input type="hidden" name="receiver_name" id="receiver_name" value="" class="nameValue">
+                                    <input type="hidden" value="${mainAddress.receiverName }" class="nameValue">
                                     <h4>주소 : ${mainAddress.receiverAddress }</h4>
-                                    <input type="hidden" name="receiver_address" id="receiver_address" value="" class="addrValue">
+                                    <input type="hidden" value="${mainAddress.receiverAddress }" class="addrValue">
                                     <hr />
                                     <h4>휴대전화 : ${mainAddress.receiverPhone }</h4>
-                                    <input type="hidden" name="receiver_phone" id="receiver_phone" value="" class="phoneValue">
+                                    <input type="hidden" value="${mainAddress.receiverPhone }" class="phoneValue">
                                 </div>
                             </div>
                         </c:otherwise>
@@ -90,10 +94,13 @@
                                     <div>
                                         <input type="radio" name="addrconfirm" id="liston${vs.getIndex()}" class="liston" value="click${vs.getIndex()}">
                                         <span>받는 사람 : ${addressList.receiverName }</span>
+                                        <input type="hidden" value="${addressList.receiverName }" class="nameValue">
                                         <hr />
                                         <h4>주소 : ${addressList.receiverAddress }</h4>
+                                        <input type="hidden" value="${addressList.receiverAddress }" class="addrValue">
                                         <hr />
                                         <h4>휴대전화 : ${addressList.receiverPhone }</h4>
+                                        <input type="hidden" value="${addressList.receiverPhone }" class="phoneValue">
                                     </div>
                                 </div>
                             </c:forEach>
@@ -172,26 +179,26 @@
                     <c:set var="finalTotalPoint" value="0" />
 
                     <c:forEach items="${list}" var="payInfo" varStatus="vs">
-                    <input type="hidden" id="user_id" value="${login.user_id}" name = "PayInfopayInfo[${vs.getIndex()}].userId">
+<%--                    <input type="hidden" id="user_id" value="${login.user_id}" name = "PayInfopayInfo[${vs.getIndex()}].userId">--%>
                     <tr>
                         <td class="main_list_col1"><img src="/image${payInfo.bookThumbUrl }" style="width: 100px; height: 110px">
                         </td>
                         <td class="main_list_col2">${payInfo.bookTitle }
-                            <input type="hidden" id="bkName${vs.getIndex()}" value="${payInfo.bookTitle }" name = "PayInfolist[${vs.getIndex()}].bkName">
-                            <input type="hidden" id="bkNum${vs.getIndex()}" value="${payInfo.bookNum }" name = "PayInfolist[${vs.getIndex()}].bkNum">
+                            <input type="hidden" id="bkName${vs.getIndex()}" value="${payInfo.bookTitle }" name = "payInfoBook[${vs.getIndex()}].bookTitle">
+                            <input type="hidden" id="bkNum${vs.getIndex()}" value="${payInfo.bookNum }" name = "payInfoBook[${vs.getIndex()}].bookNum">
                         </td>
 
                         <td class="main_list_col3">
                                 <fmt:formatNumber value="${payInfo.bookPrice}" pattern="#,###" /> 원 | 수량 ${payInfo.bookOrderCount } 개
-                            <input type="hidden" id="bkPrice${vs.getIndex()}" value="${payInfo.bookPrice}" name = "PayInfolist[${vs.getIndex()}].bkPrice" >
-                            <input type="hidden" id="bkOdcnt${vs.getIndex()}" value="${payInfo.bookOrderCount }" name = "PayInfolist[${vs.getIndex()}].bkOdcnt">
-                            <input type="hidden" id="cartNum${vs.getIndex()}" value="${payInfo.cartNum }" name = "PayInfolist[${vs.getIndex()}].cartNum">
+                            <input type="hidden" id="bkPrice${vs.getIndex()}" value="${payInfo.bookPrice}" name = "payInfoBook[${vs.getIndex()}].bookPrice" >
+                            <input type="hidden" id="bkOdcnt${vs.getIndex()}" value="${payInfo.bookOrderCount }" name = "payInfoBook[${vs.getIndex()}].bookOrderCount">
+                            <input type="hidden" id="cartNum${vs.getIndex()}" value="${payInfo.cartNum }" name = "payInfoBook[${vs.getIndex()}].cartNum">
                             <c:choose>
-                            <c:when test="${login.user_rank == '0'}">
+                            <c:when test="${member.memberDto.memberPoint == '0'}">
                             <input type="hidden" id="totalPrice${vs.getIndex()}"
                                    value="${payInfo.bookPrice * payInfo.bookOrderCount }">
                             </c:when>
-                            <c:when test="${login.user_rank == '1'}">
+                            <c:when test="${member.memberDto.memberPoint == '1'}">
                             <input type="hidden" id="totalPrice${vs.getIndex()}"
                                    value="${(payInfo.bookPrice * payInfo.bookOrderCount)*0.97 }">
                             </c:when>
@@ -232,11 +239,11 @@
                         <input type="hidden" name="shipPrice" id="shipPrice" value="${shipPrice }">
                         <div class="clearfix"></div></li>
                     <li class="sale_price"><c:choose>
-                        <c:when test="${login.user_rank == '0'}">
+                        <c:when test="${member.memberDto.memberPoint == '0'}">
                             <c:set var="sale_price" value="0" />
                             <c:set var="customerInfo" value="일반고객  할인율 없음" />
                         </c:when>
-                        <c:when test="${login.user_rank == '1'}">
+                        <c:when test="${member.memberDto.memberPoint == '1'}">
                             <c:set var="sale_price" value="${total*0.03 }" />
                             <c:set var="customerInfo" value="VIP고객  상품 금액 할인율 3%" />
                         </c:when>
@@ -250,6 +257,7 @@
 						    <fmt:formatNumber value="${sale_price}" pattern="#,###" />원</span> <input type="hidden" id="sale_priceInput" name="usePoint" value="0">
                         <div class="clearfix"></div></li>
                     <c:set var="finalTotalPrice" value="${(total+shipPrice)-sale_price }" />
+                    <input type="hidden" name="totalPrice" id="totalPrice" value="">
                     <span id="label" class="btn btn-light" style="margin-top: 10px">최종 결제금액</span>
                     <strong id="label_result" style="margin-top: 10px">
                         <span id="number"> <fmt:formatNumber value="${finalTotalPrice}" pattern="#,###" /></span>원
@@ -263,7 +271,7 @@
                 <input type="checkbox" name="checkbox" class="btn btn-light" id="agree">주문내역 확인 동의<strong><필수></strong>
             </div>
             <div id="final_buy_button">
-                <input type="submit" id="lastPayment" class="btn btn-outline-danger" value="결제하기" >
+                <input type="button" id="paymentBtn" class="btn btn-outline-danger" value="결제하기" >
             </div>
         </div>
     </form>
@@ -497,79 +505,6 @@
     });
 </script>
 
-
-
-<script>
-
-    $(document).ready(function(){
-
-        let userPoint;
-        let totalPrice;
-
-        totalPrice = "<c:out value='${finalTotalPrice}'/>";
-        userPoint = "<c:out value='${login.user_point - finalTotalPrice }'/>";
-
-        console.log("totalPrice : " + Math.floor(totalPrice));
-        console.log("userPoint : " + Math.floor(userPoint));
-
-        $("#lastPayment").click(function(){
-
-            $.ajax({
-                url: "infoPayment",
-                type: "POST",
-                data:{
-                    "addr" : addr,
-                    "tPrice" : Math.floor(totalPrice),
-                    "uPoint" : Math.floor(userPoint),
-
-                },
-                success: function(data) {
-
-                    /* location.href="../mypage/order"; */
-
-                }
-            });
-        });
-    });
-
-</script>
-
-<script>
-    function submitCheck(){
-
-        var userPoint = ${login.user_point };
-        var finalTotalPrice = Math.floor($('#finalTotalPrice').val());
-        var total = ${total};
-
-        if(!$("input:radio[name='addrconfirm']").is(":checked")){
-
-            alert("배송지를 선택해주세요.");
-
-            return false;
-
-
-        } else if(!$("input:checkbox[name='checkbox']").is(":checked")) {
-
-            alert("결제 동의가 필요합니다.");
-
-            return false;
-
-
-        } else if(userPoint < finalTotalPrice ) {
-
-            alert("Point 잔액이 부족합니다.");
-
-            return false;
-
-        } else {
-
-            return true;
-
-
-        }
-    }
-</script>
-
 <script>
     <%-- 주소 등록 script--%>
 
@@ -774,6 +709,82 @@
         });
     });
 
+</script>
+
+<script>
+
+    $("#paymentBtn").click(function(){
+
+        let memberPoint = ${member.memberDto.memberPoint};
+        let finalTotalPrice = Math.floor(${finalTotalPrice});
+
+        $('#totalPrice').val(finalTotalPrice);
+
+        if(!$("input:radio[name='addrconfirm']").is(":checked")){
+
+            alert("배송지를 선택해주세요.");
+
+            return false;
+
+        } else if(!$("input:checkbox[name='checkbox']").is(":checked")) {
+
+            alert("결제 동의가 필요합니다.");
+
+            return false;
+
+        } else if(memberPoint < finalTotalPrice ) {
+
+            alert("Point 잔액이 부족합니다.");
+
+            return false;
+
+        } else {
+
+            $('#payment').submit();
+
+        }
+
+
+    });
+
+
+
+</script>
+
+<script>
+    function submitCheck(){
+
+        var userPoint = ${login.user_point };
+        var finalTotalPrice = Math.floor($('#finalTotalPrice').val());
+        var total = ${total};
+
+        if(!$("input:radio[name='addrconfirm']").is(":checked")){
+
+            alert("배송지를 선택해주세요.");
+
+            return false;
+
+
+        } else if(!$("input:checkbox[name='checkbox']").is(":checked")) {
+
+            alert("결제 동의가 필요합니다.");
+
+            return false;
+
+
+        } else if(userPoint < finalTotalPrice ) {
+
+            alert("Point 잔액이 부족합니다.");
+
+            return false;
+
+        } else {
+
+            return true;
+
+
+        }
+    }
 </script>
 
 </html>
