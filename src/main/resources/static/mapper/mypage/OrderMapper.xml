@@ -83,6 +83,19 @@
         VALUES (#{memberEmail}, #{totalPrice}, #{memberPoint})
     </insert>
 
+    <select id="searchMemberPointSum" parameterType="String" resultType="int">
+        SELECT SUM(point_use)
+        FROM point
+        WHERE member_Email = #{memberEmail}
+        GROUP BY member_Email
+    </select>
+
+    <update id="upgradeMemberRank">
+        UPDATE member
+        SET member_rank = #{memberRank}
+        WHERE member_email = #{memberEmail}
+    </update>
+
 
 
 </mapper>

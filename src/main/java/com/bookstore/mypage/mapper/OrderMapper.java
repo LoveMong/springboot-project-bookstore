@@ -48,4 +48,12 @@ public interface OrderMapper {
     // 포인트 사용 내역 등록
     void registerPointUse(PayInfoDto payInfo);
 
+    // 사용 포인트의 합 출력
+    int searchMemberPointSum(String memberEmail);
+
+    // 고객 등급 수정
+    void upgradeMemberRank(String memberEmail, String memberRank);
+
+
+
 }

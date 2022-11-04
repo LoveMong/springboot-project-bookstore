@@ -15,6 +15,7 @@ public class PayInfoDto {
     private List<CartDto> payInfoBook;
 
     private String memberEmail;
+    private String memberRank;
     private int memberPoint;
     private int totalPrice;
 

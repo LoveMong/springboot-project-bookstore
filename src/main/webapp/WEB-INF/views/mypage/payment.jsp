@@ -35,6 +35,7 @@
                 <div>
                     <input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberDto.memberEmail}">
                     <input type="hidden" name="memberPoint" id="memberPoint" value="${member.memberDto.memberPoint}">
+                    <input type="hidden" name="memberRank" id="memberRank" value="${member.memberDto.memberRank}">
                 </div>
             </div>
 
@@ -194,11 +195,11 @@
                             <input type="hidden" id="bkOdcnt${vs.getIndex()}" value="${payInfo.bookOrderCount }" name = "payInfoBook[${vs.getIndex()}].bookOrderCount">
                             <input type="hidden" id="cartNum${vs.getIndex()}" value="${payInfo.cartNum }" name = "payInfoBook[${vs.getIndex()}].cartNum">
                             <c:choose>
-                            <c:when test="${member.memberDto.memberPoint == '0'}">
+                            <c:when test="${member.memberDto.memberRank == 'GENERAL'}">
                             <input type="hidden" id="totalPrice${vs.getIndex()}"
                                    value="${payInfo.bookPrice * payInfo.bookOrderCount }">
                             </c:when>
-                            <c:when test="${member.memberDto.memberPoint == '1'}">
+                            <c:when test="${member.memberDto.memberRank == 'VIP'}">
                             <input type="hidden" id="totalPrice${vs.getIndex()}"
                                    value="${(payInfo.bookPrice * payInfo.bookOrderCount)*0.97 }">
                             </c:when>
@@ -239,11 +240,11 @@
                         <input type="hidden" name="shipPrice" id="shipPrice" value="${shipPrice }">
                         <div class="clearfix"></div></li>
                     <li class="sale_price"><c:choose>
-                        <c:when test="${member.memberDto.memberPoint == '0'}">
+                        <c:when test="${member.memberDto.memberRank == 'GENERAL'}">
                             <c:set var="sale_price" value="0" />
                             <c:set var="customerInfo" value="일반고객  할인율 없음" />
                         </c:when>
-                        <c:when test="${member.memberDto.memberPoint == '1'}">
+                        <c:when test="${member.memberDto.memberRank == 'VIP'}">
                             <c:set var="sale_price" value="${total*0.03 }" />
                             <c:set var="customerInfo" value="VIP고객  상품 금액 할인율 3%" />
                         </c:when>

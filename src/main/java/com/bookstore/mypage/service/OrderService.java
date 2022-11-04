@@ -2,6 +2,7 @@ package com.bookstore.mypage.service;
 
 import com.bookstore.admin.domain.BookDto;
 import com.bookstore.home.mapper.HomeMapper;
+import com.bookstore.member.domain.PrincipalDetails;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.domain.OrderDto;
@@ -163,6 +164,11 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     public void proceedPayment(PayInfoDto payInfoDto) throws Exception {
 
+        String memberEmail = payInfoDto.getMemberEmail();
+        String memberRank = payInfoDto.getMemberRank();
+        String receiverAddress = payInfoDto.getReceiverAddress();
+
+
         try {
 
             for (int i = 0; i < payInfoDto.getPayInfoBook().size(); i++) {
@@ -170,8 +176,8 @@ public class OrderService {
                 OrderDto payInfo = new OrderDto();
                 payInfo.setBookNum(payInfoDto.getPayInfoBook().get(i).getBookNum());
                 payInfo.setBookOrderCount(payInfoDto.getPayInfoBook().get(i).getBookOrderCount());
-                payInfo.setMemberEmail(payInfoDto.getMemberEmail());
-                payInfo.setMemberAddress(payInfoDto.getReceiverAddress());
+                payInfo.setMemberEmail(memberEmail);
+                payInfo.setMemberAddress(receiverAddress);
 
                 orderMapper.registerOrderInfo(payInfo); // 주문 내역 등록
                 orderMapper.updateBookInfo(payInfo); // 도서 판매량, 재고등 수정
@@ -182,13 +188,29 @@ public class OrderService {
             orderMapper.updateMemberPointInfo(payInfoDto); // 고객 포인트 정보 수정
             orderMapper.registerPointUse(payInfoDto); // 포인트 사용 내역 등록
 
+
+            Integer memberPointSum = orderMapper.searchMemberPointSum(memberEmail);
+
+
+            if (memberPointSum == null) {
+                memberPointSum = 0;
+            }
+
+            if (memberPointSum >= 200000 && memberRank.equals("GENERAL")) {
+                memberRank = "VIP";
+            } else if (memberPointSum >= 500000 && memberRank.equals("VIP")) {
+                memberRank = "VVIP";
+            }
+
+            orderMapper.upgradeMemberRank(memberEmail, memberRank);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("PAYMENT_ERR");
         }
 
     }
-
 
 
 }
