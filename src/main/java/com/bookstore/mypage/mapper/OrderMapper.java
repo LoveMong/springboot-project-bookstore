@@ -54,6 +54,7 @@ public interface OrderMapper {
     // 고객 등급 수정
     void upgradeMemberRank(String memberEmail, String memberRank);
 
+    List<OrderDto> searchMyOrderList(String memberEmail);
 
 
 }

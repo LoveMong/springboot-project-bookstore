@@ -96,6 +96,31 @@
         WHERE member_email = #{memberEmail}
     </update>
 
+    <select id="searchMyOrderList" resultMap="OrderList">
+        SELECT *
+        FROM `order` a
+        LEFT JOIN  book b ON a.book_num = b.book_num
+        WHERE member_email = #{memberEmail}
+    </select>
+
+    <resultMap id="OrderList" type="com.bookstore.mypage.domain.OrderDto">
+        <result column="order_num" property="orderNum"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="order_state" property="orderState"/>
+        <result column="book_orderCount" property="bookOrderCount"/>
+        <result column="member_email" property="memberEmail"/>
+        <result column="member_registerDate" property="memberRegisterDate"/>
+        <result column="member_address" property="memberAddress"/>
+        <collection property="cartInfoList" resultMap="BookInfo"/>
+    </resultMap>
+
+    <resultMap id="BookInfo" type="com.bookstore.mypage.domain.CartDto">
+        <result column="book_num" property="bookNum"/>
+        <result column="book_title" property="bookTitle"/>
+        <result column="book_price" property="bookPrice"/>
+        <result column="book_pictureUrl" property="bookPictureUrl"/>
+        <result column="book_thumbUrl" property="bookThumbUrl"/>
+    </resultMap>
 
 
 </mapper>

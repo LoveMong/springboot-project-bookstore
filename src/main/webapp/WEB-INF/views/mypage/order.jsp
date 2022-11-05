@@ -124,50 +124,50 @@
 							</thead>
 							
 							<tbody>
-								
+							<sec:authentication property="principal" var="member"/>
 								<c:forEach items="${myOrderList}" var="list" varStatus="i" >
 								<tr>
-									<td id="tb_td_year" class="tb_td_year">${list.od_date }</td>
+									<td id="tb_td_year" class="tb_td_year">${list.orderDate }</td>
 									<td  class="tb_td_info">
-										<a href="/detail?num=${list.bk_num}">
+										<a href="/detail?num=${list.cartInfoList[i.index].bookNum}">
 										<span style="display: inline-block;">
-											<img src="${list.bk_pick}" style="width: 150px;">
+											<img src="/image${list.cartInfoList[i.index].bookThumbUrl}" style="width: 150px;">
 										</span>
 										<span style="display: inline-block;">
 										
-										상품명 :<span id="productName${i.index }">${list.bk_name }</span>
-										(<span id="amount${i.index}">${list.bk_ordercnt } </span>개)
+										상품명 :<span id="productName${i.index }">${list.cartInfoList[i.index].bookTitle }</span>
+										(<span id="amount${i.index}">${list.bookOrderCount } </span>개)
 										<br>
 										금액 : 											
 										<c:choose>
-												<c:when test="${login.user_rank == '0'}">
-													<fmt:formatNumber value="${list.bk_price*list.bk_ordercnt}" pattern="#,###"/>원
+												<c:when test="${member.memberDto.memberName == 'GENERAL'}">
+													<fmt:formatNumber value="${list.cartInfoList[i.index].bookPrice*list.bookOrderCount}" pattern="#,###"/>원
 												</c:when>
-												<c:when test="${login.user_rank == '1'}">
-													<fmt:formatNumber value="${(list.bk_price*list.bk_ordercnt)*0.97}" pattern="#,###"/>원
+												<c:when test="${member.memberDto.memberName == 'VIP'}">
+													<fmt:formatNumber value="${(list.cartInfoList[i.index].bookPrice*list.bookOrderCount)*0.97}" pattern="#,###"/>원
 												</c:when>
 												<c:otherwise>
-													<fmt:formatNumber value="${(list.bk_price*list.bk_ordercnt)*0.95}" pattern="#,###"/>원
+													<fmt:formatNumber value="${(list.cartInfoList[i.index].bookPrice*list.bookOrderCount)*0.95}" pattern="#,###"/>원
 												</c:otherwise>
 										</c:choose>											
 									</span>
 										 </a>
 									</td>
-									<td class="tb_td_state">${list.user_addr}</td>
+									<td class="tb_td_state">${list.memberAddress}</td>
 									<td class="tb_td_btn">
 									
-										<c:if test="${list.od_dv == '0'}">
+										<c:if test="${list.orderState == '0'}">
 											배송 준비중
 										</c:if>
-										<c:if test="${list.od_dv == '1'}">
+										<c:if test="${list.orderState == '1'}">
 											배송중
 										</c:if>
-										<c:if test="${list.od_dv == '2'}">
+										<c:if test="${list.orderState == '2'}">
 											배송완료
 										</c:if>
 									
 										
-										<input type="hidden" id="orderId${i.index }" value="${list.user_id }">
+										<input type="hidden" id="orderId${i.index }" value="${list.memberEmail }">
 										
 										
 										
@@ -175,7 +175,7 @@
 									</td>
 								</tr>
 								
-									<input type="hidden" id="orderId${i.index}" value="${list.od_num}">
+									<input type="hidden" id="orderId${i.index}" value="${list.memberEmail}">
 									
 								</c:forEach>
 								

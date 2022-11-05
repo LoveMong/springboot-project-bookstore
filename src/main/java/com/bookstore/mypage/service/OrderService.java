@@ -212,5 +212,9 @@ public class OrderService {
 
     }
 
+    public List<OrderDto> searchMyOrderList(String memberEmail) {
+        return orderMapper.searchMyOrderList(memberEmail);
+    }
+
 
 }

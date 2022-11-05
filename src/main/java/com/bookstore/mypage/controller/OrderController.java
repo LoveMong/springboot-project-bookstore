@@ -193,6 +193,7 @@ public class OrderController {
 
     /**
      * 도서 상품 결제 진행
+     *
      * @param payInfoDto 도서 및 결제 정보
      * @return 주문 내역 화면
      */
@@ -201,7 +202,17 @@ public class OrderController {
 
         orderService.proceedPayment(payInfoDto);
 
-        return "redirect:/mypage/order";
+        return "redirect:/order/myOrders";
 
+    }
+
+    @GetMapping("/myOrders")
+    public String myOrders(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+        List<OrderDto> orderList = orderService.searchMyOrderList(memberEmail);
+        model.addAttribute("myOrderList", orderList);
+
+        return "/mypage/order";
     }
 }
