@@ -7,14 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome! SJBook Store!</title>
-<link rel="stylesheet" href="../resources/css/myRoom/myorder.css">
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-<script src="../resources/js/myRoom/exit.js" type="text/javascript"></script>
-<script src="../resources/ckeditor/ckeditor.js"></script>
-<script src="../resources/bootstraps/css/bootstrap.css"></script>
+<link rel="stylesheet" href="/css/mypage/order.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.css">
 
 </head>
 
@@ -34,7 +29,9 @@
 			<p>마이페이지</p>
 		</div>
 
-			<jsp:include page="../common/mypage_menu.jsp"/>
+			<div id="side_menu">
+				<jsp:include page="../common/mypage_menu.jsp"/>
+			</div>
 			<!-- 메인  컨텐츠-->
 			<div id="main_content_wrap">
 				<div id="main_content">
@@ -129,25 +126,25 @@
 								<tr>
 									<td id="tb_td_year" class="tb_td_year">${list.orderDate }</td>
 									<td  class="tb_td_info">
-										<a href="/detail?num=${list.cartInfoList[i.index].bookNum}">
+										<a href="/detail?num=${list.cartInfoList[0].bookNum}">
 										<span style="display: inline-block;">
-											<img src="/image${list.cartInfoList[i.index].bookThumbUrl}" style="width: 150px;">
+											<img src="/image${list.cartInfoList[0].bookPictureUrl}" style="width: 150px;">
 										</span>
 										<span style="display: inline-block;">
 										
-										상품명 :<span id="productName${i.index }">${list.cartInfoList[i.index].bookTitle }</span>
+										상품명 :<span id="productName${i.index }">${list.cartInfoList[0].bookTitle }</span>
 										(<span id="amount${i.index}">${list.bookOrderCount } </span>개)
 										<br>
 										금액 : 											
 										<c:choose>
 												<c:when test="${member.memberDto.memberName == 'GENERAL'}">
-													<fmt:formatNumber value="${list.cartInfoList[i.index].bookPrice*list.bookOrderCount}" pattern="#,###"/>원
+													<fmt:formatNumber value="${list.cartInfoList[0].bookPrice*list.bookOrderCount}" pattern="#,###"/>원
 												</c:when>
 												<c:when test="${member.memberDto.memberName == 'VIP'}">
-													<fmt:formatNumber value="${(list.cartInfoList[i.index].bookPrice*list.bookOrderCount)*0.97}" pattern="#,###"/>원
+													<fmt:formatNumber value="${(list.cartInfoList[0].bookPrice*list.bookOrderCount)*0.97}" pattern="#,###"/>원
 												</c:when>
 												<c:otherwise>
-													<fmt:formatNumber value="${(list.cartInfoList[i.index].bookPrice*list.bookOrderCount)*0.95}" pattern="#,###"/>원
+													<fmt:formatNumber value="${(list.cartInfoList[0].bookPrice*list.bookOrderCount)*0.95}" pattern="#,###"/>원
 												</c:otherwise>
 										</c:choose>											
 									</span>
