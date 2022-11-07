@@ -16,6 +16,7 @@ public class OrderDto {
     private int bookOrderCount; // 도서 주문 수량
     private String memberEmail; // 고객 아이디
     private String memberAddress; // 고객 주소
+    private String memberName; // 고객 이름
 
 //    private int orderTotalPrice;   // 도서 구매 합계 금액
 //    private int bookSalePrice; // 도서 판매 금액

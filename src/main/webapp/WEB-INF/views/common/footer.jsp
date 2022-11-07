@@ -117,14 +117,14 @@
 <!-- Search model end -->
 
 <!-- Js Plugins -->
-<script src="/css/bootstraps/js/jquery-3.3.1.min.js"></script>
-<script src="/css/bootstraps/js/bootstrap.min.js"></script>
-<script src="/css/bootstraps/js/jquery.magnific-popup.min.js"></script>
-<script src="/css/bootstraps/js/isotope.pkgd.min.js"></script>
-<script src="/css/bootstraps/js/masonry.pkgd.min.js"></script>
-<script src="/css/bootstraps/js/jquery.slicknav.js"></script>
-<script src="/css/bootstraps/js/owl.carousel.min.js"></script>
-<script src="/css/bootstraps/js/main.js"></script>
+<%--<script src="/css/bootstraps/js/jquery-3.3.1.min.js"></script>--%>
+<%--<script src="/css/bootstraps/js/bootstrap.min.js"></script>--%>
+<%--<script src="/css/bootstraps/js/jquery.magnific-popup.min.js"></script>--%>
+<%--<script src="/css/bootstraps/js/isotope.pkgd.min.js"></script>--%>
+<%--<script src="/css/bootstraps/js/masonry.pkgd.min.js"></script>--%>
+<%--<script src="/css/bootstraps/js/jquery.slicknav.js"></script>--%>
+<%--<script src="/css/bootstraps/js/owl.carousel.min.js"></script>--%>
+<%--<script src="/css/bootstraps/js/main.js"></script>--%>
 
 
 

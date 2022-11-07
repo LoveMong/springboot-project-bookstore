@@ -1,6 +1,9 @@
 package com.bookstore.mypage.controller;
 
 
+import com.bookstore.admin.domain.BookDto;
+import com.bookstore.common.utils.PageHandler;
+import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.member.domain.PrincipalDetails;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
@@ -207,11 +210,25 @@ public class OrderController {
     }
 
     @GetMapping("/myOrders")
-    public String myOrders(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public String myOrders(SearchCondition sc, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        log.info("sc : " + sc);
 
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
-        List<OrderDto> orderList = orderService.searchMyOrderList(memberEmail);
-        model.addAttribute("myOrderList", orderList);
+        sc.setMemberEmail(memberEmail);
+
+//        try {
+            log.info("myOrders 시작");
+            int totalCnt = orderService.searchOrderResultCnt(sc);
+            log.info("totalCnt : " + totalCnt);
+            PageHandler pageHandler = new PageHandler(totalCnt, sc);
+            List<OrderDto> orderList = orderService.searchMyOrderList(sc);
+
+            model.addAttribute("myOrderList", orderList);
+            model.addAttribute("pageHandler", pageHandler);
+//        } catch (Exception e) {
+            model.addAttribute("totalCnt", 0);
+//        }
 
         return "/mypage/order";
     }

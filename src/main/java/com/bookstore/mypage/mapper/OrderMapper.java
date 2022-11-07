@@ -1,11 +1,14 @@
 package com.bookstore.mypage.mapper;
 
 
+import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.domain.OrderDto;
 import com.bookstore.mypage.domain.PayInfoDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -54,7 +57,9 @@ public interface OrderMapper {
     // 고객 등급 수정
     void upgradeMemberRank(String memberEmail, String memberRank);
 
-    List<OrderDto> searchMyOrderList(String memberEmail);
+    List<OrderDto> searchMyOrderList(SearchCondition sc);
+
+    int searchOrderResultCnt(SearchCondition sc);
 
 
 }

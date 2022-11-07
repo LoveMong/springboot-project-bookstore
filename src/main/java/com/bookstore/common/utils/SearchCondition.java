@@ -9,8 +9,15 @@ import static java.util.Objects.requireNonNullElse;
 public class SearchCondition {
     private Integer page = 1;
     private Integer pageSize = DEFAULT_PAGE_SIZE;
-    private String  option = "";
-    private String  keyword = "";
+    private String option = "";
+    private String keyword = "";
+
+    private String startDate = "";
+
+    private String endDate = "";
+
+    private String memberEmail = "";
+
 //    private Integer  offset;
 
     public static final int MIN_PAGE_SIZE = 5;
@@ -80,6 +87,14 @@ public class SearchCondition {
 
     public Integer getOffset() {
         return (page-1)*pageSize;
+    }
+
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
     }
 
     @Override

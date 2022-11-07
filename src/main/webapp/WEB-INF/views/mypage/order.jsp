@@ -1,23 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Welcome! SJBook Store!</title>
-<link rel="stylesheet" href="/css/mypage/order.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.css">
-
+	<meta charset="UTF-8">
+	<meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
+	<title>Welcome! SJBook Store!</title>
+	<link rel="stylesheet" href="/css/mypage/order.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
-
 <body>
 
-
 <jsp:include page="../common/header.jsp"/>
-
 
 <div id="wrap">
 	
@@ -33,51 +33,43 @@
 				<jsp:include page="../common/mypage_menu.jsp"/>
 			</div>
 			<!-- 메인  컨텐츠-->
-			<div id="main_content_wrap">
+			<div id="main_content_wrap" style="margin-top: 25px">
 				<div id="main_content">
 					<div id="main_content_subject">
 						<p>주문/배송조회</p>
 					</div>
 					<br>
 					<div id="main_content_1">
-						
-						<div class="form-group row justify-content-left" style="margin: 10px">
-						<p style="margin-right: 10px"> 조회기간 :
-							<div class="w100 float_left" style="padding-right:10px; float:left;">
-						    <input type="text" id="datepicker1" class="form-control form-control-sm">
+						<form action="/order/myOrders" method="get">
+<%--						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
+						<div class="" style="margin: 10px">
+							<p style="margin-right: 10px; float: left"> 조회기간 :
+							<div class="" style="padding-right:10px; float:left;">
+							    <input type="text" id="datepickerStart" name="startDate" class="form-control form-control-sm">
 						    </div>
-						     ~ 
-						    <div class="w100 float_left" style="padding-right:10px; float:left;">
-						    <input type="text" id="datepicker2" class="form-control form-control-sm">
+							<div style="float: left; margin-right: 10px"> ~ </div>
+						    <div class="" style="padding-right:10px; float:left;">
+						    	<input type="text" id="datepickerEnd" name="endDate" class="form-control form-control-sm">
 						    </div>
-					
 						</div>
 						<br>
-						   <div class="form-group row justify-content-left" style="margin: 10px">
+						   <div class="" style="float: right; margin-top: 40px; margin-bottom: 40px">
 							   <div class="w100 float_left" style="padding-right:10px; float:left;">
-									<select name="ordersearchType" id="ordersearchType" class="form-control form-control-sm">
-										<option value="title">제목 검색</option>
-										<option value="content">작가 검색</option>
-									</select>
+								   <select class="form-control form-control-sm" name="option" id="searchType" style="width: 107px; float: left; margin-right: 7px; margin-left: -57px;">
+									   <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>제목</option>
+									   <option value="W" ${pageHandler.sc.option=='R' ? "selected" : ""}>수령인</option>
+								   </select>
 								</div>
-									<div class="w300  float_left" style="padding-right:10px; float:left;">	
-									<input type="text" name="keyword" class="form-control form-control-sm" id="order_keyword">
-									</div>
-									<div class="float_left" style=" float:left;">
-									<input type="submit" value="검색" class="btn btn-sm btn-primary" id="orderbtnSearch">
-									</div>
-									<div class="clear_fix" style="clear:both;"></div>
+							   <div class="w300  float_left" style="padding-right:10px; float:left;">
+								   <input type="text" name="keyword" class="form-control form-control-sm-input" type="text" value="${pageHandler.sc.keyword}" placeholder="검색어를 입력해주세요" style="height: 32px">
+							   </div>
+							   <input type="submit" class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch" value="검색"/>
 							</div>
-						
-						<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-						<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-						<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+						</form>
 						<script>
-							
+
 							var today = new Date().toLocaleDateString();
-						
-							
-						
+
 						  $.datepicker.setDefaults({
 						    dateFormat: 'yy-mm-dd',
 						    prevText: '이전 달',
@@ -93,27 +85,31 @@
 						    onClose : function( selectedDate ) { 
 			                      if( selectedDate != "" ) {
 			                        
-			                          $("#datepicker1").datepicker("option", "maxDate", $("#datepicker2").val());
-			                          $("#datepicker2").datepicker("option", "minDate", $("#datepicker1").val());
+			                          $("#datepickerStart").datepicker("option", "maxDate", $("#datepickerEnd").val());
+			                          $("#datepickerEnd").datepicker("option", "minDate", $("#datepickerStart").val());
 			                      }
 			                  }
 
 						    
 						  });
 						
-						  $(function() {	  
-							$("#datepicker1").datepicker();
-						 	$("#datepicker2").datepicker();
-						  });
-						
+
+							$(function() {
+								$("#datepickerStart,#datepickerEnd").datepicker({
+									//옵션들 생략//
+									//옵션들 생략//
+								});
+							});
+
+
 						</script>
 					
 						<table id="point_table">
 							<thead>
 							
 								<tr style="background-color: #e9e9e9;">
-									<td id="th_td_year">일자</td>
-									<td id="th_td_info">상품정보</td>
+									<td id="th_td_year">주문일자</td>
+									<td id="th_td_info">주문내역</td>
 									<td id="th_td_stae">배송지</td>
 									<td id="th_td_btn">배송상태</td>
 								</tr>
@@ -255,9 +251,9 @@
 		url = url + "?searchType=" + $('#ordersearchType').val();
 		url = url + "&keyword=" + $('#order_keyword').val();
 
-		if($(datepicker1).val() != null && $(datepicker1).val() != '') {
-			url = url + "&startDate=" + $('#datepicker1').val();
-			url = url + "&endDate=" + $('#datepicker2').val();
+		if($(datepickerStart).val() != null && $(datepickerStart).val() != '') {
+			url = url + "&startDate=" + $('#datepickerStart').val();
+			url = url + "&endDate=" + $('#datepickerEnd').val();
 		}
 
 
@@ -267,6 +263,7 @@
 
 
 </script>
+
 
 <jsp:include page="../common/footer.jsp"/>
 

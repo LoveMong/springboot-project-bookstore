@@ -1,6 +1,7 @@
 package com.bookstore.mypage.service;
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.mapper.HomeMapper;
 import com.bookstore.member.domain.PrincipalDetails;
 import com.bookstore.mypage.domain.AddressDto;
@@ -10,6 +11,7 @@ import com.bookstore.mypage.domain.PayInfoDto;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -167,6 +169,7 @@ public class OrderService {
         String memberEmail = payInfoDto.getMemberEmail();
         String memberRank = payInfoDto.getMemberRank();
         String receiverAddress = payInfoDto.getReceiverAddress();
+        String receiverName = payInfoDto.getReceiverName();
 
 
         try {
@@ -178,6 +181,7 @@ public class OrderService {
                 payInfo.setBookOrderCount(payInfoDto.getPayInfoBook().get(i).getBookOrderCount());
                 payInfo.setMemberEmail(memberEmail);
                 payInfo.setMemberAddress(receiverAddress);
+                payInfo.setMemberName(receiverName);
 
                 orderMapper.registerOrderInfo(payInfo); // 주문 내역 등록
                 orderMapper.updateBookInfo(payInfo); // 도서 판매량, 재고등 수정
@@ -212,8 +216,12 @@ public class OrderService {
 
     }
 
-    public List<OrderDto> searchMyOrderList(String memberEmail) {
-        return orderMapper.searchMyOrderList(memberEmail);
+    public List<OrderDto> searchMyOrderList(SearchCondition sc) {
+        return orderMapper.searchMyOrderList(sc);
+    }
+
+    public int searchOrderResultCnt(SearchCondition sc) {
+        return orderMapper.searchOrderResultCnt(sc);
     }
 
 
