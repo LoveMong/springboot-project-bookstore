@@ -98,7 +98,7 @@
 							<li><p>${member.memberDto.memberRank} 회원</p></li>
 							<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
 									value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>
-							<li><a href="/mypage/cart">마이페이지</a></li>
+							<li><a href="/order/myOrders">마이페이지</a></li>
 							<c:set var="String" value="${login.user_id }"/>
 							<li><a href="/account/logout">로그아웃</a></li>
 <%--							<li><p> ${member.memberDto.memberRole}</p></li>--%>

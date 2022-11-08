@@ -66,72 +66,31 @@
 							   <input type="submit" class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch" value="검색"/>
 							</div>
 						</form>
-						<script>
 
-							var today = new Date().toLocaleDateString();
-
-						  $.datepicker.setDefaults({
-						    dateFormat: 'yy-mm-dd',
-						    prevText: '이전 달',
-						    nextText: '다음 달',
-						    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-						    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-						    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-						    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-						    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-						    showMonthAfterYear: true,
-						    yearSuffix: '년',
-						    maxDate: new Date(),
-						    onClose : function( selectedDate ) { 
-			                      if( selectedDate != "" ) {
-			                        
-			                          $("#datepickerStart").datepicker("option", "maxDate", $("#datepickerEnd").val());
-			                          $("#datepickerEnd").datepicker("option", "minDate", $("#datepickerStart").val());
-			                      }
-			                  }
-
-						    
-						  });
-						
-
-							$(function() {
-								$("#datepickerStart,#datepickerEnd").datepicker({
-									//옵션들 생략//
-									//옵션들 생략//
-								});
-							});
-
-
-						</script>
-					
 						<table id="point_table">
 							<thead>
-							
 								<tr style="background-color: #e9e9e9;">
-									<td id="th_td_year">주문일자</td>
-									<td id="th_td_info">주문내역</td>
-									<td id="th_td_stae">배송지</td>
-									<td id="th_td_btn">배송상태</td>
+									<td style="width: 14%; border: 1px solid grey">주문일자</td>
+									<td style="border: 1px solid grey; width: 40%;">주문내역</td>
+									<td style="border: 1px solid grey; width: 30%">배송지</td>
+									<td style="border: 1px solid grey">배송상태</td>
 								</tr>
-							
 							</thead>
-							
 							<tbody>
 							<sec:authentication property="principal" var="member"/>
 								<c:forEach items="${myOrderList}" var="list" varStatus="i" >
 								<tr>
 									<td id="tb_td_year" class="tb_td_year">${list.orderDate }</td>
 									<td  class="tb_td_info">
-										<a href="/detail?num=${list.cartInfoList[0].bookNum}">
+										<a href="/bookSearchDetail?num=${list.cartInfoList[0].bookNum}">
 										<span style="display: inline-block;">
-											<img src="/image${list.cartInfoList[0].bookPictureUrl}" style="width: 150px;">
+											<img src="/image${list.cartInfoList[0].bookPictureUrl}" style="width: 60px;">
 										</span>
 										<span style="display: inline-block;">
-										
-										상품명 :<span id="productName${i.index }">${list.cartInfoList[0].bookTitle }</span>
-										(<span id="amount${i.index}">${list.bookOrderCount } </span>개)
-										<br>
-										금액 : 											
+										<span id="productName${i.index }">${list.cartInfoList[0].bookTitle }</span>
+										[<span id="amount${i.index}">${list.bookOrderCount } </span>개]
+											<br/>
+										금액 :
 										<c:choose>
 												<c:when test="${member.memberDto.memberName == 'GENERAL'}">
 													<fmt:formatNumber value="${list.cartInfoList[0].bookPrice*list.bookOrderCount}" pattern="#,###"/>원
@@ -148,7 +107,6 @@
 									</td>
 									<td class="tb_td_state">${list.memberAddress}</td>
 									<td class="tb_td_btn">
-									
 										<c:if test="${list.orderState == '0'}">
 											배송 준비중
 										</c:if>
@@ -158,44 +116,48 @@
 										<c:if test="${list.orderState == '2'}">
 											배송완료
 										</c:if>
-									
-										
 										<input type="hidden" id="orderId${i.index }" value="${list.memberEmail }">
-										
-										
-										
-									
 									</td>
 								</tr>
-								
 									<input type="hidden" id="orderId${i.index}" value="${list.memberEmail}">
-									
 								</c:forEach>
-								
 							</tbody>
 						</table>
-						
-						<div id="paginationBox" style="text-align: center; margin-top: 20px">
-								<ul class="pagination" >
-								<c:if test="${pagination.prev}">
-									<li class="page-item"><a class="page-link" href="#"
-										onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.searchType }','${pagination.keyword }', '${pagination.startDate}', '${pagination.endDate}')">Previous</a></li>
-								</c:if>
-								
-								
-								<c:forEach begin="${pagination.startPage}" end="${pagination.endPage }" var="idx">
-									<li
-										class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> "><a
-										class="page-link" href="#"
-										onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.searchType }','${pagination.keyword }', '${pagination.startDate}', '${pagination.endDate}')">
-											${idx} </a></li>
-								</c:forEach>
-								<c:if test="${pagination.next}">
-									<li class="page-item"><a class="page-link" href="#"
-										onClick="fn_next('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.searchType }','${pagination.keyword }', '${pagination.startDate}', '${pagination.endDate}')">Next</a></li>
-								</c:if>
+
+						<div>
+							<nav aria-label="Page navigation" style="margin-top: 100px">
+								<ul class="pagination justify-content-center">
+									<c:if test="${totalCnt !=null || totalCnt==0}">
+										<div>
+											<div><img src="/img/경고.png" alt=""></div>
+											<div style="margin-top: 30px; margin-left: -43px; font-size: 20px; font-weight: bold;">검색 결과가 없습니다.</div>
+										</div>
+									</c:if>
+									<c:if test="${totalCnt==null && totalCnt!=0}">
+										<li class="page-item">
+											<c:if test="${pageHandler.showPrev}">
+												<a class="page-link" href="<c:url value="/admin/bookList${pageHandler.sc.getQueryString(pageHandler.beginPage-1)}"/>"  tabindex="-1">Previous</a>
+											</c:if>
+										</li>
+										<c:forEach begin="${pageHandler.beginPage}" end="${pageHandler.endPage}" step="1" var="i">
+											<c:choose>
+												<c:when test="${pageHandler.sc.page == i}">
+													<li class="page-item"><a class="page-link" style="background-color: #cce5ff" href="#">${i}</a></li>
+												</c:when>
+												<c:otherwise>
+													<li class="page-item"><a class="page-link" href="<c:url value="/order/myOrders${pageHandler.sc.getQueryString(i)}"/>">${i}</a></li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										<li class="page-item">
+											<c:if test="${pageHandler.showNext}">
+												<a class="page-link" href="<c:url value="/admin/bookList${pageHandler.sc.getQueryString(pageHandler.endPage+1)}"/>">Next</a>
+											</c:if>
+										</li>
+									</c:if>
 								</ul>
-							</div>
+							</nav>
+						</div>
 					</div>
 				</div>		
 			</div>
@@ -208,59 +170,39 @@
 </div>
 
 <script>
-	//이전 버튼 이벤트
-	function fn_prev(page, range, rangeSize, searchType, keyword, startDate, endDate) {
-		var page = ((range - 2) * rangeSize) + 1;
-		var range = range - 1;
-		var url = "${pageContext.request.contextPath}/mypage/order";
-		url = url + "?page=" + page;
-		url = url + "&range=" + range;
-		url = url + "&keyword=" + $('#order_keyword').val();
-		url = url + "&startDate=" + startDate;
-		url = url + "&endDate=" + endDate;
-		location.href = url;
-	}
-	//페이지 번호 클릭
-	function fn_pagination(page, range, rangeSize, searchType, keyword, startDate, endDate) {
-		var url = "${pageContext.request.contextPath}/mypage/order";
-		url = url + "?page=" + page;
-		url = url + "&range=" + range;
-		url = url + "&searchType=" + searchType;
-		url = url + "&keyword=" + keyword;
-		url = url + "&startDate=" + startDate;
-		url = url + "&endDate=" + endDate;
-		location.href = url;
-	}
-	//다음 버튼 이벤트
-	function fn_next(page, range, rangeSize, searchType, keyword, startDate, endDate) {
-		var page = parseInt((range * rangeSize)) + 1;
-		var range = parseInt(range) + 1;
-		var url = "${pageContext.request.contextPath}/mypage/order";
-		url = url + "?page=" + page;
-		url = url + "&range=" + range;
-		url = url + "&keyword=" + $('#order_keyword').val();
-		url = url + "&startDate=" + startDate;
-		url = url + "&endDate=" + endDate;
-		location.href = url;
-	}
 
-	$(document).on('click', '#orderbtnSearch', function(e){
-		e.preventDefault();
-		var url = "${pageContext.request.contextPath}/mypage/order";
+	let today = new Date().toLocaleDateString();
 
-		url = url + "?searchType=" + $('#ordersearchType').val();
-		url = url + "&keyword=" + $('#order_keyword').val();
+	$.datepicker.setDefaults({
+		dateFormat: 'yy-mm-dd',
+		prevText: '이전 달',
+		nextText: '다음 달',
+		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+		showMonthAfterYear: true,
+		yearSuffix: '년',
+		maxDate: new Date(),
+		onClose : function( selectedDate ) {
+			if( selectedDate != "" ) {
 
-		if($(datepickerStart).val() != null && $(datepickerStart).val() != '') {
-			url = url + "&startDate=" + $('#datepickerStart').val();
-			url = url + "&endDate=" + $('#datepickerEnd').val();
+				$("#datepickerStart").datepicker("option", "maxDate", $("#datepickerEnd").val());
+				$("#datepickerEnd").datepicker("option", "minDate", $("#datepickerStart").val());
+			}
 		}
 
 
-		location.href = url;
-		console.log(url);
 	});
 
+
+	$(function() {
+		$("#datepickerStart,#datepickerEnd").datepicker({
+			//옵션들 생략//
+			//옵션들 생략//
+		});
+	});
 
 </script>
 

@@ -216,10 +216,21 @@ public class OrderService {
 
     }
 
+    /**
+     * 주문내역 리스트 출력
+     * @param sc 검색 조건
+     * @return 주문내역 리스트
+     */
     public List<OrderDto> searchMyOrderList(SearchCondition sc) {
         return orderMapper.searchMyOrderList(sc);
     }
 
+
+    /**
+     * 검색된 주문내역 리스트 개수 확인
+     * @param sc 검색 조건
+     * @return 주문내역 리스트 개수
+     */
     public int searchOrderResultCnt(SearchCondition sc) {
         return orderMapper.searchOrderResultCnt(sc);
     }

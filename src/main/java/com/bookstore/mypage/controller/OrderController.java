@@ -209,27 +209,31 @@ public class OrderController {
 
     }
 
+
+    /**
+     * 주문 내역 확인
+     * @param sc 주문내역 페이징 처리 및 검색 조건
+     * @param model 주문내역 리스트, 페이징 설정 등
+     * @param principalDetails 로그인된 고객정보
+     * @return 주문내역 화면
+     */
     @GetMapping("/myOrders")
     public String myOrders(SearchCondition sc, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-
-        log.info("sc : " + sc);
 
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
         sc.setMemberEmail(memberEmail);
 
-//        try {
-            log.info("myOrders 시작");
+        try {
             int totalCnt = orderService.searchOrderResultCnt(sc);
-            log.info("totalCnt : " + totalCnt);
             PageHandler pageHandler = new PageHandler(totalCnt, sc);
             List<OrderDto> orderList = orderService.searchMyOrderList(sc);
 
             model.addAttribute("myOrderList", orderList);
             model.addAttribute("pageHandler", pageHandler);
-//        } catch (Exception e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             model.addAttribute("totalCnt", 0);
-//        }
-
+        }
         return "/mypage/order";
     }
 }
