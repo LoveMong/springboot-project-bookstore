@@ -3,7 +3,6 @@ package com.bookstore.mypage.service;
 import com.bookstore.admin.domain.BookDto;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.mapper.HomeMapper;
-import com.bookstore.member.domain.PrincipalDetails;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.domain.OrderDto;
@@ -11,7 +10,6 @@ import com.bookstore.mypage.domain.PayInfoDto;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -19,9 +19,9 @@
 			
 			<li id="main_nav_2"><a href="/order/cart" class="primary-btn">장바구니</a></li>
 		
-			<li id="main_nav_4"><a href="/mypage/point" class="primary-btn">포인트 충전</a></li>
+			<li id="main_nav_4"><a href="/point/charge" class="primary-btn">포인트 충전</a></li>
 		
-			<li id="main_nav_5"><a href="/mypage/paylist" class="primary-btn">포인트 내역</a></li>
+			<li id="main_nav_5"><a href="/point/history" class="primary-btn">포인트 내역</a></li>
 		</ul>
 	</div>
 </div>

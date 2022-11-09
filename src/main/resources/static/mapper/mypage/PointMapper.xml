@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookstore.mypage.mapper.PointMapper">
+
+    <!-- 주문내역 리스트 출력 -->
+    <select id="searchPointList" parameterType="com.bookstore.common.utils.SearchCondition" resultType="com.bookstore.mypage.domain.PointDto">
+        SELECT ANY_VALUE(point_changeDate) as pointChangeDate, ANY_VALUE(point_num) as pointNum,
+        ANY_VALUE(member_Email) as memberEmail, sum(point_charge) as pointCharge, ANY_VALUE(point_use) as pointUse, ANY_VALUE(point_current) as pointCurrent
+        <!-- ANY_VALUE() : GROUP BY 쿼리 에러 해결 방법 -->
+        from point
+        where member_Email = #{memberEmail}
+        <if test='startDate != null and startDate != "" and endDate != null and endDate != "" '>
+            AND DATE(point_changeDate) BETWEEN #{startDate} AND #{endDate}
+        </if>
+        GROUP BY FLOOR(MINUTE(point_changeDate)), point_num, member_Email, point_charge, point_use, point_current
+        order by point_num desc
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+
+    <!-- 주문내역 개수 확익 -->
+    <select id="searchPointResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
+        SELECT count(*) as listCnt
+        from (
+            select count(*) as listCnt
+            from point
+            where member_Email = #{memberEmail}
+            <if test='startDate != null and startDate != "" and endDate != null and endDate != "" '>
+                AND DATE(point_changeDate) BETWEEN #{startDate} AND #{endDate}
+            </if>
+            GROUP BY FLOOR(MINUTE(point_changeDate)), point_current
+        ) A
+    </select>
+
+    <insert id="chargePoint" parameterType="com.bookstore.mypage.domain.PointDto">
+        INSERT INTO point(member_Email, point_charge, point_current)
+        VALUES (#{memberEmail}, #{pointCharge}, #{pointCurrent})
+    </insert>
+
+    <update id="updateMemberPoint" parameterType="com.bookstore.mypage.domain.PointDto">
+        UPDATE member
+        SET member_point = #{pointCurrent}
+        WHERE member_email = #{memberEmail}
+    </update>
+
+
+</mapper>

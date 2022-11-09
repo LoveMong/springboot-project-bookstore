@@ -1,7 +1,6 @@
 package com.bookstore.mypage.controller;
 
 
-import com.bookstore.admin.domain.BookDto;
 import com.bookstore.common.utils.PageHandler;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.member.domain.PrincipalDetails;
