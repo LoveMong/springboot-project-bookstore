@@ -3,7 +3,9 @@ package com.bookstore.mypage.controller;
 
 import com.bookstore.common.utils.PageHandler;
 import com.bookstore.common.utils.SearchCondition;
+import com.bookstore.member.domain.MemberDto;
 import com.bookstore.member.domain.PrincipalDetails;
+import com.bookstore.member.service.MemberService;
 import com.bookstore.mypage.domain.PointDto;
 import com.bookstore.mypage.service.PointService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +33,16 @@ public class PointController {
 
     private final PointService pointService;
 
+    private final MemberService memberService;
 
+
+    /**
+     * 포인트 충전 및 사용내역 조회
+     * @param sc 조회 기준 기간 설정
+     * @param model 로그인된 고객 정보 및 포인트 내역
+     * @param principalDetails 로그인된 고객정보
+     * @return 포인트 내역 조회 화면
+     */
     @GetMapping("/history")
     public String history(SearchCondition sc, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
@@ -41,8 +52,10 @@ public class PointController {
         try {
             int totalCnt = pointService.searchPointResultCnt(sc);
             PageHandler pageHandler = new PageHandler(totalCnt, sc);
+            MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
             List<PointDto> pointList = pointService.searchPointList(sc);
 
+            model.addAttribute("memberInfo", memberDto);
             model.addAttribute("pointList", pointList);
             model.addAttribute("pageHandler", pageHandler);
         } catch (Exception e) {
@@ -53,12 +66,30 @@ public class PointController {
     }
 
 
+    /**
+     * 포인트 충전 화면으로 이동
+     * @param principalDetails 로그인된 고객정보
+     * @param model 고객 정보
+     * @return 포인트 충전 화면
+     */
     @GetMapping("/charge")
-    public String charge() {
+    public String charge(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+
+        String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
+
+        model.addAttribute("memberInfo", memberDto);
+
         return "/mypage/pointCharge";
     }
 
 
+    /**
+     * 포인트 충전 진행
+     * @param pointDto 충전할 포인트 정보
+     * @param rttr 포인트 충전 성공 여부 메시지
+     * @return 포인트 내역 조회 화면
+     */
     @PostMapping("/charge")
     public String charge(PointDto pointDto, RedirectAttributes rttr) throws Exception {
 

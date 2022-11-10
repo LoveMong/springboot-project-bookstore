@@ -70,10 +70,10 @@
 						<table id="point_table">
 							<thead>
 								<tr style="background-color: #e9e9e9;">
-									<td style="width: 14%; border: 1px solid grey">주문일자</td>
-									<td style="border: 1px solid grey; width: 40%;">주문내역</td>
-									<td style="border: 1px solid grey; width: 30%">배송지</td>
-									<td style="border: 1px solid grey">배송상태</td>
+									<td style="width: 14%; border: 1px solid #d0d0d0">주문일자</td>
+									<td style="border: 1px solid #d0d0d0; width: 40%;">주문내역</td>
+									<td style="border: 1px solid #d0d0d0; width: 30%">배송지</td>
+									<td style="border: 1px solid #d0d0d0">배송상태</td>
 								</tr>
 							</thead>
 							<tbody>

@@ -2,7 +2,8 @@ package com.bookstore.common.utils;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static java.lang.Math.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static java.util.Objects.requireNonNullElse;
 
 
@@ -48,6 +49,8 @@ public class SearchCondition {
                 .queryParam("pageSize", pageSize)
                 .queryParam("option",   option)
                 .queryParam("keyword",  keyword)
+                .queryParam("startDate",  startDate)
+                .queryParam("endDate",  endDate)
                 .build().toString();
     }
     public Integer getPage() {
@@ -120,6 +123,9 @@ public class SearchCondition {
                 ", pageSize=" + pageSize +
                 ", option='" + option + '\'' +
                 ", keyword='" + keyword + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
                 '}';
     }
 }

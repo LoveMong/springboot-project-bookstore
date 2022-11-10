@@ -3,7 +3,9 @@ package com.bookstore.mypage.controller;
 
 import com.bookstore.common.utils.PageHandler;
 import com.bookstore.common.utils.SearchCondition;
+import com.bookstore.member.domain.MemberDto;
 import com.bookstore.member.domain.PrincipalDetails;
+import com.bookstore.member.service.MemberService;
 import com.bookstore.mypage.domain.AddressDto;
 import com.bookstore.mypage.domain.CartDto;
 import com.bookstore.mypage.domain.OrderDto;
@@ -33,6 +35,8 @@ public class OrderController {
 
 
     private final OrderService orderService;
+
+    private final MemberService memberService;
 
 
     /**
@@ -126,10 +130,13 @@ public class OrderController {
 
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
 
+        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
         AddressDto mainAddress = orderService.searchMainAddressByMemberEmail(memberEmail); // 메인 배송주소 검색
         List<AddressDto> addedAddressList = orderService.searchAddedAddressByMemberEmail(memberEmail); // 추가된 배송주소 검색
         List<CartDto> cartInfoList = orderService.makeCartInfoList(order);
 
+
+        model.addAttribute("memberInfo", memberDto);
         model.addAttribute("mainAddress", mainAddress);
         model.addAttribute("addedAddress", addedAddressList);
         model.addAttribute("list", cartInfoList);

@@ -41,10 +41,10 @@
                      <form class="login__input" action="/point/charge" method="post" id="pointfrm">
                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                      <sec:authentication property="principal" var="member"/>
-                        <input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberDto.memberEmail}" readonly="readonly">
+                        <input type="hidden" name="memberEmail" id="memberEmail" value="${memberInfo.memberEmail}" readonly="readonly">
                         <input type="hidden" name="pointCharge" id="pointCharge" value="0">
-                        <input type="hidden" name="pointCurrent" id="pointCurrent" value="${member.memberDto.memberPoint}"> <br>
-                        현재 포인트 : <strong id="defaultPoint" class="text-primary"><fmt:formatNumber value="${member.memberDto.memberPoint}" pattern="#,###"/></strong>
+                        <input type="hidden" name="pointCurrent" id="pointCurrent" value="${memberInfo.memberPoint}"> <br>
+                        현재 포인트 : <strong id="defaultPoint" class="text-primary"><fmt:formatNumber value="${memberInfo.memberPoint}" pattern="#,###"/></strong>
                         <br/>
                         
                           <label class="form-label mt-4" for="inputValid">충전하실 금액 </label>

@@ -96,8 +96,16 @@
 <%--							<li><p><sec:authentication property="principal.memberDto.memberName"/> 님</p></li>--%>
 							<li><p>${member.memberDto.memberName} </p> <li><p style="font-size: 14px; margin-left: -11px;">님</p></li>
 							<li><p>${member.memberDto.memberRank} 회원</p></li>
-							<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
-									value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>
+							<c:choose>
+								<c:when test="${memberInfo.memberPoint != null}">
+									<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
+											value="${memberInfo.memberPoint}" pattern="#,### 원" /> </a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a id="member_point" href="/mypage/paylist">보유포인트 : <fmt:formatNumber
+											value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>
+								</c:otherwise>
+							</c:choose>
 							<li><a href="/order/myOrders">마이페이지</a></li>
 							<c:set var="String" value="${login.user_id }"/>
 							<li><a href="/account/logout">로그아웃</a></li>
