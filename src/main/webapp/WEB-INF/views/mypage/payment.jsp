@@ -30,12 +30,12 @@
                 <!-- 구매자 정보 출력(이름/이메일) -->
                 <div class="order_cli">
                     <hr />
-                    <h3>${member.memberDto.memberName} [${member.memberDto.memberEmail}]</h3>
+                    <h3>${memberInfo.memberName} [${memberInfo.memberEmail}]</h3>
                 </div>
                 <div>
-                    <input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberDto.memberEmail}">
-                    <input type="hidden" name="memberPoint" id="memberPoint" value="${member.memberDto.memberPoint}">
-                    <input type="hidden" name="memberRank" id="memberRank" value="${member.memberDto.memberRank}">
+                    <input type="hidden" name="memberEmail" id="memberEmail" value="${memberInfo.memberEmail}">
+                    <input type="hidden" name="memberPoint" id="memberPoint" value="${memberInfo.memberPoint}">
+                    <input type="hidden" name="memberRank" id="memberRank" value="${memberInfo.memberRank}">
                 </div>
             </div>
 
@@ -716,8 +716,9 @@
 
     $("#paymentBtn").click(function(){
 
-        let memberPoint = ${member.memberDto.memberPoint};
+        let memberPoint = ${memberInfo.memberPoint};
         let finalTotalPrice = Math.floor(${finalTotalPrice});
+        let currentPoint = memberPoint - finalTotalPrice;
 
         $('#totalPrice').val(finalTotalPrice);
 
@@ -741,6 +742,8 @@
 
         } else {
 
+            $('#memberPoint').val(currentPoint);
+
             $('#payment').submit();
 
         }
@@ -750,42 +753,6 @@
 
 
 
-</script>
-
-<script>
-    function submitCheck(){
-
-        var userPoint = ${login.user_point };
-        var finalTotalPrice = Math.floor($('#finalTotalPrice').val());
-        var total = ${total};
-
-        if(!$("input:radio[name='addrconfirm']").is(":checked")){
-
-            alert("배송지를 선택해주세요.");
-
-            return false;
-
-
-        } else if(!$("input:checkbox[name='checkbox']").is(":checked")) {
-
-            alert("결제 동의가 필요합니다.");
-
-            return false;
-
-
-        } else if(userPoint < finalTotalPrice ) {
-
-            alert("Point 잔액이 부족합니다.");
-
-            return false;
-
-        } else {
-
-            return true;
-
-
-        }
-    }
 </script>
 
 </html>

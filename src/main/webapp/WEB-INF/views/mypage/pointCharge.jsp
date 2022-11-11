@@ -41,10 +41,10 @@
                      <form class="login__input" action="/point/charge" method="post" id="pointfrm">
                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                      <sec:authentication property="principal" var="member"/>
-                        <input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberDto.memberEmail}" readonly="readonly">
+                        <input type="hidden" name="memberEmail" id="memberEmail" value="${memberInfo.memberEmail}" readonly="readonly">
                         <input type="hidden" name="pointCharge" id="pointCharge" value="0">
-                        <input type="hidden" name="pointCurrent" id="pointCurrent" value="${member.memberDto.memberPoint}"> <br>
-                        현재 포인트 : <strong id="defaultPoint" class="text-primary"><fmt:formatNumber value="${member.memberDto.memberPoint}" pattern="#,###"/></strong>
+                        <input type="hidden" name="pointCurrent" id="pointCurrent" value="${memberInfo.memberPoint}"> <br>
+                        현재 포인트 : <strong id="defaultPoint" class="text-primary"><fmt:formatNumber value="${memberInfo.memberPoint}" pattern="#,###"/></strong>
                         <br/>
                         
                           <label class="form-label mt-4" for="inputValid">충전하실 금액 </label>
@@ -58,7 +58,7 @@
                           <input type="submit" class="btn btn-primary" value="충전하기">
                      </form>
                      <br/>
-                        <input type="button"  id="addpoint" class="btn btn-warning" value="카카오페이 충전">
+                        <input type="button"  id="kakaoPay" class="btn btn-warning" value="카카오페이 충전">
                   </div>
                   
                   
@@ -120,43 +120,40 @@
                </script>
                <script>
                   $(function() {
-                     $('#addpoint')
+                      $('#kakaoPay')
                            .click(
                                  function() {
-                                    var userid = "${login.user_id}";
-                                    var pointCharge = $(
-                                          '#point_charge').val();
-                                    var point = $('#point').val();
-                                    if (userid != "") {
-                                       if (point != 0) {
-                                          $
-                                                .ajax({
+
+                                     let token = $("meta[name='_csrf']").attr("content");
+                                     let header = $("meta[name='_csrf_header']").attr("content");
+
+                                     let memberEmail = "${memberInfo.memberEmail}";
+                                     let pointCharge = $('#pointCharge').val();
+                                     let pointCurrent = $('#pointCurrent').val();
+
+                                     if (pointCharge != 0) {
+                                          $.ajax({
                                                    type : "POST",
-                                                   url : '/kakaopay',
+                                                   url : '/point/kakaoPay',
+                                                  beforeSend : function (xhr){
+                                                      xhr.setRequestHeader(header, token);
+                                                  },
                                                    data : {
-                                                      userid : userid,
-                                                      pointCharge : pointCharge,
-                                                      point : point,
+                                                       memberEmail : memberEmail,
+                                                       pointCharge : pointCharge,
+                                                       pointCurrent : pointCurrent,
                                                    },
-                                                   dataType : 'json',
-                                                   success : function(
-                                                         data) {
-                                                      var box = data.next_redirect_pc_url;
-                                                      window
-                                                            .open(box);
+                                                   success : function(data) {
+                                                       location.href = data.next_redirect_pc_url;
+                                                      // window.open(box);
                                                    },
-                                                   error : function(
-                                                         error) {
-                                                      alert('error : '
-                                                            + error);
+                                                   error : function(error) {
+                                                      alert('error : ' + error);
                                                    }
                                                 });
                                        } else {
                                           alert('충전할 포인트를 입력해주세요.');
                                        }
-                                    } else {
-                                       alert('로그인을 해주세요.')
-                                    }
                                  });
                   });
                </script>

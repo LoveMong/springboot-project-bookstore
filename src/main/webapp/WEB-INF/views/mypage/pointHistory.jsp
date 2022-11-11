@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Welcome! SJBook Store!</title>
-	<link rel="stylesheet" href="/css/mypage/order.css">
+	<link rel="stylesheet" href="/css/mypage/pointHistory.css">
 	<script
 	  src="https://code.jquery.com/jquery-3.4.1.js"
 	  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -44,12 +44,13 @@
 			<!-- 메인  컨텐츠-->
 			<div id="main_content_wrap" style="margin-top: 25px">
 				<div id="main_content">
+					<form action="/point/history" method="get">
 					<div id="main_content_subject">
 						<p>포인트 사용내역 / 조회</p>
 					</div>
 					<div id="main_content_1" style="margin-top: 35px">
 						<div class="" style="margin: 10px">
-							<p style="margin-right: 10px; float: left"> 조회기간 :
+							<p style="margin-right: 10px; float: left; margin-bottom: 30px"> 조회기간 :
 							<div class="" style="padding-right:10px; float:left;">
 								<input type="text" id="datepickerStart" name="startDate" class="form-control form-control-sm">
 							</div>
@@ -58,17 +59,18 @@
 								<input type="text" id="datepickerEnd" name="endDate" class="form-control form-control-sm">
 							</div>
 						</div>
-						
-					
+						<input type="submit" class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch" value="검색"/>
+					</div>
+					</form>
 						<table id="point_table">
 							<thead>
 							
 								<tr style="background-color: #e9e9e9;">
-									<td id="th_td_year">일자</td>
-									<td id="th_td_info" style="width: 22%;">내용</td>
-									<td id="th_td_stae" style=" width: 22%;">충천포인트</td>   
-									<td id="th_td_stae" style=" width: 22%;">사용포인트</td>
-									<td id="th_td_btn" style=" width: 22%;">남은포인트</td>
+									<td style="border: 1px solid #d0d0d0">일자</td>
+									<td style="width: 22%; border: 1px solid #d0d0d0">내용</td>
+									<td style=" width: 22%; border: 1px solid #d0d0d0">충전포인트</td>
+									<td style=" width: 22%; border: 1px solid #d0d0d0">사용포인트</td>
+									<td style=" width: 22%; border: 1px solid #d0d0d0">남은포인트</td>
 								</tr>
 							
 							</thead>

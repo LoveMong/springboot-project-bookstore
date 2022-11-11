@@ -4,7 +4,7 @@
 
 <mapper namespace="com.bookstore.mypage.mapper.PointMapper">
 
-    <!-- 주문내역 리스트 출력 -->
+    <!-- 포인트 내역 출력 -->
     <select id="searchPointList" parameterType="com.bookstore.common.utils.SearchCondition" resultType="com.bookstore.mypage.domain.PointDto">
         SELECT ANY_VALUE(point_changeDate) as pointChangeDate, ANY_VALUE(point_num) as pointNum,
         ANY_VALUE(member_Email) as memberEmail, sum(point_charge) as pointCharge, ANY_VALUE(point_use) as pointUse, ANY_VALUE(point_current) as pointCurrent
@@ -20,7 +20,7 @@
     </select>
 
 
-    <!-- 주문내역 개수 확익 -->
+    <!-- 포인트 내역 개수 확인 -->
     <select id="searchPointResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
         SELECT count(*) as listCnt
         from (

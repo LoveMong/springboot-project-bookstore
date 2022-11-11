@@ -16,13 +16,13 @@
 	rel="stylesheet">
 
 <!-- 부트스트랩 CSS -->
-<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/elegant-icons.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/magnific-popup.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/style.css" type="text/css">
+<%--<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.min.css" type="text/css">--%>
+<%--<link rel="stylesheet" href="/css/bootstraps/css/font-awesome.min.css" type="text/css">--%>
+<%--<link rel="stylesheet" href="/css/bootstraps/css/elegant-icons.css" type="text/css">--%>
+<%--<link rel="stylesheet" href="/css/bootstraps/css/owl.carousel.min.css" type="text/css">--%>
+<%--<link rel="stylesheet" href="/css/bootstraps/css/magnific-popup.css" type="text/css">--%>
+<%--<link rel="stylesheet" href="/css/bootstraps/css/slicknav.min.css" type="text/css">--%>
+<%--<link rel="stylesheet" href="/css/bootstraps/css/style.css" type="text/css">--%>
 
 
 <!-- Footer Section Begin -->
@@ -117,13 +117,13 @@
 <!-- Search model end -->
 
 <!-- Js Plugins -->
-<script src="/css/bootstraps/js/bootstrap.min.js"></script>
+<%--<script src="/css/bootstraps/js/bootstrap.min.js"></script>--%>
 <script src="/css/bootstraps/js/jquery.magnific-popup.min.js"></script>
 <script src="/css/bootstraps/js/isotope.pkgd.min.js"></script>
 <script src="/css/bootstraps/js/masonry.pkgd.min.js"></script>
 <script src="/css/bootstraps/js/jquery.slicknav.js"></script>
 <script src="/css/bootstraps/js/owl.carousel.min.js"></script>
-<script src="/css/bootstraps/js/main.js"></script>
+<script src="/css/bootstraps/js/main.min.js"></script>
 
 
 

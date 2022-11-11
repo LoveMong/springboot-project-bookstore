@@ -178,10 +178,9 @@ tbody{
     border: 1px solid #d0d0d0;
 }
 .tb_td_info{
-	padding-left: 20px;
 	border: 1px solid #d0d0d0;
 	line-height: 30px;
-
+	text-align: center;
 }
 .tb_td_state{
 	text-align : center;
@@ -195,7 +194,7 @@ tbody{
 
 
 #point_table tr{
-	height: 105px;
+	height: 80px;
     border: 1px solid #d0d0d0;
 }
 

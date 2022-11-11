@@ -10,29 +10,23 @@
 <meta name="keywords" content="Phozogy, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="google-signin-scope" content="profile email">
-<meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<%--<meta name="google-signin-scope" content="profile email">--%>
+<%--<meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">--%>
+<%--<script src="https://apis.google.com/js/platform.js" async defer></script>--%>
+
 
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
 
 <!-- 부트스트랩 CSS -->
-<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.min.css"
-   type="text/css">
-<link rel="stylesheet"
-   href="/css/bootstraps/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/elegant-icons.css"
-   type="text/css">
-<link rel="stylesheet"
-   href="/css/bootstraps/css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet"
-   href="/css/bootstraps/css/magnific-popup.css" type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/slicknav.min.css"
-   type="text/css">
-<link rel="stylesheet" href="/css/bootstraps/css/style.css"
-   type="text/css">
+<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="/css/bootstraps/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="/css/bootstraps/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="/css/bootstraps/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="/css/bootstraps/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="/css/bootstraps/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="/css/bootstraps/css/style.css" type="text/css">
 
 
 
@@ -96,8 +90,16 @@
 <%--							<li><p><sec:authentication property="principal.memberDto.memberName"/> 님</p></li>--%>
 							<li><p>${member.memberDto.memberName} </p> <li><p style="font-size: 14px; margin-left: -11px;">님</p></li>
 							<li><p>${member.memberDto.memberRank} 회원</p></li>
-							<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
-									value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>
+							<c:choose>
+								<c:when test="${memberInfo.memberPoint != null}">
+									<li><a href="/point/charge">보유포인트 : <fmt:formatNumber
+											value="${memberInfo.memberPoint}" pattern="#,### 원" /> </a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a id="member_point" href="/point/charge">보유포인트 : <fmt:formatNumber
+											value="${member.memberDto.memberPoint}" pattern="#,### 원" /> </a></li>
+								</c:otherwise>
+							</c:choose>
 							<li><a href="/order/myOrders">마이페이지</a></li>
 							<c:set var="String" value="${login.user_id }"/>
 							<li><a href="/account/logout">로그아웃</a></li>
@@ -107,26 +109,6 @@
 							</c:if>
 						</sec:authorize>
 					</ul>
-					<script type="text/javascript">
-						  function onLoad() {
-						      gapi.load('auth2', function() {
-						        gapi.auth2.init();
-						      });
-						    }  
-						
-						  function signOut() {
-							    var auth2 = gapi.auth2.getAuthInstance();
-							    auth2.signOut().then(function () {
-							    	location.href="logout";
-							    });
-							    auth2.disconnect();  
-							    
-							  /*  gapi.auth2.getAuthInstance().disconnect();
-							    location.href="logout" */
-							  }
-					</script>	
-					<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-					
 					<!-- 로그인 회원가입 마이페이지 -->
 					<div id="mobile-menu-wrap"></div>
 				</div>
