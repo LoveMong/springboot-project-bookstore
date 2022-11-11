@@ -196,4 +196,7 @@ buildNumber.properties
 application.properties
 src/main/resources/application.properties
 KaKaoPayService.java
+
+#폴더 무시
+images/
 # End of https://www.toptal.com/developers/gitignore/api/macos,java,maven,intellij
