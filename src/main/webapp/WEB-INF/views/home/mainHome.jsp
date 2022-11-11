@@ -194,7 +194,6 @@
         </div>
     </div>
 
-    <jsp:include page="../common/footer.jsp"></jsp:include>
 
 </div>
 
@@ -242,6 +241,7 @@
         return result;
     }
 </script>
+<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>
