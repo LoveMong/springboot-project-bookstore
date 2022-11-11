@@ -195,5 +195,5 @@ buildNumber.properties
 #파일 무시
 application.properties
 src/main/resources/application.properties
-
+KaKaoPayService.java
 # End of https://www.toptal.com/developers/gitignore/api/macos,java,maven,intellij
