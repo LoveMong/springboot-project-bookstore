@@ -195,6 +195,7 @@ buildNumber.properties
 #파일 무시
 application.properties
 src/main/resources/application.properties
+src/main/java/com/bookstore/mypage/service/KaKaoPayService.java
 KaKaoPayService.java
 
 #폴더 무시
