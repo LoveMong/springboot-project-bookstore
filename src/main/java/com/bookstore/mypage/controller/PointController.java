@@ -1,13 +1,13 @@
 package com.bookstore.mypage.controller;
 
 
-import com.bookstore.mypage.domain.KaKaoPayReadyDto;
-import com.bookstore.mypage.domain.KakaoPayDto;
 import com.bookstore.common.utils.PageHandler;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.member.domain.MemberDto;
 import com.bookstore.member.domain.PrincipalDetails;
 import com.bookstore.member.service.MemberService;
+import com.bookstore.mypage.domain.KaKaoPayReadyDto;
+import com.bookstore.mypage.domain.KakaoPayDto;
 import com.bookstore.mypage.domain.PointDto;
 import com.bookstore.mypage.service.KaKaoPayService;
 import com.bookstore.mypage.service.PointService;
@@ -17,11 +17,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * 포인트 관리를 위한 컨트롤러
@@ -32,6 +31,7 @@ import java.util.Objects;
 @RequestMapping("/point")
 @RequiredArgsConstructor
 @Slf4j
+@SessionAttributes({"tid", "pointChargeInfo"})
 public class PointController {
 
     private final PointService pointService;
@@ -115,22 +115,66 @@ public class PointController {
     }
 
 
+    /**
+     * 카카오 페이 api 사용 point 충전 진행(결제 요청)
+     * @param payInfo 충전될 포인트 정보
+     * @param model 결제 고유번호, 포인트 정보
+     * @return 결제 고유번호, redirect url
+     */
     @PostMapping("/kakaoPay")
     @ResponseBody
-    public KaKaoPayReadyDto kakaoPay(KakaoPayDto payInfo) {
+    public KaKaoPayReadyDto kakaoPay(KakaoPayDto payInfo, Model model) {
 
-        log.info("payInfo : " + payInfo);
+        KaKaoPayReadyDto kaKaoPayReadyDto = kaKaoPayService.payReady(payInfo);
 
-        return kaKaoPayService.payReady(payInfo);
+        // 객체 공유를 위한 @SessionAttributes 사용 -> model.addAttribute()를 활용하여 객체를 세션에 저장
+        model.addAttribute("tid", kaKaoPayReadyDto.getTid());
+        model.addAttribute("pointChargeInfo", payInfo);
+
+        return kaKaoPayReadyDto;
 
     }
 
+
+    /**
+     * 카카오 페이 결제 성공(결제 승인 요청)
+     * @param pg_token 결제 승인 인증 토큰
+     * @param tid 결제 고유 번호
+     * @param payInfoDto 진행될 포인트 정보
+     * @param sessionS session 데이터 정리
+     * @param rttr 포인트 충전 성공여부
+     * @return 포인트 사용 내역 화면
+     */
     @GetMapping("/kakaoPaySuccess")
-    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token){
+    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token,
+                                  @ModelAttribute("tid") String tid,
+                                  @ModelAttribute("pointChargeInfo") KakaoPayDto payInfoDto,
+                                  SessionStatus sessionS, RedirectAttributes rttr){
+
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
 
-        return null;
+        PointDto pointDto = new PointDto(payInfoDto.getMemberEmail(), payInfoDto.getPointCharge(), payInfoDto.getPointCurrent());
+
+        try {
+
+            String resultConfirm = kaKaoPayService.payApprove(tid, pg_token, payInfoDto);
+
+            if (resultConfirm.equals("SUCCESS")) {
+                pointService.chargePoint(pointDto);
+                rttr.addFlashAttribute("msg", "포인트 충전 성공");
+            } else {
+                throw new Exception("FAIL");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rttr.addFlashAttribute("msg", "포인트 충전 실패");
+        }
+
+        sessionS.setComplete(); // @SessionAttributes에 저장된 객체들 제거
+
+        return "redirect:/point/history";
 
     }
 }

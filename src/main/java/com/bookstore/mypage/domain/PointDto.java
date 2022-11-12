@@ -18,4 +18,9 @@ public class PointDto {
 
     private String memberEmail;
 
+    public PointDto(String memberEmail, String pointCharge, String pointCurrent) {
+        this.memberEmail = memberEmail;
+        this.pointCharge = Integer.parseInt(pointCharge);
+        this.pointCurrent = Integer.parseInt(pointCurrent);
+    }
 }

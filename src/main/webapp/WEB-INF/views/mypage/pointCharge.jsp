@@ -143,9 +143,10 @@
                                                        pointCharge : pointCharge,
                                                        pointCurrent : pointCurrent,
                                                    },
+                                                   dataType : 'json',
                                                    success : function(data) {
-                                                       location.href = data.next_redirect_pc_url;
-                                                      // window.open(box);
+                                                       let box = data.next_redirect_pc_url;
+                                                       window.open(box);
                                                    },
                                                    error : function(error) {
                                                       alert('error : ' + error);
