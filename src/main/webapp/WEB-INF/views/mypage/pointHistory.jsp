@@ -18,7 +18,7 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		let msg = '${msg}';
-		if (msg !== null && msg !== '') {
+		if (msg !== '') {
 			alert(msg);
 		}
 	</script>
