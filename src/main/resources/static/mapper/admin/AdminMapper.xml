@@ -103,5 +103,58 @@
         LIMIT #{offset}, #{pageSize}
     </select>
 
+    <!-- 주문내역 리스트 출력 -->
+    <select id="searchOrderList" parameterType="com.bookstore.common.utils.SearchCondition" resultMap="OrderList">
+        SELECT *
+        FROM `order` a
+        LEFT JOIN  book b ON a.book_num = b.book_num
+        WHERE true
+        <include refid="searchOrderCondition"/>
+        ORDER BY order_date DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
 
+
+    <resultMap id="OrderList" type="com.bookstore.mypage.domain.OrderDto">
+        <result column="order_num" property="orderNum"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="order_state" property="orderState"/>
+        <result column="book_orderCount" property="bookOrderCount"/>
+        <result column="member_email" property="memberEmail"/>
+        <result column="member_registerDate" property="memberRegisterDate"/>
+        <result column="member_address" property="memberAddress"/>
+        <collection property="cartInfoList" resultMap="BookInfo"/>
+    </resultMap>
+
+    <resultMap id="BookInfo" type="com.bookstore.mypage.domain.CartDto">
+        <result column="book_num" property="bookNum"/>
+        <result column="book_title" property="bookTitle"/>
+        <result column="book_price" property="bookPrice"/>
+        <result column="book_pictureUrl" property="bookPictureUrl"/>
+        <result column="book_thumbUrl" property="bookThumbUrl"/>
+    </resultMap>
+
+    <!-- 주문내역 개수 확익 -->
+    <select id="searchOrderListResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM `order` a
+        LEFT JOIN  book b ON a.book_num = b.book_num
+        WHERE true
+        <include refid="searchOrderCondition"/>
+    </select>
+
+    <sql id="searchOrderCondition">
+        <choose>
+            <when test='option=="E"'>
+                AND member_email LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='option=="N"'>
+                AND member_name LIKE concat('%', #{keyword}, '%')
+            </when>
+            <otherwise>
+                AND (member_email   LIKE concat('%', #{keyword}, '%')
+                OR   member_name LIKE concat('%', #{keyword}, '%'))
+            </otherwise>
+        </choose>
+    </sql>
 </mapper>
