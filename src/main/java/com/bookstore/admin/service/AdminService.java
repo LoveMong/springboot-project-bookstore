@@ -6,6 +6,7 @@ import com.bookstore.admin.mapper.AdminMapper;
 import com.bookstore.common.utils.FileStoreHandler;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.member.domain.MemberDto;
+import com.bookstore.mypage.domain.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,8 @@ public class AdminService {
 
     /**
      * 도서 등록 서비스 로직
-     * @param bookDto 해당 도서 정보
+     *
+     * @param bookDto    해당 도서 정보
      * @param uploadFile 해당 도서 파일 정보
      * @throws Exception
      */
@@ -50,6 +52,7 @@ public class AdminService {
 
     /**
      * 도서 리스트 개수 확인
+     *
      * @return 개수
      */
     public int countBookList() {
@@ -58,6 +61,7 @@ public class AdminService {
 
     /**
      * 도서 상세 내용 검색
+     *
      * @param bookNum 해당 도서 번호
      * @return 해당 도서 정보 객체
      */
@@ -68,6 +72,7 @@ public class AdminService {
 
     /**
      * 도서 리스트 검색
+     *
      * @param map 검색 조건
      * @return 도서 리스트 객체
      */
@@ -78,6 +83,7 @@ public class AdminService {
 
     /**
      * 검색 조건에 해당되는 도서 리스트 개수 확인
+     *
      * @param sc 검색 조건
      * @return 검색된 도서 개수
      */
@@ -88,6 +94,7 @@ public class AdminService {
 
     /**
      * 검색 조건에 해당되는 도서 리스트 출력
+     *
      * @param sc 검색 조건
      * @return 검색된 도서 객체 리스트
      */
@@ -98,8 +105,9 @@ public class AdminService {
 
     /**
      * 도서 수정
+     *
      * @param bookDto 해당 도서 정보
-     * @param file 해당 도서 파일정보
+     * @param file    해당 도서 파일정보
      * @throws Exception
      */
     public void bookUpdate(BookDto bookDto, MultipartFile file) throws Exception {
@@ -123,6 +131,7 @@ public class AdminService {
 
     /**
      * 도서 삭제
+     *
      * @param bookNum 해당 도서 번호
      */
     public int bookRemove(int bookNum) {
@@ -132,6 +141,7 @@ public class AdminService {
 
     /**
      * 검색 조건에 해당되는 회원 리스트 개수 확인
+     *
      * @param sc 검색 조건
      * @return 검색된 회원 수
      */
@@ -142,6 +152,7 @@ public class AdminService {
 
     /**
      * 검색 조건에 해당되는 도서 리스트 출력
+     *
      * @param sc 검색 조건
      * @return 검색된 도서 객체 리스트
      */
@@ -149,7 +160,13 @@ public class AdminService {
         return adminMapper.searchMemberSelectPage(sc);
     }
 
+    public int searchOrderListResultCnt(SearchCondition sc) {
+        return adminMapper.searchOrderListResultCnt(sc);
+    }
 
+    public List<OrderDto> searchOrderList(SearchCondition sc) {
+        return adminMapper.searchOrderList(sc);
+    }
 
 
 

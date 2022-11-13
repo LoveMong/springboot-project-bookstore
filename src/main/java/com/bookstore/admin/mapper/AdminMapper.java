@@ -3,6 +3,7 @@ package com.bookstore.admin.mapper;
 import com.bookstore.admin.domain.BookDto;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.member.domain.MemberDto;
+import com.bookstore.mypage.domain.OrderDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -40,5 +41,11 @@ public interface AdminMapper {
 
     // 검색된 조건에 해당하는 회원 객체 리스트
     List<MemberDto> searchMemberSelectPage(SearchCondition sc);
+
+    int searchOrderListResultCnt(SearchCondition sc);
+
+    List<OrderDto> searchOrderList(SearchCondition sc);
+
+
 
 }

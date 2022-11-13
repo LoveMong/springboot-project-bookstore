@@ -38,7 +38,7 @@
                <div id="main_content_1">
 
                   <div id="main_content_1_1">
-                     <form class="login__input" action="/point/charge" method="post" id="pointfrm">
+                     <form class="login__input" action="/point/charge" method="post" id="pointChargeForm">
                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                      <sec:authentication property="principal" var="member"/>
                         <input type="hidden" name="memberEmail" id="memberEmail" value="${memberInfo.memberEmail}" readonly="readonly">
@@ -55,7 +55,7 @@
                           <input type="text" value="" class="form-control is-valid"  readonly="readonly" id="pointSum" name="point_charge_sum" onkeyup="inputNumberFormat(this);">
                           
                           <br/>
-                          <input type="submit" class="btn btn-primary" value="충전하기">
+                          <input type="button" id="chargeBtn" class="btn btn-primary" value="충전하기">
                      </form>
                      <br/>
                         <input type="button"  id="kakaoPay" class="btn btn-warning" value="카카오페이 충전">
@@ -93,7 +93,7 @@
                <script>
 
                   $("#charge").change(function() {
-                     var charge = $(this).val();
+                     let charge = $(this).val();
                      charge = charge.replace(/,/gi, "");
                      if (isNaN(charge)) {
                         alert("충전하실 금액은 숫자로만 입력 부탁드립니다.");
@@ -105,18 +105,15 @@
                   });
 
                   function pointSum() {
-                     var defaultPoint = $('#defaultPoint').text();
+                     let defaultPoint = $('#defaultPoint').text();
                      defaultPoint = defaultPoint.replace(/,/gi, "");
                      defaultPoint = Number(defaultPoint);
-                     var chargePoint = Number($('#pointCharge').val());
-                     
-
-                     console.log("defaultPoint : "+defaultPoint);	
-                     console.log("chargePoint : "+chargePoint);	
+                     let chargePoint = Number($('#pointCharge').val());
 
                      $('#pointCurrent').val(defaultPoint + chargePoint);
                      $('#pointSum').val(defaultPoint + chargePoint);
-                  };
+                  }
+
                </script>
                <script>
                   $(function() {
@@ -145,8 +142,7 @@
                                                    },
                                                    dataType : 'json',
                                                    success : function(data) {
-                                                       let box = data.next_redirect_pc_url;
-                                                       window.open(box);
+                                                       location.href = data.next_redirect_pc_url;
                                                    },
                                                    error : function(error) {
                                                       alert('error : ' + error);
@@ -158,6 +154,22 @@
                                  });
                   });
                </script>
+
+                <script>
+                    $("#chargeBtn").click(function() {
+
+                        let pointCharge = $('#pointCharge').val();
+
+                        if (pointCharge != 0) {
+                            $('#pointChargeForm').submit();
+                        } else {
+                            alert('충전할 포인트를 입력해주세요');
+                        }
+
+                    });
+
+                </script>
+
             </div>
          </div>
          <div class="clearfix"></div>
