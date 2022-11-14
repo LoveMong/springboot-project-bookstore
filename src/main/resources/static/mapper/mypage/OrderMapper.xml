@@ -59,8 +59,8 @@
 
     <!-- 도서 주문 정보 등록   -->
     <insert id="registerOrderInfo" parameterType="com.bookstore.mypage.domain.OrderDto">
-        INSERT INTO `order`(book_num, book_orderCount, member_email, member_address, member_name)
-        VALUES (#{bookNum}, #{bookOrderCount}, #{memberEmail}, #{memberAddress}, #{memberName});
+        INSERT INTO `order`(book_num, book_orderCount, member_email, member_address, member_name, order_number)
+        VALUES (#{bookNum}, #{bookOrderCount}, #{memberEmail}, #{memberAddress}, #{memberName}, #{orderNumber});
     </insert>
 
     <!-- 도서 판매량 및 재고 업데이트 -->
@@ -98,7 +98,7 @@
 
     <!-- 주문내역 리스트 출력 -->
     <select id="searchMyOrderList" parameterType="com.bookstore.common.utils.SearchCondition" resultMap="OrderList">
-        SELECT *
+        SELECT order_number, count(book_orderCount) as 'book_typeCount', order_date, ANY_VALUE(book_title) as 'book_title', ANY_VALUE(member_name) as 'member_name', ANY_VALUE(member_address) as 'member_address'
         FROM `order` a
         LEFT JOIN  book b ON a.book_num = b.book_num
         WHERE member_email = #{memberEmail}
@@ -111,16 +111,19 @@
         <if test='startDate != null and startDate != "" and endDate != null and endDate != "" '>
             AND DATE(order_date) BETWEEN #{startDate} AND #{endDate}
         </if>
+        GROUP BY a.order_number, a.order_date
         ORDER BY order_date DESC
         LIMIT #{offset}, #{pageSize}
     </select>
 
     <resultMap id="OrderList" type="com.bookstore.mypage.domain.OrderDto">
-        <result column="order_num" property="orderNum"/>
+        <result column="order_number" property="orderNumber"/>
+        <result column="book_typeCount" property="bookTypeCount"/>
         <result column="order_date" property="orderDate"/>
         <result column="order_state" property="orderState"/>
         <result column="book_orderCount" property="bookOrderCount"/>
         <result column="member_email" property="memberEmail"/>
+        <result column="member_name" property="memberName"/>
         <result column="member_registerDate" property="memberRegisterDate"/>
         <result column="member_address" property="memberAddress"/>
         <collection property="cartInfoList" resultMap="BookInfo"/>
@@ -137,18 +140,22 @@
     <!-- 주문내역 개수 확익 -->
     <select id="searchOrderResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
         SELECT count(*)
-        FROM `order` a
-        LEFT JOIN  book b ON a.book_num = b.book_num
-        WHERE member_email = #{memberEmail}
-        <if test='option == "T"'>
-            AND book_title LIKE concat('%', #{keyword}, '%')
-        </if>
-        <if test='option == "R"'>
-            AND member_name LIKE concat('%', #{keyword}, '%')
-        </if>
-        <if test='startDate != null and startDate != "" and endDate != null and endDate != "" '>
-            AND DATE(order_date) BETWEEN #{startDate} AND #{endDate}
-        </if>
+        FROM (
+            SELECT a.order_number
+            FROM `order` a
+            LEFT JOIN  book b ON a.book_num = b.book_num
+            WHERE member_email = #{memberEmail}
+            <if test='option == "T"'>
+                AND book_title LIKE concat('%', #{keyword}, '%')
+            </if>
+            <if test='option == "R"'>
+                AND member_name LIKE concat('%', #{keyword}, '%')
+            </if>
+            <if test='startDate != null and startDate != "" and endDate != null and endDate != "" '>
+                AND DATE(order_date) BETWEEN #{startDate} AND #{endDate}
+            </if>
+            GROUP BY a.order_number, a.order_date
+        ) as count
     </select>
 
 

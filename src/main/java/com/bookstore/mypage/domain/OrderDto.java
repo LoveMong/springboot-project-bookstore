@@ -9,8 +9,10 @@ public class OrderDto {
 
     private List<CartDto> cartInfoList;
 
-    private int orderNum; // 주문 번호
+    private int orderNum; // 주문 번호 (index)
+    private String orderNumber; // 주문 번호(주문일 + 4자리 난수 ex 202211120000)
     private String orderDate; // 주문일
+    private int bookTypeCount; // 도서 종류 개수
     private int orderState; // 주문 상태(배송 상태)
     private int bookNum; // 도서 번호
     private int bookOrderCount; // 도서 주문 수량

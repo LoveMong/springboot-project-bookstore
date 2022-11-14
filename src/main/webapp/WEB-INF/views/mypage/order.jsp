@@ -69,43 +69,38 @@
 
 						<table id="point_table">
 							<thead>
-								<tr style="background-color: #e9e9e9;">
-									<td style="width: 14%; border: 1px solid #d0d0d0">주문일자</td>
-									<td style="border: 1px solid #d0d0d0; width: 40%;">주문내역</td>
+								<tr style="background-color: #e9e9e9; font-size: 13px">
+									<td style="width: 10%; border: 1px solid #d0d0d0">주문번호</td>
+									<td style="width: 8%; border: 1px solid #d0d0d0">주문일자</td>
+									<td style="border: 1px solid #d0d0d0; width: 32%;">주문내역</td>
 									<td style="border: 1px solid #d0d0d0; width: 30%">배송지</td>
+									<td style="border: 1px solid #d0d0d0; width: 8%">수령인</td>
 									<td style="border: 1px solid #d0d0d0">배송상태</td>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody style="font-size: 12px">
 							<sec:authentication property="principal" var="member"/>
 								<c:forEach items="${myOrderList}" var="list" varStatus="i" >
 								<tr>
-									<td id="tb_td_year" class="tb_td_year">${list.orderDate }</td>
+									<td id="tb_td_number" class="tb_td_year">
+										<a  style="color: #0d6efd" href="/bookSearchDetail?num=${list.orderNumber }">${list.orderNumber }</a>
+									</td>
+									<td id="tb_td_year" class="tb_td_year">
+										<fmt:parseDate value="${list.orderDate }" var="parseDateValue" pattern="yyyy-MM-dd HH:mm:ss"/>
+										<fmt:formatDate value="${parseDateValue}" pattern="yyyy-MM-dd"/>
+									</td>
 									<td  class="tb_td_info">
-										<a href="/bookSearchDetail?num=${list.cartInfoList[0].bookNum}">
-										<span style="display: inline-block;">
-											<img src="/image${list.cartInfoList[0].bookPictureUrl}" style="width: 60px;">
-										</span>
-										<span style="display: inline-block;">
-										<span id="productName${i.index }">${list.cartInfoList[0].bookTitle }</span>
-										[<span id="amount${i.index}">${list.bookOrderCount } </span>개]
-											<br/>
-										금액 :
 										<c:choose>
-												<c:when test="${member.memberDto.memberName == 'GENERAL'}">
-													<fmt:formatNumber value="${list.cartInfoList[0].bookPrice*list.bookOrderCount}" pattern="#,###"/>원
-												</c:when>
-												<c:when test="${member.memberDto.memberName == 'VIP'}">
-													<fmt:formatNumber value="${(list.cartInfoList[0].bookPrice*list.bookOrderCount)*0.97}" pattern="#,###"/>원
-												</c:when>
-												<c:otherwise>
-													<fmt:formatNumber value="${(list.cartInfoList[0].bookPrice*list.bookOrderCount)*0.95}" pattern="#,###"/>원
-												</c:otherwise>
-										</c:choose>											
-									</span>
-										 </a>
+											<c:when test="${list.bookTypeCount == 1}">
+												${list.cartInfoList[0].bookTitle }
+											</c:when>
+											<c:otherwise>
+												${list.cartInfoList[0].bookTitle } 외 ${list.bookTypeCount - 1} 종
+											</c:otherwise>
+										</c:choose>
 									</td>
 									<td class="tb_td_state">${list.memberAddress}</td>
+									<td class="tb_td_state">${list.memberName}</td>
 									<td class="tb_td_btn">
 										<c:if test="${list.orderState == '0'}">
 											배송 준비중
