@@ -177,6 +177,7 @@ public class OrderService {
                 OrderDto payInfo = new OrderDto();
                 payInfo.setBookNum(payInfoDto.getPayInfoBook().get(i).getBookNum());
                 payInfo.setBookOrderCount(payInfoDto.getPayInfoBook().get(i).getBookOrderCount());
+                payInfo.setOrderNumber(payInfoDto.getOrderNumber());
                 payInfo.setMemberEmail(memberEmail);
                 payInfo.setMemberAddress(receiverAddress);
                 payInfo.setMemberName(receiverName);

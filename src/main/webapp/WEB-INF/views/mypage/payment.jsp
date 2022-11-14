@@ -36,6 +36,7 @@
                     <input type="hidden" name="memberEmail" id="memberEmail" value="${memberInfo.memberEmail}">
                     <input type="hidden" name="memberPoint" id="memberPoint" value="${memberInfo.memberPoint}">
                     <input type="hidden" name="memberRank" id="memberRank" value="${memberInfo.memberRank}">
+                    <input type="hidden" name="orderNumber" id="orderNumber" value="">
                 </div>
             </div>
 
@@ -720,6 +721,8 @@
         let finalTotalPrice = Math.floor(${finalTotalPrice});
         let currentPoint = memberPoint - finalTotalPrice;
 
+        createOrderNumber();
+
         $('#totalPrice').val(finalTotalPrice);
 
         if(!$("input:radio[name='addrconfirm']").is(":checked")){
@@ -753,6 +756,37 @@
 
 
 
+</script>
+
+
+<script>
+    <%-- 주문번호 생성 script --%>
+    function createOrderNumber() {
+
+        let orderDate = getCurrentDate(); // 주문일
+        let random = Math.floor(1000 + Math.random() * 9000); // 4자리 난수
+
+        let orderNumber = orderDate + random; // 주문번호 생성
+
+        $('#orderNumber').val(parseInt(orderNumber));
+
+    }
+</script>
+
+<script>
+    <%-- yyyyMMdd 형식의  string 데이터 반환 ( EX : 20210324 ) script --%>
+    function getCurrentDate() {
+        let date = new Date();
+        let year = date.getFullYear().toString();
+
+        let month = date.getMonth() + 1;
+        month = month < 10 ? '0' + month.toString() : month.toString();
+
+        let day = date.getDate();
+        day = day < 10 ? '0' + day.toString() : day.toString();
+
+        return year + month + day ;
+    }
 </script>
 
 </html>

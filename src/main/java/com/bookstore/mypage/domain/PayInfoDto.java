@@ -14,6 +14,7 @@ public class PayInfoDto {
 
     private List<CartDto> payInfoBook;
 
+    private String orderNumber; // 주문번호
     private String memberEmail;
     private String memberRank;
     private int memberPoint;
