@@ -83,7 +83,7 @@
 								<c:forEach items="${myOrderList}" var="list" varStatus="i" >
 								<tr>
 									<td id="tb_td_number" class="tb_td_year">
-										<a  style="color: #0d6efd" href="/bookSearchDetail?num=${list.orderNumber }">${list.orderNumber }</a>
+										<a  style="color: #0d6efd" href="/order/orderDetail?num=${list.orderNumber }">${list.orderNumber }</a>
 									</td>
 									<td id="tb_td_year" class="tb_td_year">
 										<fmt:parseDate value="${list.orderDate }" var="parseDateValue" pattern="yyyy-MM-dd HH:mm:ss"/>
