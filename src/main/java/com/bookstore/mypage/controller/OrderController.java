@@ -218,8 +218,9 @@ public class OrderController {
 
     /**
      * 주문 내역 확인
-     * @param sc 주문내역 페이징 처리 및 검색 조건
-     * @param model 주문내역 리스트, 페이징 설정 등
+     *
+     * @param sc               주문내역 페이징 처리 및 검색 조건
+     * @param model            주문내역 리스트, 페이징 설정 등
      * @param principalDetails 로그인된 고객정보
      * @return 주문내역 화면
      */
@@ -242,4 +243,19 @@ public class OrderController {
         }
         return "/mypage/order";
     }
+
+
+    @GetMapping("/orderDetail")
+    public String orderDetail(@RequestParam("num") String orderNumber, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+
+
+        List<PayInfoDto> orderDetail = orderService.searchOrderDetail(orderNumber);
+        List<CartDto> searchOrderDetailBookInfo = orderService.searchOrderDetailBookInfo(orderNumber);
+
+        model.addAttribute("bookInfoList", searchOrderDetailBookInfo);
+        model.addAttribute("orderDetail", orderDetail);
+
+        return "/mypage/orderDetail";
+    }
+
 }

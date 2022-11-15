@@ -209,7 +209,8 @@
                                    value="${(payInfo.bookPrice * payInfo.bookOrderCount)*0.95 }">
                             </c:otherwise>
                             </c:choose>
-                                <c:set var="total" value="${total + (payInfo.bookPrice * payInfo.bookOrderCount)}" /> <!-- 각 제품의 할인된가격 총합 -->
+                                <c:set var="total" value="${total + (payInfo.bookPrice * payInfo.bookOrderCount)}" /> <!-- 도서 가격 총합 -->
+                                <c:set var="count" value="${count + payInfo.bookOrderCount}" /> <!-- 도서 개수 총합 -->
                                 <c:set var="discountPrice" value="0" /> <!-- 할인된가격 * 수량 -->
                                 <c:set var="discountPriceStock" value="0" /> <!-- 받을 포인트 -->
                                 <c:set var="point" value="0" />
@@ -259,7 +260,8 @@
 						    <fmt:formatNumber value="${sale_price}" pattern="#,###" />원</span> <input type="hidden" id="sale_priceInput" name="usePoint" value="0">
                         <div class="clearfix"></div></li>
                     <c:set var="finalTotalPrice" value="${(total+shipPrice)-sale_price }" />
-                    <input type="hidden" name="totalPrice" id="totalPrice" value="">
+                    <input type="hidden" name="orderTotalPrice" id="totalPrice" value="${finalTotalPrice}">
+                    <input type="hidden" name="orderTotalBookCount" id="totalBookCount" value="${count}">
                     <span id="label" class="btn btn-light" style="margin-top: 10px">최종 결제금액</span>
                     <strong id="label_result" style="margin-top: 10px">
                         <span id="number"> <fmt:formatNumber value="${finalTotalPrice}" pattern="#,###" /></span>원

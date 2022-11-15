@@ -18,7 +18,8 @@ public class PayInfoDto {
     private String memberEmail;
     private String memberRank;
     private int memberPoint;
-    private int totalPrice;
+    private int orderTotalPrice;
+    private int orderTotalBookCount;
 
     private String receiverAddress;
     private String receiverName;

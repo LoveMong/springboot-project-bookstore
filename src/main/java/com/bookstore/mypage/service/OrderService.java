@@ -3,10 +3,7 @@ package com.bookstore.mypage.service;
 import com.bookstore.admin.domain.BookDto;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.mapper.HomeMapper;
-import com.bookstore.mypage.domain.AddressDto;
-import com.bookstore.mypage.domain.CartDto;
-import com.bookstore.mypage.domain.OrderDto;
-import com.bookstore.mypage.domain.PayInfoDto;
+import com.bookstore.mypage.domain.*;
 import com.bookstore.mypage.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -164,10 +161,10 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     public void proceedPayment(PayInfoDto payInfoDto) throws Exception {
 
+        log.info("payInfoDto : " + payInfoDto);
+
         String memberEmail = payInfoDto.getMemberEmail();
         String memberRank = payInfoDto.getMemberRank();
-        String receiverAddress = payInfoDto.getReceiverAddress();
-        String receiverName = payInfoDto.getReceiverName();
 
 
         try {
@@ -178,16 +175,18 @@ public class OrderService {
                 payInfo.setBookNum(payInfoDto.getPayInfoBook().get(i).getBookNum());
                 payInfo.setBookOrderCount(payInfoDto.getPayInfoBook().get(i).getBookOrderCount());
                 payInfo.setOrderNumber(payInfoDto.getOrderNumber());
-                payInfo.setMemberEmail(memberEmail);
-                payInfo.setMemberAddress(receiverAddress);
-                payInfo.setMemberName(receiverName);
+//                payInfo.setMemberEmail(memberEmail);
+//                payInfo.setMemberAddress(receiverAddress);
+//                payInfo.setMemberName(receiverName);
 
-                orderMapper.registerOrderInfo(payInfo); // 주문 내역 등록
+//                orderMapper.registerOrderInfo(payInfo); // 주문 내역 등록
                 orderMapper.updateBookInfo(payInfo); // 도서 판매량, 재고등 수정
+                orderMapper.registerOrderBookInfo(payInfo);
                 orderMapper.deleteCartInfo(payInfoDto.getPayInfoBook().get(i).getCartNum()); // 장바구니 내 구매한 품목 삭제 처리
 
             }
 
+            orderMapper.registerOrderInfo(payInfoDto);
             orderMapper.updateMemberPointInfo(payInfoDto); // 고객 포인트 정보 수정
             orderMapper.registerPointUse(payInfoDto); // 포인트 사용 내역 등록
 
@@ -232,6 +231,14 @@ public class OrderService {
      */
     public int searchOrderResultCnt(SearchCondition sc) {
         return orderMapper.searchOrderResultCnt(sc);
+    }
+
+    public List<PayInfoDto> searchOrderDetail(String orderNumber) {
+        return orderMapper.searchOrderDetail(orderNumber);
+    }
+
+    public List<CartDto> searchOrderDetailBookInfo(String orderNumber) {
+        return orderMapper.searchOrderDetailBookInfo(orderNumber);
     }
 
 

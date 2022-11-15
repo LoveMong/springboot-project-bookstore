@@ -58,9 +58,9 @@
     </update>
 
     <!-- 도서 주문 정보 등록   -->
-    <insert id="registerOrderInfo" parameterType="com.bookstore.mypage.domain.OrderDto">
-        INSERT INTO `order`(book_num, book_orderCount, member_email, member_address, member_name, order_number)
-        VALUES (#{bookNum}, #{bookOrderCount}, #{memberEmail}, #{memberAddress}, #{memberName}, #{orderNumber});
+    <insert id="registerOrderInfo" parameterType="com.bookstore.mypage.domain.PayInfoDto">
+        INSERT INTO `order`(order_totalPrice, order_totalCount, member_email, member_address, member_name, order_number, member_rank)
+        VALUES (#{orderTotalPrice}, #{orderTotalBookCount}, #{memberEmail}, #{receiverAddress}, #{receiverName}, #{orderNumber}, #{memberRank});
     </insert>
 
     <!-- 도서 판매량 및 재고 업데이트 -->
@@ -73,14 +73,14 @@
     <!-- 고객 포인트 수정 -->
     <update id="updateMemberPointInfo" parameterType="com.bookstore.mypage.domain.PayInfoDto">
         UPDATE member
-        SET member_point = member_point - #{totalPrice}
+        SET member_point = member_point - #{orderTotalPrice}
         WHERE member_email = #{memberEmail}
     </update>
 
     <!-- 포인트 사용 내역 등록 -->
     <insert id="registerPointUse" parameterType="com.bookstore.mypage.domain.PayInfoDto">
         INSERT INTO point(member_Email, point_use, point_current)
-        VALUES (#{memberEmail}, #{totalPrice}, #{memberPoint})
+        VALUES (#{memberEmail}, #{orderTotalPrice}, #{memberPoint})
     </insert>
 
     <select id="searchMemberPointSum" parameterType="String" resultType="int">
@@ -96,11 +96,18 @@
         WHERE member_email = #{memberEmail}
     </update>
 
+    <insert id="registerOrderBookInfo" parameterType="com.bookstore.mypage.domain.OrderDto">
+        INSERT INTO order_book(order_number, book_num, book_orderCount)
+        values (#{orderNumber}, #{bookNum}, #{bookOrderCount})
+    </insert>
+
+
+
     <!-- 주문내역 리스트 출력 -->
     <select id="searchMyOrderList" parameterType="com.bookstore.common.utils.SearchCondition" resultMap="OrderList">
-        SELECT order_number, count(book_orderCount) as 'book_typeCount', order_date, ANY_VALUE(book_title) as 'book_title', ANY_VALUE(member_name) as 'member_name', ANY_VALUE(member_address) as 'member_address'
+        SELECT a.order_number, ANY_VALUE(order_totalCount) as 'book_typeCount', order_date, ANY_VALUE(book_title) as 'book_title', ANY_VALUE(member_name) as 'member_name', ANY_VALUE(member_address) as 'member_address'
         FROM `order` a
-        LEFT JOIN  book b ON a.book_num = b.book_num
+        LEFT JOIN  order_book b ON a.order_number = b.order_number LEFT JOIN book c ON b.book_num = c.book_num
         WHERE member_email = #{memberEmail}
         <if test='option == "T"'>
             AND book_title LIKE concat('%', #{keyword}, '%')
@@ -143,7 +150,7 @@
         FROM (
             SELECT a.order_number
             FROM `order` a
-            LEFT JOIN  book b ON a.book_num = b.book_num
+            LEFT JOIN  order_book b ON a.order_number = b.order_number LEFT JOIN book c ON b.book_num = c.book_num
             WHERE member_email = #{memberEmail}
             <if test='option == "T"'>
                 AND book_title LIKE concat('%', #{keyword}, '%')
@@ -158,6 +165,33 @@
         ) as count
     </select>
 
+    <select id="searchOrderDetailBookInfo" parameterType="String" resultType="com.bookstore.mypage.domain.CartDto">
+        SELECT book_title, book_price, book_orderCount, book_thumbUrl, book_pictureUrl
+        FROM order_book a LEFT JOIN book b on a.book_num = b.book_num
+        WHERE order_number = #{orderNumber}
+    </select>
+
+    <select id="searchOrderDetail" parameterType="String" resultMap="OrderDetail">
+        SELECT a.order_number, order_totalPrice, order_totalCount, member_rank, book_title, book_price, book_orderCount, book_pictureUrl, book_thumbUrl
+        FROM `order` a
+                 LEFT JOIN  order_book b ON a.order_number = b.order_number LEFT JOIN book c ON b.book_num = c.book_num
+        where a.order_number = #{orderNumber};
+    </select>
+    <resultMap id="OrderDetail" type="com.bookstore.mypage.domain.PayInfoDto">
+        <result column="order_number" property="orderNumber"/>
+        <result column="order_totalPrice" property="orderTotalPrice"/>
+        <result column="order_totalCount" property="orderTotalBookCount"/>
+        <result column="order_rank" property="memberRank"/>
+        <collection property="payInfoBook" resultMap="OrderDetailBookInfo"/>
+    </resultMap>
+
+    <resultMap id="OrderDetailBookInfo" type="com.bookstore.mypage.domain.CartDto">
+        <result column="book_title" property="bookTitle"/>
+        <result column="book_price" property="bookPrice"/>
+        <result column="book_orderCount" property="bookOrderCount"/>
+        <result column="book_pictureUrl" property="bookPictureUrl"/>
+        <result column="book_thumbUrl" property="bookThumbUrl"/>
+    </resultMap>
 
 
 </mapper>

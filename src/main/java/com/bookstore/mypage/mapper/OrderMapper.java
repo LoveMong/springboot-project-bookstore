@@ -2,10 +2,7 @@ package com.bookstore.mypage.mapper;
 
 
 import com.bookstore.common.utils.SearchCondition;
-import com.bookstore.mypage.domain.AddressDto;
-import com.bookstore.mypage.domain.CartDto;
-import com.bookstore.mypage.domain.OrderDto;
-import com.bookstore.mypage.domain.PayInfoDto;
+import com.bookstore.mypage.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
@@ -40,7 +37,7 @@ public interface OrderMapper {
     int updateAddress(AddressDto addressDto);
 
     // 주문된 도서 정보
-    void registerOrderInfo(OrderDto payInfo);
+    void registerOrderInfo(PayInfoDto payInfo);
 
     // 도서 정보 수정(판매 수량, 재고)
     void updateBookInfo(OrderDto payInfo);
@@ -60,6 +57,12 @@ public interface OrderMapper {
     List<OrderDto> searchMyOrderList(SearchCondition sc);
 
     int searchOrderResultCnt(SearchCondition sc);
+
+    void registerOrderBookInfo(OrderDto payInfo);
+
+    List<PayInfoDto> searchOrderDetail(String orderNumber);
+
+    List<CartDto> searchOrderDetailBookInfo(String orderNumber);
 
 
 }
