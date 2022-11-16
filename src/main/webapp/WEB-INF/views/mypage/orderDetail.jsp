@@ -41,7 +41,7 @@
 					<br>
 					<div id="main_content_1" style="margin-top: 20px">
 						<table id="point_table">
-							<span style="margin-right: 10px ">주문번호</span> <span style="font-weight: bold; color: #0d6efd">${orderDetail[0].orderNumber}</span>
+							<span style="margin-right: 10px;">주문번호</span> <span style="font-weight: bold; color: #0d6efd">${orderDetail[0].orderNumber}</span>
 							<thead>
 								<tr style="background-color: #e9e9e9; font-size: 13px">
 									<td style="width: 20%; border: 1px solid #d0d0d0">상품명</td>
@@ -79,22 +79,42 @@
 							<table class="table" id="book_detail">
 
 								<tr>
-									<th style="background-color: #f8f8ff; text-align: center; width: 180px">총 주문 금액</th><td><span><fmt:formatNumber value="${totalPrice}" pattern="#,###"/></span> 원</td>
-									<th style="background-color: #f8f8ff; text-align: center; width: 180px">등급 할인 금액</th><td><span><fmt:formatNumber value="${totalPrice - orderDetail[0].orderTotalPrice}" pattern="#,###"/> <sapn> 원</sapn></td>
+									<th style="background-color: #f8f8ff; text-align: center; width: 180px">총 주문 금액</th>
+									<td><span><fmt:formatNumber value="${totalPrice}" pattern="#,###"/></span> 원</td>
+									<th style="background-color: #f8f8ff; text-align: center; width: 180px">등급 할인 금액</th>
+									<c:choose>
+										<c:when test="${orderDetail[0].memberRank == 'GENERAL'}">
+											<td><span><fmt:formatNumber value="${totalPrice}" pattern="#,###"/> <sapn> 원</sapn></span></td>
+										</c:when>
+										<c:when test="${orderDetail[0].memberRank == 'VIP'}">
+											<td><span><fmt:formatNumber value="${totalPrice*0.03}" pattern="#,###"/> <sapn> 원</sapn></span></td>
+										</c:when>
+										<c:when test="${orderDetail[0].memberRank == 'VVIP'}">
+											<td><span><fmt:formatNumber value="${totalPrice*0.05}" pattern="#,###"/> <sapn> 원</sapn></span></td>
+										</c:when>
+									</c:choose>
 								</tr>
-								<tr>
+								<tr style="border-bottom: 1px solid #dee2e6;">
 									<th style="background-color: #f8f8ff; text-align: center; width: 180px">실 결제 금액</th>
-									<td><fmt:formatNumber value="${orderDetail[0].orderTotalPrice}" pattern="#,###"/></td>
+									<c:choose>
+										<c:when test="${totalPrice >= 30000}">
+											<td><span><fmt:formatNumber value="${orderDetail[0].orderTotalPrice}" pattern="#,###"/></span> 원</td>
+										</c:when>
+										<c:when test="${totalPrice <= 30000}">
+											<td><span><fmt:formatNumber value="${orderDetail[0].orderTotalPrice}" pattern="#,###"/></span> 원 [배송비 포함]</td>
+										</c:when>
+									</c:choose>
 								</tr>
-								<tr>
+								<tr style="border-bottom: 1px solid #dee2e6;">
 									<th style="background-color: #f8f8ff; text-align: center; width: 180px">결제하신 금액</th>
-									<td><fmt:formatNumber value="${orderDetail[0].orderTotalPrice}" pattern="#,###"/></td>
+									<td><span style="color: coral; font-weight: bold"><fmt:formatNumber value="${orderDetail[0].orderTotalPrice}" pattern="#,###"/></span> 원</td>
 								</tr>
-								<tr>
+								<tr style="border-bottom: 1px solid #dee2e6;">
 									<th style="background-color: #f8f8ff; text-align: center; width: 180px">결제 수단</th>
 									<td>포인트 결제</td>
 								</tr>
 							</table>
+							<div style="text-align: center; margin-top: 50px"><input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/order/myOrders${searchCondition.queryString}"/>' "></div>
 						</div>
 					</div>
 				</div>		

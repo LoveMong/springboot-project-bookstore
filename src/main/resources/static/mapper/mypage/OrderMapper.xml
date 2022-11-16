@@ -181,7 +181,7 @@
         <result column="order_number" property="orderNumber"/>
         <result column="order_totalPrice" property="orderTotalPrice"/>
         <result column="order_totalCount" property="orderTotalBookCount"/>
-        <result column="order_rank" property="memberRank"/>
+        <result column="member_rank" property="memberRank"/>
         <collection property="payInfoBook" resultMap="OrderDetailBookInfo"/>
     </resultMap>
 

@@ -57,7 +57,7 @@
 							   <div class="w100 float_left" style="padding-right:10px; float:left;">
 								   <select class="form-control form-control-sm" name="option" id="searchType" style="width: 107px; float: left; margin-right: 7px; margin-left: -57px;">
 									   <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>제목</option>
-									   <option value="W" ${pageHandler.sc.option=='R' ? "selected" : ""}>수령인</option>
+									   <option value="R" ${pageHandler.sc.option=='R' ? "selected" : ""}>수령인</option>
 								   </select>
 								</div>
 							   <div class="w300  float_left" style="padding-right:10px; float:left;">
@@ -83,7 +83,7 @@
 								<c:forEach items="${myOrderList}" var="list" varStatus="i" >
 								<tr>
 									<td id="tb_td_number" class="tb_td_year">
-										<a  style="color: #0d6efd" href="/order/orderDetail?num=${list.orderNumber }">${list.orderNumber }</a>
+										<a  style="color: #0d6efd" href="/order/orderDetail${pageHandler.sc.queryString}&num=${list.orderNumber }">${list.orderNumber }</a>
 									</td>
 									<td id="tb_td_year" class="tb_td_year">
 										<fmt:parseDate value="${list.orderDate }" var="parseDateValue" pattern="yyyy-MM-dd HH:mm:ss"/>
