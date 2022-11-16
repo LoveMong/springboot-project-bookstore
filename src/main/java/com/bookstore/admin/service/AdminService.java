@@ -160,14 +160,50 @@ public class AdminService {
         return adminMapper.searchMemberSelectPage(sc);
     }
 
+
+    /**
+     * 주문목록 개수 확인
+     * @param sc 검색 조건
+     * @return 주문목록 개수
+     */
     public int searchOrderListResultCnt(SearchCondition sc) {
         return adminMapper.searchOrderListResultCnt(sc);
     }
 
+
+    /**
+     * 주문목록 리스트 출력
+     * @param sc 검색 조건
+     * @return 주문목록 리스트
+     */
     public List<OrderDto> searchOrderList(SearchCondition sc) {
         return adminMapper.searchOrderList(sc);
     }
 
 
+    /**
+     * 배송 상태 조작
+     * @param confirmNumber 배송 상태 번호(0: 배송준비, 1: 배송중, 2: 배송완료)
+     * @param orderNumber 주문번호
+     * @return 상태 업데이트 결과
+     */
+    public String updateOrderState(int confirmNumber, String orderNumber) {
+
+        String resultMessage = "변경 완료";
+
+        try {
+            if (confirmNumber == 2) {
+                throw new Exception("UPD_ERR");
+            } else {
+                confirmNumber++;
+                adminMapper.updateOrderState(confirmNumber, orderNumber);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMessage = "변경 실패";
+        }
+
+        return resultMessage;
+    }
 
 }

@@ -105,7 +105,7 @@
 
     <!-- 주문내역 리스트 출력 -->
     <select id="searchMyOrderList" parameterType="com.bookstore.common.utils.SearchCondition" resultMap="OrderList">
-        SELECT a.order_number, ANY_VALUE(order_totalCount) as 'book_typeCount', order_date, ANY_VALUE(book_title) as 'book_title', ANY_VALUE(member_name) as 'member_name', ANY_VALUE(member_address) as 'member_address'
+        SELECT a.order_number, count(b.order_number) as 'book_typeCount', order_date, ANY_VALUE(book_title) as 'book_title', ANY_VALUE(member_name) as 'member_name', ANY_VALUE(member_address) as 'member_address', ANY_VALUE(order_state) as 'order_state'
         FROM `order` a
         LEFT JOIN  order_book b ON a.order_number = b.order_number LEFT JOIN book c ON b.book_num = c.book_num
         WHERE member_email = #{memberEmail}

@@ -8,18 +8,10 @@
     <meta charset="UTF-8">
     <title>Welcome! Book Store!</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" href="/css/mypage/order.css">
     <link rel="stylesheet" href="/css/admin/bookList.css">
     <script integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="/css/bootstraps/css/bootstrap.css"></script>
-
-    <script>
-        let msg = "${msg}";
-        if(msg=="READ_ERR")  alert("삭제되었거나 없는 게시물입니다.");
-        if(msg=="DEL_ERR")   alert("삭제되었거나 없는 게시물입니다.");
-        if(msg=="DEL_OK")    alert("성공적으로 삭제되었습니다.");
-        if(msg=="ENR_OK")    alert("성공적으로 등록되었습니다.");
-        if(msg=="UPD_OK")    alert("성공적으로 수정되었습니다.");
-    </script>
 </head>
 
 <body>
@@ -48,99 +40,96 @@
                         <div class="alert alert-success">
                             <h4>주문 목록</h4>
                         </div>
-
-                        <div style="margin-left: 430px; margin-top: 50px; margin-bottom: 100px">
-                            <div class="w100 float_left" style="padding-right:10px; float:left;">
-                                <div class="search-container" style="margin-left: 350px;">
-                                    <form action="<c:url value="/admin/bookList"/>" class="search-form" method="get">
-                                        <select class="form-control form-control-sm" name="option" id="searchType" style="width: 107px; float: left; margin-right: 7px; margin-left: -57px;">
-                                            <option value="A" ${pageHandler.sc.option=='A' || pageHandler.sc.option=='' ? "selected" : ""}>제목+내용</option>
-                                            <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>제목</option>
-                                            <option value="W" ${pageHandler.sc.option=='W' ? "selected" : ""}>작가</option>
-                                        </select>
-                                        <div class="w300  float_left" style="padding-right:10px; float:left;">
-                                            <input type="text" name="keyword" class="form-control form-control-sm-input" type="text" value="${pageHandler.sc.keyword}" placeholder="검색어를 입력해주세요" style="height: 32px">
-                                        </div>
-                                        <input type="submit" class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch" value="검색"/>
-                                    </form>
+                        <form action="" method="get">
+                            <%--						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
+                            <div class="" style="margin: 10px">
+                                <p style="margin-right: 10px; float: left"> 조회기간 :
+                                <div class="" style="padding-right:10px; float:left;">
+                                    <input type="text" id="datepickerStart" name="startDate" class="form-control form-control-sm">
+                                </div>
+                                <div style="float: left; margin-right: 10px"> ~ </div>
+                                <div class="" style="padding-right:10px; float:left;">
+                                    <input type="text" id="datepickerEnd" name="endDate" class="form-control form-control-sm">
                                 </div>
                             </div>
-                    </div>
+                            <br>
+                            <div class="" style="float: right; margin-top: 40px; margin-bottom: 40px">
+                                <div class="w100 float_left" style="padding-right:10px; float:left;">
+                                    <select class="form-control form-control-sm" name="option" id="searchType" style="width: 107px; float: left; margin-right: 7px; margin-left: -57px;">
+                                        <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>구매자</option>
+                                        <option value="R" ${pageHandler.sc.option=='R' ? "selected" : ""}>수령인</option>
+                                    </select>
+                                </div>
+                                <div class="w300  float_left" style="padding-right:10px; float:left;">
+                                    <input type="text" name="keyword" class="form-control form-control-sm-input" type="text" value="${pageHandler.sc.keyword}" placeholder="검색어를 입력해주세요" style="height: 32px">
+                                </div>
+                                <input type="submit" class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch" value="검색"/>
+                            </div>
+                        </form>
                     <br>
                         <div id="main_content_1">
-                            <table class="table table-hover" style="margin-top: 25px">
-                                <colgroup>
-                                    <col width="5%"/>
-                                    <col width="10%"/>
-                                    <col width="10%"/>
-                                    <col width="10%"/>
-                                    <col width="5%"/>
-                                    <col width="10%"/>
-                                    <col width="10%"/>
-                                    <col width="15%"/>
-                                    <col width="10%"/>
-                                </colgroup>
+                            <table id="point_table">
                                 <thead>
-                                <tr class="table-success">
-                                    <th scope="col">주문 번호</th>
-                                    <th scope="col">주문 일시</th>
-                                    <th scope="col">주문 도서</th>
-                                    <th scope="col">도서 가격</th>
-                                    <th scope="col">주문 수량</th>
-                                    <th scope="col">구매자(ID)</th>
-<%--                                    <th scope="col">주문 금액(할인 적용)</th>--%>
-                                    <th scope="col">배송지</th>
-                                    <th scope="col">배송 상태</th>
+                                <tr style="background-color: #e9e9e9; font-size: 13px">
+                                    <td style="width: 10%; border: 1px solid #d0d0d0">주문번호</td>
+                                    <td style="width: 9%; border: 1px solid #d0d0d0">주문일자</td>
+                                    <td style="border: 1px solid #d0d0d0; width: 32%;">주문내역</td>
+                                    <td style="border: 1px solid #d0d0d0; width: 30%">배송지/수령인</td>
+                                    <td style="border: 1px solid #d0d0d0; width: 8%">구매자</td>
+                                    <td style="border: 1px solid #d0d0d0; width: 8%">배송상태</td>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <c:forEach items="${orderList}" var="list" varStatus="vs">
-                                    <tr id="">
-                                        <th>${list.orderNum}</th>
-                                        <th>${list.orderDate}</th>
-                                        <th>${list.cartInfoList[0].bookTitle}</th>
-                                        <th><fmt:formatNumber value="${list.cartInfoList[0].bookPrice}" pattern="#,###"/></th>
-                                        <th>${list.bookOrderCount}</th>
-                                        <th>${list.memberEmail}</th>
-<%--                                        <th>${list.bookOrderCount * list.cartInfoList[0].bookPrice}</th>--%>
-                                        <th>${list.memberAddress}</th>
-                                        <th><form id="" method="get">
-                                            <input type="hidden" id="cNum${vs.getIndex()}" value="${list.orderState}">
-                                            <input type="hidden" id="oNum${vs.getIndex()}" value="${list.orderNum}">
-                                            <c:set var="result" value="${list.orderState}"/>
+                                <tbody style="font-size: 12px">
+                                <c:forEach items="${orderList}" var="list" varStatus="i" >
+                                    <tr>
+                                        <td id="tb_td_number" class="tb_td_year">
+                                            ${list.orderNumber }
+                                        </td>
+                                        <td id="tb_td_year" class="tb_td_year">
+                                            <fmt:parseDate value="${list.orderDate }" var="parseDateValue" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                            <fmt:formatDate value="${parseDateValue}" pattern="yyyy-MM-dd"/>
+                                        </td>
+                                        <td  class="tb_td_info">
                                             <c:choose>
-                                                <c:when test="${result == '0'}">
-                                                    <input type="button" id="confirm${vs.getIndex()}" class="btn btn-outline-secondary" value="배송준비중">
-                                                </c:when>
-                                                <c:when test="${result == '1'}">
-                                                    <input type="button" id="confirm${vs.getIndex()}" class="btn btn-outline-secondary" value="배송중">
+                                                <c:when test="${list.bookTypeCount == 1}">
+                                                    ${list.cartInfoList[0].bookTitle }
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="button" id="confirm${vs.getIndex()}" class="btn btn-outline-secondary" value="배송완료">
+                                                    ${list.cartInfoList[0].bookTitle } 외 ${list.bookTypeCount - 1} 종
                                                 </c:otherwise>
                                             </c:choose>
-                                        </form></th>
+                                        </td>
+                                        <td class="tb_td_state">${list.memberAddress} / ${list.memberName}</td>
+                                        <td class="tb_td_state">${list.memberEmail}</td>
+                                        <td class="tb_td_btn">
+                                            <form id="" method="get">
+                                                <input type="hidden" id="cNum${i.getIndex()}" value="${list.orderState}">
+                                                <input type="hidden" id="oNum${i.getIndex()}" value="${list.orderNumber}">
+                                                <c:choose>
+                                                    <c:when test="${list.orderState == 0}">
+                                                        <input style="padding: revert; font-size: 12px;" type="button" id="confirm${i.getIndex()}" class="btn btn-outline-secondary" value="배송준비중">
+                                                    </c:when>
+                                                    <c:when test="${list.orderState == 1}">
+                                                        <input style="padding: revert; font-size: 12px;" type="button" id="confirm${i.getIndex()}" class="btn btn-outline-secondary" value="배송중">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input  style="padding: revert; font-size: 12px;" type="button" id="confirm${i.getIndex()}" class="btn btn-outline-secondary" value="배송완료">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </form>
+                                        </td>
                                     </tr>
                                     <script>
 
-                                        $(document).on('click', '#btnSearch', function(e){
-                                            e.preventDefault();
-                                            var url = "${pageContext.request.contextPath}/admin/orderList";
-                                            url = url + "?searchType=" + $('#searchType').val();
-                                            url = url + "&keyword=" + $('#keyword').val();
-                                            location.href = url;
-                                            console.log(url);
-                                        });
-
                                         $(document).ready(function(e){
 
-                                            $("#confirm${vs.getIndex()}").click(function(){
-                                                const cNum = $('#cNum${vs.getIndex()}').val();
-                                                const oNum = $('#oNum${vs.getIndex()}').val();
+                                            $("#confirm${i.getIndex()}").click(function(){
+                                                const cNum = $('#cNum${i.getIndex()}').val();
+                                                const oNum = $('#oNum${i.getIndex()}').val();
 
 
                                                 console.log("cNum : "+cNum);
-                                                console.log("oNum : "+cNum);
+                                                console.log("oNum : "+oNum);
 
                                                 if(cNum == 2) {
                                                     alert('이미 배송완료 되었습니다.')
@@ -153,7 +142,7 @@
                                                             "oNum" : oNum
                                                         },
                                                         success: function(data) {
-                                                            alert('변경완료')
+                                                            alert(data);
                                                             location.reload();
                                                         }
                                                     });
