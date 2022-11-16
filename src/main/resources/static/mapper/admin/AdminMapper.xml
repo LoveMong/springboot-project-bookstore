@@ -103,24 +103,77 @@
         LIMIT #{offset}, #{pageSize}
     </select>
 
+
+
+
+
+
+<!--    &lt;!&ndash; 주문내역 리스트 출력 &ndash;&gt;-->
+<!--    <select id="searchOrderList" parameterType="com.bookstore.common.utils.SearchCondition" resultMap="OrderList">-->
+<!--        SELECT *-->
+<!--        FROM `order` a-->
+<!--        LEFT JOIN  book b ON a.book_num = b.book_num-->
+<!--        WHERE true-->
+<!--        <include refid="searchOrderCondition"/>-->
+<!--        ORDER BY order_date DESC-->
+<!--        LIMIT #{offset}, #{pageSize}-->
+<!--    </select>-->
+
+
+<!--    <resultMap id="OrderList" type="com.bookstore.mypage.domain.OrderDto">-->
+<!--        <result column="order_num" property="orderNum"/>-->
+<!--        <result column="order_date" property="orderDate"/>-->
+<!--        <result column="order_state" property="orderState"/>-->
+<!--        <result column="book_orderCount" property="bookOrderCount"/>-->
+<!--        <result column="member_email" property="memberEmail"/>-->
+<!--        <result column="member_registerDate" property="memberRegisterDate"/>-->
+<!--        <result column="member_address" property="memberAddress"/>-->
+<!--        <collection property="cartInfoList" resultMap="BookInfo"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="BookInfo" type="com.bookstore.mypage.domain.CartDto">-->
+<!--        <result column="book_num" property="bookNum"/>-->
+<!--        <result column="book_title" property="bookTitle"/>-->
+<!--        <result column="book_price" property="bookPrice"/>-->
+<!--        <result column="book_pictureUrl" property="bookPictureUrl"/>-->
+<!--        <result column="book_thumbUrl" property="bookThumbUrl"/>-->
+<!--    </resultMap>-->
+
+<!--    &lt;!&ndash; 주문내역 개수 확익 &ndash;&gt;-->
+<!--    <select id="searchOrderListResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">-->
+<!--        SELECT count(*)-->
+<!--        FROM `order` a-->
+<!--        LEFT JOIN  book b ON a.book_num = b.book_num-->
+<!--        WHERE true-->
+<!--        <include refid="searchOrderCondition"/>-->
+<!--    </select>-->
+
+
+
+
+
+
+
     <!-- 주문내역 리스트 출력 -->
     <select id="searchOrderList" parameterType="com.bookstore.common.utils.SearchCondition" resultMap="OrderList">
-        SELECT *
+        SELECT a.order_number, count(b.order_number) as 'book_typeCount', order_date, ANY_VALUE(book_title) as 'book_title', ANY_VALUE(member_name) as 'member_name', ANY_VALUE(member_address) as 'member_address', ANY_VALUE(member_email) as 'member_email', ANY_VALUE(order_state) as 'order_state'
         FROM `order` a
-        LEFT JOIN  book b ON a.book_num = b.book_num
+        LEFT JOIN  order_book b ON a.order_number = b.order_number LEFT JOIN book c ON b.book_num = c.book_num
         WHERE true
         <include refid="searchOrderCondition"/>
+        GROUP BY a.order_number, a.order_date
         ORDER BY order_date DESC
         LIMIT #{offset}, #{pageSize}
     </select>
 
-
     <resultMap id="OrderList" type="com.bookstore.mypage.domain.OrderDto">
-        <result column="order_num" property="orderNum"/>
+        <result column="order_number" property="orderNumber"/>
+        <result column="book_typeCount" property="bookTypeCount"/>
         <result column="order_date" property="orderDate"/>
         <result column="order_state" property="orderState"/>
         <result column="book_orderCount" property="bookOrderCount"/>
         <result column="member_email" property="memberEmail"/>
+        <result column="member_name" property="memberName"/>
         <result column="member_registerDate" property="memberRegisterDate"/>
         <result column="member_address" property="memberAddress"/>
         <collection property="cartInfoList" resultMap="BookInfo"/>
@@ -137,18 +190,22 @@
     <!-- 주문내역 개수 확익 -->
     <select id="searchOrderListResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
         SELECT count(*)
+        FROM (
+        SELECT a.order_number
         FROM `order` a
-        LEFT JOIN  book b ON a.book_num = b.book_num
+        LEFT JOIN  order_book b ON a.order_number = b.order_number LEFT JOIN book c ON b.book_num = c.book_num
         WHERE true
         <include refid="searchOrderCondition"/>
+        GROUP BY a.order_number, a.order_date
+        ) as count
     </select>
 
     <sql id="searchOrderCondition">
         <choose>
-            <when test='option=="E"'>
+            <when test='option=="T"'>
                 AND member_email LIKE concat('%', #{keyword}, '%')
             </when>
-            <when test='option=="N"'>
+            <when test='option=="R"'>
                 AND member_name LIKE concat('%', #{keyword}, '%')
             </when>
             <otherwise>
@@ -157,4 +214,11 @@
             </otherwise>
         </choose>
     </sql>
+
+    <update id="updateOrderState">
+        UPDATE `order`
+        SET order_state = #{confirmNumber}
+        WHERE order_number = #{orderNumber}
+    </update>
+
 </mapper>

@@ -245,15 +245,22 @@ public class OrderController {
     }
 
 
+    /**
+     * 주문내역 상세 보기
+     * @param orderNumber 주문 번호
+     * @param model 결제 정보, 구매 도서 정보
+     * @param sc 검색 조건
+     * @return 주문내역 상세 화면
+     */
     @GetMapping("/orderDetail")
-    public String orderDetail(@RequestParam("num") String orderNumber, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+    public String orderDetail(@RequestParam("num") String orderNumber, SearchCondition sc, Model model) {
 
-
-        List<PayInfoDto> orderDetail = orderService.searchOrderDetail(orderNumber);
-        List<CartDto> searchOrderDetailBookInfo = orderService.searchOrderDetailBookInfo(orderNumber);
+        List<PayInfoDto> orderDetail = orderService.searchOrderDetail(orderNumber); // 결제 정보
+        List<CartDto> searchOrderDetailBookInfo = orderService.searchOrderDetailBookInfo(orderNumber); // 구매 도서 정보
 
         model.addAttribute("bookInfoList", searchOrderDetailBookInfo);
         model.addAttribute("orderDetail", orderDetail);
+        model.addAttribute("searchCondition", sc);
 
         return "/mypage/orderDetail";
     }

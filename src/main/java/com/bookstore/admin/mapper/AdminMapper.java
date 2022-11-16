@@ -42,10 +42,14 @@ public interface AdminMapper {
     // 검색된 조건에 해당하는 회원 객체 리스트
     List<MemberDto> searchMemberSelectPage(SearchCondition sc);
 
+    // 도서 주문목록 개수
     int searchOrderListResultCnt(SearchCondition sc);
 
+    // 도서 주문내역 출력
     List<OrderDto> searchOrderList(SearchCondition sc);
 
+    // 배송 상태 업데이트
+    void updateOrderState(int confirmNumber, String orderNumber);
 
 
 }
