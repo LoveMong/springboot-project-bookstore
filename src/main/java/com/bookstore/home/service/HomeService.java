@@ -2,6 +2,7 @@ package com.bookstore.home.service;
 
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.mapper.HomeMapper;
 import lombok.RequiredArgsConstructor;
@@ -121,7 +122,29 @@ public class HomeService {
         return homeMapper.enrollReview(reviewDto);
     }
 
+    public int searchBookListResultCnt(SearchCondition sc) {
+        return homeMapper.searchBookListResultCnt(sc);
+    }
 
+    public List<BookDto> searchBookList(SearchCondition sc) {
+        return homeMapper.searchBookList(sc);
+    }
 
+    public List<BookDto> searchBookListSelect(SearchCondition sc) throws Exception {
+
+        String option = sc.getSelectOption();
+
+        switch (option) {
+            case "BEST":
+                return homeMapper.searchBookListBest();
+            case "NEW":
+                return homeMapper.searchBookListNew();
+            case "GRADE":
+                return homeMapper.searchBookListGrade();
+            default:
+                throw new Exception("SEARCH_ERR");
+        }
+
+    }
 
 }

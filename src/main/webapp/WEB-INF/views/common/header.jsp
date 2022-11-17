@@ -43,10 +43,11 @@
 	            <form action="/search" method="get" style="margin: 105px 10px 1px 30px;">
 	               <div id="top_1_selection_1_search" >
 	                  <div class="keyword_box">
-	                     <select name="searchType" id="searchType">
-	                        <option value="title">제목 검색</option>
-	                        <option value="content">작가 검색</option>
-	                     </select> <input type="text" name="keyword" class="keyword" id="keyword">
+	                     <select name="option" id="searchType">
+							 <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>제목 검색</option>
+							 <option value="R" ${pageHandler.sc.option=='R' ? "selected" : ""}>작가 검색</option>
+	                     </select>
+						 <input type="text" name="keyword" class="keyword" id="keyword" value="${pageHandler.sc.keyword}">
 	                     <input type="submit" value="검색" class="key_btn" id="btn_Search">
 	            
 	                  </div>
@@ -59,21 +60,21 @@
 					<ul>
 						<li class="active"><a href="#">Category</a>
 							<ul class="dropdown">
-								<li><a href="/search?cateCode=1">소설</a></li>
-								<li><a href="/search?cateCode=2">시/에세이</a></li>
-								<li><a href="/search?cateCode=3">경제/경영</a></li>
-								<li><a href="/search?cateCode=4">자기계발</a></li>
-								<li><a href="/search?cateCode=5">인문</a></li>
-								<li><a href="/search?cateCode=6">역사/문화</a></li>
-								<li><a href="/search?cateCode=7">종교</a></li>
-								<li><a href="/search?cateCode=8">정치/사회</a></li>
-								<li><a href="/search?cateCode=9">예술/대중문화</a></li>
-								<li><a href="/search?cateCode=10">과학</a></li>
-								<li><a href="/search?cateCode=11">기술/공학</a></li>
-								<li><a href="/search?cateCode=12">컴퓨터/IT</a></li>
+								<li><a href="/search?bookCategory=1">소설</a></li>
+								<li><a href="/search?bookCategory=2">시/에세이</a></li>
+								<li><a href="/search?bookCategory=3">경제/경영</a></li>
+								<li><a href="/search?bookCategory=4">자기계발</a></li>
+								<li><a href="/search?bookCategory=5">인문</a></li>
+								<li><a href="/search?bookCategory=6">역사/문화</a></li>
+								<li><a href="/search?bookCategory=7">종교</a></li>
+								<li><a href="/search?bookCategory=8">정치/사회</a></li>
+								<li><a href="/search?bookCategory=9">예술/대중문화</a></li>
+								<li><a href="/search?bookCategory=10">과학</a></li>
+								<li><a href="/search?bookCategory=11">기술/공학</a></li>
+								<li><a href="/search?bookCategory=12">컴퓨터/IT</a></li>
 							</ul></li>
-						<li><a href="/search?best=1">Best</a></li>
-                 		<li><a href="/search?newbook=1">New</a></li>
+						<li><a href="/search?selectOption=BEST">Best</a></li>
+                 		<li><a href="/search?selectOption=NEW">New</a></li>
 					</ul>
 				</nav>
 				<!-- 로그인 회원가입 마이페이지 -->

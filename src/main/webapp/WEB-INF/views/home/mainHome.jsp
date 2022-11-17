@@ -106,7 +106,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="right-btn">
-                                <a href="#" class="primary-btn" style="color:#fff;">VIew all</a>
+                                <a href="/search?selectOption=BEST" class="primary-btn" style="color:#fff;">VIew all</a>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="right-btn">
-                                <a href="#" class="primary-btn" style="color:#fff;">VIew all</a>
+                                <a href="/search?selectOption=NEW" class="primary-btn" style="color:#fff;">VIew all</a>
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="right-btn">
-                                <a href="#" class="primary-btn" style="color:#fff;">VIew all</a>
+                                <a href="/search?selectOption=GRADE" class="primary-btn" style="color:#fff;">VIew all</a>
                             </div>
                         </div>
                     </div>

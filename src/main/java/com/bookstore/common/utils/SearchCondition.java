@@ -19,6 +19,10 @@ public class SearchCondition {
 
     private String memberEmail = "";
 
+    private Integer bookCategory;
+
+    private String selectOption = ""; // 도서 검색 (베스트, 인기, 신간 택 1)
+
 //    private Integer  offset;
 
     public static final int MIN_PAGE_SIZE = 5;
@@ -114,6 +118,22 @@ public class SearchCondition {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getBookCategory() {
+        return bookCategory;
+    }
+
+    public void setBookCategory(Integer bookCategory) {
+        this.bookCategory = bookCategory;
+    }
+
+    public String getSelectOption() {
+        return selectOption;
+    }
+
+    public void setSelectOption(String selectOption) {
+        this.selectOption = selectOption;
     }
 
     @Override

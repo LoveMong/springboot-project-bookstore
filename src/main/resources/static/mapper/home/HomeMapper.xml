@@ -88,7 +88,8 @@
     <!-- 도서 구매 여부 확인 -->
     <select id="purchaseConfirm" parameterType="com.bookstore.home.domain.ReviewDto" resultType="int">
         select COUNT(*)
-        FROM `order`
+        FROM `order` a
+                 LEFT JOIN  order_book b ON a.order_number = b.order_number
         WHERE member_email = #{memberEmail} AND book_num = #{bookNum}
     </select>
 
@@ -98,6 +99,37 @@
         FROM review
         WHERE book_num = #{bookNum} AND member_email = #{memberEmail}
     </select>
+
+
+    <select id="searchBookList" parameterType="com.bookstore.common.utils.SearchCondition" resultType="com.bookstore.admin.domain.BookDto">
+        SELECT *
+        FROM book
+        WHERE true
+        <include refid="searchBookListCondition"/>
+        ORDER BY book_publishingDate DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="searchBookListResultCnt" parameterType="com.bookstore.common.utils.SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM book
+        WHERE true
+        <include refid="searchBookListCondition"/>
+    </select>
+
+    <sql id="searchBookListCondition">
+        <choose>
+            <when test='option=="T"'>
+                AND book_title LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='option=="R"'>
+                AND book_author LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='bookCategory != null'>
+                AND book_category = #{bookCategory}
+            </when>
+        </choose>
+    </sql>
 
 
 </mapper>

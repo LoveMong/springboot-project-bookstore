@@ -1,6 +1,7 @@
 package com.bookstore.home.mapper;
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.domain.ReviewDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,5 +39,8 @@ public interface HomeMapper {
 
     int reviewDuplicateConfirm(ReviewDto reviewDto);
 
+    int searchBookListResultCnt(SearchCondition sc);
+
+    List<BookDto> searchBookList(SearchCondition sc);
 
 }
