@@ -2,15 +2,19 @@ package com.bookstore.home.controller;
 
 
 import com.bookstore.admin.domain.BookDto;
+import com.bookstore.common.utils.PageHandler;
 import com.bookstore.common.utils.ReviewPageHandler;
+import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.service.HomeService;
+import com.bookstore.mypage.domain.OrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +33,7 @@ public class HomeController {
 
     /**
      * 메인 홈 출력
+     *
      * @param model 신간 도서 , 베스트셀러 도서, 인기 도서 정보
      * @return 메인 홈 화면
      */
@@ -50,10 +55,11 @@ public class HomeController {
 
     /**
      * 도서 검색 상세 페이지 출력
-     * @param bookNum 해당 도서 번호
-     * @param page 페이징 처리 -> 출력 시작 번호
+     *
+     * @param bookNum  해당 도서 번호
+     * @param page     페이징 처리 -> 출력 시작 번호
      * @param pageSize 페이징 처리 -> 출력할 개수
-     * @param model 도서 정보, 도서 리뷰 정보, 페이징 정보
+     * @param model    도서 정보, 도서 리뷰 정보, 페이징 정보
      * @return 도서 검색 상세 페이지 화면
      */
     @GetMapping("/bookSearchDetail")
@@ -82,6 +88,7 @@ public class HomeController {
 
     /**
      * 도서 리뷰 삭제
+     *
      * @param reviewNum 해당 도서 번호
      * @return 도서 리뷰 삭제 성공 여부
      */
@@ -135,6 +142,7 @@ public class HomeController {
 
     /**
      * 도서 리뷰 등록
+     *
      * @param reviewDto 등록할 리뷰 내용
      * @return 리뷰 등록 성공 여부
      */
@@ -162,5 +170,41 @@ public class HomeController {
 
         return resultConfirm;
 
+    }
+
+
+    /**
+     *
+     * @param sc
+     * @param model
+     * @return
+     */
+    @GetMapping("/search")
+    public String search(SearchCondition sc, Model model) {
+
+        try {
+
+            List<BookDto> bookDtoList;
+
+            if (!sc.getSelectOption().equals("")) {
+                bookDtoList = homeService.searchBookListSelect(sc);
+            } else {
+                int totalCnt = homeService.searchBookListResultCnt(sc);
+                PageHandler pageHandler = new PageHandler(totalCnt, sc);
+                bookDtoList = homeService.searchBookList(sc);
+
+
+                model.addAttribute("pageHandler", pageHandler);
+            }
+
+            model.addAttribute("bookList", bookDtoList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("totalCnt", 0);
+        }
+
+
+        return "/home/mainSearch";
     }
 }

@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public class ReviewPageHandler {
 
+
+    private SearchCondition sc;
     private int totalCnt; // 총 개시물 갯수
 
     private int pageSize; // 한 페이지 크기

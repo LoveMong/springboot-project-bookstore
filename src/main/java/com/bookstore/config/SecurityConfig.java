@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests() // 시큐리티 처리에 HttpServletRequest를 이용
-                .mvcMatchers("/", "/login", "/logout", "/account/**", "/bookSearchDetail").permitAll() // 메인, 회원 관련, 상품 관련, 상품 이미지 관련 페이지는 모든 사용자가 로그인(인증)없이 접근 가능
+                .mvcMatchers("/", "/login", "/logout", "/account/**", "/bookSearchDetail", "/search").permitAll() // 메인, 회원 관련, 상품 관련, 상품 이미지 관련 페이지는 모든 사용자가 로그인(인증)없이 접근 가능
                 .mvcMatchers("/admin/**").hasRole("ADMIN") // admin으로 시작하는 경로는 계정이 ADMIN일 경우에만 접근 가능
                 .anyRequest().authenticated() // 위 mvcMatchers로 설정해준 결로 외 나머지 경로들은 모두 인증 요구
         ;
