@@ -7,14 +7,12 @@ import com.bookstore.common.utils.ReviewPageHandler;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.service.HomeService;
-import com.bookstore.mypage.domain.OrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -174,29 +172,28 @@ public class HomeController {
 
 
     /**
-     *
-     * @param sc
-     * @param model
-     * @return
+     * 도서 검색(통합, 제목, 작가, 카테고리 등)
+     * @param sc 검색 조건
+     * @param model 검색된 도서 정보 및 페이징 처리 객체
+     * @return 도서 검색 화면
      */
     @GetMapping("/search")
     public String search(SearchCondition sc, Model model) {
 
         try {
-
             List<BookDto> bookDtoList;
+            PageHandler pageHandler;
 
             if (!sc.getSelectOption().equals("")) {
                 bookDtoList = homeService.searchBookListSelect(sc);
+                pageHandler = new PageHandler(0, sc);
             } else {
                 int totalCnt = homeService.searchBookListResultCnt(sc);
-                PageHandler pageHandler = new PageHandler(totalCnt, sc);
+                pageHandler = new PageHandler(totalCnt, sc);
                 bookDtoList = homeService.searchBookList(sc);
-
-
-                model.addAttribute("pageHandler", pageHandler);
             }
 
+            model.addAttribute("pageHandler", pageHandler);
             model.addAttribute("bookList", bookDtoList);
 
         } catch (Exception e) {
