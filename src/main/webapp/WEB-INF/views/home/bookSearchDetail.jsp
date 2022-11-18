@@ -29,7 +29,10 @@
 		<div id="detail_middle" class="categories-section mt-3">
 			<div class="container">
 				<div id="detail_middle_container" class="clearfix">
-
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal" var="member"/>
+						<c:set var="loginUser" value="${member.memberDto.memberEmail}" />
+					</sec:authorize>
 					<div id="cover">
 						<div id="image">
 							<img class="img_size" src="/image${bookDetail.bookPictureUrl}">
@@ -84,13 +87,15 @@
 						</div><br>
 						<div id="purchase_btn">
 							<br /> <br /> <br />
-							<form method="post" action="/pay/payment" id="payfrm">
-								<input type="hidden" name="Orderlist[0].chkBox" value="on">
-								<input type="hidden" name="Orderlist[0].order_bookPrice" id="order_bookPrice" value="${bookDetail.bookPrice }">
-								<input type="hidden" name="Orderlist[0].order_bookNum" id="order_bookNum" value="${bookDetail.bookNum}">
-								<input type="hidden" name="Orderlist[0].order_bookCount" id="order_bookCount" value="cartStock">
-								<input type="hidden" name="Orderlist[0].order_totalPrice" id="order_totalPrice" value="">
-								<span id="purchase_money3">합계금액&nbsp;<span style="color: red;" id="totalPrice">0</span>원 <%-- <fmt:formatNumber var="allprice2" value="0" pattern="#,###"/> --%>
+							<form method="post" action="/order/payInfoDirect" id="payfrm">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<input type="hidden" name="memberEmail" id="order_memberEmail" value="${member.memberDto.memberEmail}">
+								<input type="hidden" name="bookTitle" id="order_bookTitle" value="${bookDetail.bookTitle }">
+								<input type="hidden" name="bookPrice" id="order_bookPrice" value="${bookDetail.bookPrice }">
+								<input type="hidden" name="bookNum" id="order_bookNum" value="${bookDetail.bookNum}">
+								<input type="hidden" name="bookOrderCount" id="order_bookCount" value="0">
+								<input type="hidden" name="bookThumbUrl" id="order_bookThumbUrl" value="${bookDetail.bookThumbUrl}">
+								<span id="purchase_money3">합계금액&nbsp;<span style="color: red;" id="totalPrice">0</span>원
 								</span>
 								<div style="float: right;" class="detail_btn">
 									<input class="btn btn-success" type="button" id="cart_btn" value="장바구니">
@@ -215,10 +220,6 @@
 															<input type="hidden" id="reviewGrade${i.getIndex() }" value="${review.reviewGrade }">
 															<input type="hidden" id="reviewNum${i.getIndex()}" value="${review.reviewNum }">
 															<ul class="control">
-																<sec:authorize access="isAuthenticated()">
-																	<sec:authentication property="principal" var="member"/>
-																	<c:set var="loginUser" value="${member.memberDto.memberEmail}" />
-																</sec:authorize>
 																<c:set var="reviewUser" value="${review.memberEmail}" />
 																<c:if test="${loginUser == reviewUser }">
 																	<button type="button" id="comment_delete${i.getIndex()}" value="${review.reviewNum}" class="btn btn-success">삭제</button>
@@ -583,13 +584,11 @@
 
 	});
 
-
-
 </script>
 
 <script>
 
-
+	<%-- 도서 장바구니에 담기 --%>
 	$("#cart_btn").click(function(e){
 
 		let token = $("meta[name='_csrf']").attr("content");
@@ -639,24 +638,20 @@
 		}
 	});
 
+	<%-- 도서 바로구매하기 --%>
 	$('#buy_btn').click(function(){
-		let user = "${login.user_id}"
-		console.log(user);
-		if(user===null){
-			alert('로그인해주세요');
-		}
-		else{
-			let bkprice = parseInt($('#bk_price').val());
-			let order_bookCount = parseInt($('#order_bookCount').val());
-			let order_totalPrice = (bkprice*order_bookCount);
-			$('order_totalPrice').val(order_totalPrice);
-			if(order_bookCount>0){
-				$('#payfrm').submit();
-			}
-			else{
-				alert('수량을 입력하세요')
-			}
 
+		let memberEmail = "${member.memberDto.memberEmail }";
+		let order_bookCount = parseInt($('#order_bookCount').val());
+
+		if(memberEmail === ""){
+			alert('로그인해주세요');
+			return false;
+		} else if (order_bookCount === 0) {
+			alert("수량을 입력해주세요.");
+			return false;
+		} else {
+			$('#payfrm').submit();
 		}
 	});
 
@@ -769,8 +764,6 @@
 		}
 		$('#cate').html(result);
 		$('#cate2').html(result);
-
-
 	});
 
 </script>

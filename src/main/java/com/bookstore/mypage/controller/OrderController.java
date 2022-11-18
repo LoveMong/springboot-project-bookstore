@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -134,6 +135,36 @@ public class OrderController {
         AddressDto mainAddress = orderService.searchMainAddressByMemberEmail(memberEmail); // 메인 배송주소 검색
         List<AddressDto> addedAddressList = orderService.searchAddedAddressByMemberEmail(memberEmail); // 추가된 배송주소 검색
         List<CartDto> cartInfoList = orderService.makeCartInfoList(order);
+
+
+        model.addAttribute("memberInfo", memberDto);
+        model.addAttribute("mainAddress", mainAddress);
+        model.addAttribute("addedAddress", addedAddressList);
+        model.addAttribute("list", cartInfoList);
+
+        return "/mypage/payment";
+
+    }
+
+    /**
+     * 바로결제 진행 시 정보 확인 및 결제 페이지로 이동
+     *
+     * @param order            도서 정보 리스트
+     * @param model            고객 배송주소지 정보 및 결제 예정 도서 정보
+     * @return 결제 진행 페이지 화면
+     */
+    @PostMapping("/payInfoDirect")
+    public String payInfoDirect(CartDto order, Model model) {
+
+        log.info("order : " + order);
+
+        String memberEmail = order.getMemberEmail();
+
+        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
+        AddressDto mainAddress = orderService.searchMainAddressByMemberEmail(memberEmail); // 메인 배송주소 검색
+        List<AddressDto> addedAddressList = orderService.searchAddedAddressByMemberEmail(memberEmail); // 추가된 배송주소 검색
+        List<CartDto> cartInfoList = new ArrayList<>();
+        cartInfoList.add(order);
 
 
         model.addAttribute("memberInfo", memberDto);

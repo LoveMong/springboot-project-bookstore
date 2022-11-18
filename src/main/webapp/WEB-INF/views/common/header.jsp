@@ -44,6 +44,7 @@
 	               <div id="top_1_selection_1_search" >
 	                  <div class="keyword_box">
 	                     <select name="option" id="searchType">
+							 <option value="A" ${pageHandler.sc.option=='A' ? "selected" : ""}>통합 검색</option>
 							 <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>제목 검색</option>
 							 <option value="R" ${pageHandler.sc.option=='R' ? "selected" : ""}>작가 검색</option>
 	                     </select>

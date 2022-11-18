@@ -122,14 +122,32 @@ public class HomeService {
         return homeMapper.enrollReview(reviewDto);
     }
 
+
+    /**
+     * 검색 조건에 해당하는 도서 개수
+     * @param sc 검색 조건
+     * @return 검색된 도서 개수
+     */
     public int searchBookListResultCnt(SearchCondition sc) {
         return homeMapper.searchBookListResultCnt(sc);
     }
 
+
+    /**
+     * 검색 조건에 해당하는 도서 리스트
+     * @param sc 검색 조건
+     * @return 검색된 도서 리스트
+     */
     public List<BookDto> searchBookList(SearchCondition sc) {
         return homeMapper.searchBookList(sc);
     }
 
+
+    /**
+     * 도서 검색(베스트, 신간, 인기 도서)
+     * @param sc 검색 조건
+     * @return 검색 도서
+     */
     public List<BookDto> searchBookListSelect(SearchCondition sc) throws Exception {
 
         String option = sc.getSelectOption();
