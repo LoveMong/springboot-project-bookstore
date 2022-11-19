@@ -101,8 +101,8 @@ public class HomeService {
      * 리뷰 전체 개수 확인
      * @return 리뷰 전체 개수
      */
-    public int countReview() {
-        return homeMapper.countReview();
+    public int countReview(int bookNum) {
+        return homeMapper.countReview(bookNum);
     }
 
 

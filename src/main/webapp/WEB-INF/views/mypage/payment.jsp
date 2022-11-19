@@ -196,7 +196,7 @@
                             <input type="hidden" id="bkOdcnt${vs.getIndex()}" value="${payInfo.bookOrderCount }" name = "payInfoBook[${vs.getIndex()}].bookOrderCount">
                             <input type="hidden" id="cartNum${vs.getIndex()}" value="${payInfo.cartNum }" name = "payInfoBook[${vs.getIndex()}].cartNum">
                             <c:choose>
-                            <c:when test="${member.memberDto.memberRank == 'GENERAL'}">
+                            <c:when test="${member.memberDto.memberRank == '일반'}">
                             <input type="hidden" id="totalPrice${vs.getIndex()}"
                                    value="${payInfo.bookPrice * payInfo.bookOrderCount }">
                             </c:when>
@@ -242,7 +242,7 @@
                         <input type="hidden" name="shipPrice" id="shipPrice" value="${shipPrice }">
                         <div class="clearfix"></div></li>
                     <li class="sale_price"><c:choose>
-                        <c:when test="${member.memberDto.memberRank == 'GENERAL'}">
+                        <c:when test="${member.memberDto.memberRank == '일반'}">
                             <c:set var="sale_price" value="0" />
                             <c:set var="customerInfo" value="일반고객  할인율 없음" />
                         </c:when>

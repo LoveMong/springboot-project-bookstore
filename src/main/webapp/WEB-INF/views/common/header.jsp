@@ -4,15 +4,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <link rel="stylesheet" href="/css/common/searchBox.css">
 <link rel="stylesheet"  href="/css/common/header.css">
 <meta name="description" content="Phozogy Template">
 <meta name="keywords" content="Phozogy, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<%--<meta name="google-signin-scope" content="profile email">--%>
-<%--<meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">--%>
-<%--<script src="https://apis.google.com/js/platform.js" async defer></script>--%>
+<meta name="google-signin-scope" content="profile email">
+<meta name="google-signin-client_id" content="770076919086-eq6fgbjuq59078luff512ol07ifc52h8.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
 <!-- Google Font -->

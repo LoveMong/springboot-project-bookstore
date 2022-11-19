@@ -27,7 +27,7 @@ public interface HomeMapper {
 
     int updateReview(ReviewDto reviewDto);
 
-    int countReview();
+    int countReview(int bookNum);
 
     Map<String, Object> reviewSumAndCount(ReviewDto reviewDto);
 

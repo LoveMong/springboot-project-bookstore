@@ -72,7 +72,7 @@ public class HomeController {
 
         BookDto bookDto = homeService.bookSearchDetail(bookNum);
         List<ReviewDto> bookReview = homeService.searchBookReview(map);
-        int countReview = homeService.countReview();
+        int countReview = homeService.countReview(bookNum);
         ReviewPageHandler pageHandler = new ReviewPageHandler(countReview, page, pageSize);
 
         model.addAttribute("bookDetail", bookDto);
