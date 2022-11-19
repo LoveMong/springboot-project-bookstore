@@ -63,6 +63,7 @@
     <select id="countReview" resultType="int">
         SELECT COUNT(*)
         FROM review
+        WHERE book_num = #{bookNum}
     </select>
 
     <!-- 리뷰 수정 시 해당 도서 평점 평균을 재설정 하기 위해 필요한 쿼리 -->

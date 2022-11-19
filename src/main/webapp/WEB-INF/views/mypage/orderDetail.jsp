@@ -80,11 +80,11 @@
 
 								<tr>
 									<th style="background-color: #f8f8ff; text-align: center; width: 180px">총 주문 금액</th>
-									<td><span><fmt:formatNumber value="${totalPrice}" pattern="#,###"/></span> 원</td>
+									<td style="width: 33%"><span><fmt:formatNumber value="${totalPrice}" pattern="#,###"/></span> 원</td>
 									<th style="background-color: #f8f8ff; text-align: center; width: 180px">등급 할인 금액</th>
 									<c:choose>
-										<c:when test="${orderDetail[0].memberRank == 'GENERAL'}">
-											<td><span><fmt:formatNumber value="${totalPrice}" pattern="#,###"/> <sapn> 원</sapn></span></td>
+										<c:when test="${orderDetail[0].memberRank == '일반'}">
+											<td><span><fmt:formatNumber value="0" pattern="#,###"/> <sapn> 원</sapn></span></td>
 										</c:when>
 										<c:when test="${orderDetail[0].memberRank == 'VIP'}">
 											<td><span><fmt:formatNumber value="${totalPrice*0.03}" pattern="#,###"/> <sapn> 원</sapn></span></td>

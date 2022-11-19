@@ -370,7 +370,7 @@
 														<li class="page-item"><a class="page-link" style="background-color: #cce5ff" href="#">${i}</a></li>
 													</c:when>
 													<c:otherwise>
-														<li class="page-item"><a class="page-link" id="page" href="<c:url value='/bookSearchDetail?page=${i}&pageSize=${pageHandler.pageSize}&num=${bookDetail.bookNum}'/>#detail_reply" >${i}</a></li>
+														<li class="page-item"><a class="page-link" id="page" href="<c:url value='/bookSearchDetail?page=${i}&pageSize=${pageHandler.pageSize}&num=${bookDetail.bookNum}'/>" >${i}</a></li>
 
 													</c:otherwise>
 												</c:choose>

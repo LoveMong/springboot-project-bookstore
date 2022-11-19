@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap"
 	rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap"
-	rel="stylesheet">
+<%--	rel="stylesheet">--%>
 
 <!-- 부트스트랩 CSS -->
 <%--<link rel="stylesheet" href="/css/bootstraps/css/bootstrap.min.css" type="text/css">--%>
@@ -116,15 +116,16 @@
 </div>
 <!-- Search model end -->
 
+
 <!-- Js Plugins -->
-<%--<script src="/css/bootstraps/js/bootstrap.min.js"></script>--%>
+
+<script src="/css/bootstraps/js/bootstrap.js"></script>
 <script src="/css/bootstraps/js/jquery.magnific-popup.min.js"></script>
 <script src="/css/bootstraps/js/isotope.pkgd.min.js"></script>
 <script src="/css/bootstraps/js/masonry.pkgd.min.js"></script>
 <script src="/css/bootstraps/js/jquery.slicknav.js"></script>
 <script src="/css/bootstraps/js/owl.carousel.min.js"></script>
-<script src="/css/bootstraps/js/main.min.js"></script>
-
+<script src="/css/bootstraps/js/main.js"></script>
 
 
 			

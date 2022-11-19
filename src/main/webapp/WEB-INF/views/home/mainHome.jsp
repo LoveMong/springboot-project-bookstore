@@ -25,7 +25,7 @@
             crossorigin="anonymous"></script>
     <script src="/js/main.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/slick.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+<%--    <script src="https://apis.google.com/js/platform.js" async defer></script>--%>
 
     <style>
 
@@ -52,7 +52,7 @@
 <body>
 
 
-<jsp:include page="../common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"/>
 
 <div id="main_contents">
     <div id="main_section" class="mt-3" style="width: 80%; margin-left: 150px;">
@@ -241,7 +241,9 @@
         return result;
     }
 </script>
+
 <jsp:include page="../common/footer.jsp"/>
+
 
 </body>
 </html>
