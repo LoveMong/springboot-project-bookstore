@@ -74,7 +74,7 @@
 					<div id="purchase">
 						<br><span style="font-size: 25px; margin-left: 29px;">
 						<c:choose>
-							<c:when test="${bookDetail.bookStock != 0}"><span style="color: green "> 구매 가능 </span></c:when>
+							<c:when test="${bookDetail.bookStock > 0}"><span style="color: green "> 구매 가능 </span></c:when>
 							<c:otherwise><span style="color: red"> 재고 없음 </span></c:otherwise>
 						</c:choose></span>
 						<span id="purchase_money1" style="margin-right: 45px">
