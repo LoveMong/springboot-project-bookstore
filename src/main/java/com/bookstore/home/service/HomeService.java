@@ -83,17 +83,15 @@ public class HomeService {
      */
     public int updateReview(ReviewDto reviewDto) {
 
-        Map<String, Object> reviewSumAndCount = homeMapper.reviewSumAndCount(reviewDto); // 도서 평균 평점을 구하기 위한 Sum/Count
+        int result = homeMapper.updateReview(reviewDto);
 
-        float sum = Float.parseFloat(String.valueOf(reviewSumAndCount.get("sum"))); // 해당 도서 평점의 합
-        int count = Integer.parseInt(String.valueOf(reviewSumAndCount.get("count"))); // 해당 도서 평점의 전체 개수
+        if (result != 1) {
+            return 0;
+        } else {
+            homeMapper.updateBookGrade(reviewDto.getBookNum(), bookGradeAverage(reviewDto)); // 새로운 평균 점수 반영
+        }
 
-        double bookGradeAverage = sum / count; // 해당 도서 평균
-
-
-        homeMapper.updateBookGrade(reviewDto.getBookNum(), bookGradeAverage); // 새로운 평균 점수 반영
-
-        return homeMapper.updateReview(reviewDto);
+        return result;
     }
 
 
@@ -119,7 +117,15 @@ public class HomeService {
             return 3; // 3 -> "구매 후 리뷰는 한번만 등록 가능합니다."
         }
 
-        return homeMapper.enrollReview(reviewDto);
+        int result = homeMapper.enrollReview(reviewDto);
+
+        if (result == 1) {
+            homeMapper.updateBookGrade(reviewDto.getBookNum(), bookGradeAverage(reviewDto)); // 새로운 평균 점수 반영
+        } else {
+            result = 0;
+        }
+
+        return result;
     }
 
 
@@ -162,6 +168,23 @@ public class HomeService {
             default:
                 throw new Exception("SEARCH_ERR");
         }
+
+    }
+
+
+    /**
+     * 도서 평균평점 계산
+     * @param reviewDto 도서번호, 도서평점 등 리뷰 정보
+     * @return 도서 평균 평점
+     */
+    private double bookGradeAverage(ReviewDto reviewDto) {
+
+        Map<String, Object> reviewSumAndCount = homeMapper.reviewSumAndCount(reviewDto); // 도서 평균 평점을 구하기 위한 Sum/Count
+
+        float sum = Float.parseFloat(String.valueOf(reviewSumAndCount.get("sum"))); // 해당 도서 평점의 합
+        int count = Integer.parseInt(String.valueOf(reviewSumAndCount.get("count"))); // 해당 도서 평점의 전체 개수
+
+        return sum / count;
 
     }
 
