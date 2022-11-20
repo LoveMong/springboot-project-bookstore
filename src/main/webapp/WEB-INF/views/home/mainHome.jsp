@@ -69,19 +69,19 @@
                         </ol>
                         <div class="carousel-inner owl-drag">
                             <div class="carousel-item active">
-                                <a href="/bookSearchDetail?num=422"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200123/bnN_01.jpg"></a>
+                                <a href="/bookSearchDetail?num=463"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200123/bnN_01.jpg"></a>
                             </div>
                             <div class="carousel-item">
-                                <a href="/bookSearchDetail?num=423"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200221/bnA_a03.jpg"></a>
+                                <a href="/bookSearchDetail?num=464"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200221/bnA_a03.jpg"></a>
                             </div>
                             <div class="carousel-item">
-                                <a href="/bookSearchDetail?num=424"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200221/bnA_a06.jpg"></a>
+                                <a href="/bookSearchDetail?num=465"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200221/bnA_a06.jpg"></a>
                             </div>
                             <div class="carousel-item">
-                                <a href="/bookSearchDetail?num=425"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200123/bnN_03.jpg"></a>
+                                <a href="/bookSearchDetail?num=466"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200123/bnN_03.jpg"></a>
                             </div>
                             <div class="carousel-item">
-                                <a href="/bookSearchDetail?num=426"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200221/bnA_a04.jpg"></a>
+                                <a href="/bookSearchDetail?num=467"><img class="w-100" src="http://image.kyobobook.co.kr/ink/images/prom/2020/banner/200221/bnA_a04.jpg"></a>
                             </div>
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
