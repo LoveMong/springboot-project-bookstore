@@ -57,7 +57,9 @@
 										<span style="display: inline-block;">
 											<img src="/image${list.bookPictureUrl}" style="width: 60px; margin: 10px" alt="">
 										</span>
-										<span style="font-size: 13px">${list.bookTitle}</span>
+										<span>
+										<a style="font-size: 13px; color: #0d6efd; font-weight: bold" href="${pageContext.request.contextPath}/bookSearchDetail?num=${list.bookNum}" value="">${list.bookTitle}</a>
+										</span>
 									</td>
 									<td id="tb_td_year" class="tb_td_year">
 											${list.bookOrderCount}

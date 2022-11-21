@@ -166,7 +166,7 @@
     </select>
 
     <select id="searchOrderDetailBookInfo" parameterType="String" resultType="com.bookstore.mypage.domain.CartDto">
-        SELECT book_title, book_price, book_orderCount, book_thumbUrl, book_pictureUrl
+        SELECT a.book_num, book_title, book_price, book_orderCount, book_thumbUrl, book_pictureUrl
         FROM order_book a LEFT JOIN book b on a.book_num = b.book_num
         WHERE order_number = #{orderNumber}
     </select>
