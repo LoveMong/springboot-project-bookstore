@@ -7,8 +7,12 @@ import com.bookstore.common.utils.ReviewPageHandler;
 import com.bookstore.common.utils.SearchCondition;
 import com.bookstore.home.domain.ReviewDto;
 import com.bookstore.home.service.HomeService;
+import com.bookstore.member.domain.MemberDto;
+import com.bookstore.member.domain.PrincipalDetails;
+import com.bookstore.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +32,20 @@ public class HomeController {
 
     private final HomeService homeService;
 
+    private final MemberService memberService;
 
     /**
      * 메인 홈 출력
      *
      * @param model 신간 도서 , 베스트셀러 도서, 인기 도서 정보
+     * @param principalDetails 로그인된 고객정보
      * @return 메인 홈 화면
      */
     @GetMapping("/")
-    public String mainHome(Model model) {
+    public String mainHome(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
 
         List<BookDto> bookListGrade = homeService.searchBookListGrade();
         List<BookDto> bookListBest = homeService.searchBookListBest();
@@ -45,6 +54,7 @@ public class HomeController {
         model.addAttribute("bookListGrade", bookListGrade);
         model.addAttribute("bookListBest", bookListBest);
         model.addAttribute("bookListNew", bookListNew);
+        model.addAttribute("memberInfo", memberDto);
 
         return "/home/mainHome";
 
