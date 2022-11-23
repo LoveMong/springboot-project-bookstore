@@ -37,15 +37,17 @@ public class HomeController {
     /**
      * 메인 홈 출력
      *
-     * @param model 신간 도서 , 베스트셀러 도서, 인기 도서 정보
+     * @param model            신간 도서 , 베스트셀러 도서, 인기 도서 정보
      * @param principalDetails 로그인된 고객정보
      * @return 메인 홈 화면
      */
     @GetMapping("/")
     public String mainHome(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        String memberEmail = principalDetails.getMemberDto().getMemberEmail();
-        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
+        if (principalDetails != null) {
+            MemberDto memberDto = memberService.selectMemberByEmail(principalDetails.getMemberDto().getMemberEmail());
+            model.addAttribute("memberInfo", memberDto);
+        }
 
         List<BookDto> bookListGrade = homeService.searchBookListGrade();
         List<BookDto> bookListBest = homeService.searchBookListBest();
@@ -54,7 +56,6 @@ public class HomeController {
         model.addAttribute("bookListGrade", bookListGrade);
         model.addAttribute("bookListBest", bookListBest);
         model.addAttribute("bookListNew", bookListNew);
-        model.addAttribute("memberInfo", memberDto);
 
         return "/home/mainHome";
 
@@ -183,7 +184,8 @@ public class HomeController {
 
     /**
      * 도서 검색(통합, 제목, 작가, 카테고리 등)
-     * @param sc 검색 조건
+     *
+     * @param sc    검색 조건
      * @param model 검색된 도서 정보 및 페이징 처리 객체
      * @return 도서 검색 화면
      */
