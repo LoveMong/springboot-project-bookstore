@@ -37,6 +37,7 @@
                     <input type="hidden" name="memberPoint" id="memberPoint" value="${memberInfo.memberPoint}">
                     <input type="hidden" name="memberRank" id="memberRank" value="${memberInfo.memberRank}">
                     <input type="hidden" name="orderNumber" id="orderNumber" value="">
+                    <input type="hidden" name="orderDate" id="orderDate" value="">
                 </div>
             </div>
 
@@ -749,6 +750,8 @@
 
             $('#memberPoint').val(currentPoint);
 
+            $('#orderDate').val(date());
+
             $('#payment').submit();
 
         }
@@ -789,6 +792,17 @@
 
         return year + month + day ;
     }
+</script>
+
+<script>
+
+    function date() {
+        let date = new Date().toLocaleDateString().replace(/\./g, '').replace(/\s/g, '-');
+        let time = new Date().toTimeString().split(' ')[0];
+
+        return date + ' ' + time;
+    }
+
 </script>
 
 </html>
