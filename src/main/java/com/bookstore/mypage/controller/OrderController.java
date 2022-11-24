@@ -235,14 +235,17 @@ public class OrderController {
      * 도서 상품 결제 진행
      *
      * @param payInfoDto 도서 및 결제 정보
+     * @param model 도서 결제 정보
      * @return 주문 내역 화면
      */
     @PostMapping("/payment")
-    public String payment(@ModelAttribute(value = "PayInfoDto") PayInfoDto payInfoDto) throws Exception {
+    public String payment(@ModelAttribute(value = "PayInfoDto") PayInfoDto payInfoDto, Model model) throws Exception {
 
         orderService.proceedPayment(payInfoDto);
 
-        return "redirect:/order/myOrders";
+        model.addAttribute("payInfo", payInfoDto);
+
+        return "/mypage/orderComplete";
 
     }
 
