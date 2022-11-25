@@ -35,7 +35,7 @@ public class BookDto {
     private String bookPublishingDate; // 출판일
 
     @NotNull(message = "카테고리를 입력해주세요.")
-    private int bookCategory; // 카테고리
+    private String bookCategory; // 카테고리
 
     @NotBlank(message = "도서 소개 내용을 입력해주세요.")
     private String bookContent; // 소개 내용
