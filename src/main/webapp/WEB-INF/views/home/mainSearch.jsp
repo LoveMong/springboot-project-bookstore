@@ -246,7 +246,7 @@
 							<c:if test="${totalCnt==null && totalCnt!=0}">
 								<li class="page-item">
 									<c:if test="${pageHandler.showPrev}">
-										<a class="page-link" href="<c:url value="/admin/bookList${pageHandler.sc.getQueryString(pageHandler.beginPage-1)}"/>"  tabindex="-1">Previous</a>
+										<a class="page-link" href="<c:url value="/search${pageHandler.sc.getQueryString(pageHandler.beginPage-1)}"/>"  tabindex="-1">Previous</a>
 									</c:if>
 								</li>
 								<c:forEach begin="${pageHandler.beginPage}" end="${pageHandler.endPage}" step="1" var="i">
@@ -255,7 +255,7 @@
 											<li class="page-item"><a class="page-link" style="background-color: #cce5ff" href="#">${i}</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="<c:url value="/admin/bookList${pageHandler.sc.getQueryString(i)}"/>">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="<c:url value="/search${pageHandler.sc.getQueryString(i)}"/>">${i}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>

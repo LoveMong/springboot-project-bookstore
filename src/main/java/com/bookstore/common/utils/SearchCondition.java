@@ -55,6 +55,7 @@ public class SearchCondition {
                 .queryParam("keyword",  keyword)
                 .queryParam("startDate",  startDate)
                 .queryParam("endDate",  endDate)
+                .queryParam("bookCategory",  bookCategory)
                 .build().toString();
     }
     public Integer getPage() {
