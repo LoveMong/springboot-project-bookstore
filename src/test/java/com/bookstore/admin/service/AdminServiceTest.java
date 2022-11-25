@@ -29,7 +29,7 @@ class AdminServiceTest {
                     .bookPrice(20000)
                     .bookPublisher("한빛")
                     .bookAuthor("한빛")
-                    .bookCategory(1)
+                    .bookCategory("1")
                     .bookContent("테스트입니다.")
                     .bookPictureUrl("/Users/juyoung/Development/Project/Spring Boot/bookstore/images//2022/09/28/1f63e248-211f-4ada-bdc4-19e2869d9ac0_다운로드.jpeg")
                     .bookThumbUrl("/Users/juyoung/Development/Project/Spring Boot/bookstore/images//2022/09/28/s_1f63e248-211f-4ada-bdc4-19e2869d9ac0_다운로드.jpeg")

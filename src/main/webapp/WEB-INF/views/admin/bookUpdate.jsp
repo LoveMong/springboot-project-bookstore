@@ -56,19 +56,18 @@
                                         <th class="success" style="width: 130px; background-color: #f8f8ff">도서 분류</th>
                                         <td colspan="5">
                                             <select name="bookCategory" id="bookCategory" class="form-span6 m-wrap" style="border: none; background: transparent;">
-                                                <option value=${bookDetail.bookCategory} selected></option>
-                                                <option value="1">소설</option>
-                                                <option value="2">시/에세이</option>
-                                                <option value="3">경제/경영</option>
-                                                <option value="4">자기계발</option>
-                                                <option value="5">인문</option>
-                                                <option value="6">역사/문화</option>
-                                                <option value="7">종교</option>
-                                                <option value="8">정치/사회</option>
-                                                <option value="9">예술/대중문화</option>
-                                                <option value="10">과학</option>
-                                                <option value="11">기술/공학</option>
-                                                <option value="12">컴퓨터/IT</option>
+                                                <option value="1" <c:if test="${bookDetail.bookCategory eq '1'} ">selected</c:if>>소설</option>
+                                                <option value="2" <c:if test="${bookDetail.bookCategory eq '2'} ">selected</c:if>>시/에세이</option>
+                                                <option value="3" <c:if test="${bookDetail.bookCategory eq '3'} ">selected</c:if>>경제/경영</option>
+                                                <option value="4" <c:if test="${bookDetail.bookCategory eq '4'} ">selected</c:if>>자기계발</option>
+                                                <option value="5" <c:if test="${bookDetail.bookCategory eq '5'} ">selected</c:if>>인문</option>
+                                                <option value="6" <c:if test="${bookDetail.bookCategory eq '6'} ">selected</c:if>>역사/문화</option>
+                                                <option value="7" <c:if test="${bookDetail.bookCategory eq '7'} ">selected</c:if>>종교</option>
+                                                <option value="8" <c:if test="${bookDetail.bookCategory eq '8'} ">selected</c:if>>정치/사회</option>
+                                                <option value="9" <c:if test="${bookDetail.bookCategory eq '9'} ">selected</c:if>>예술/대중문화</option>
+                                                <option value="10" <c:if test="${bookDetail.bookCategory eq '10'} ">selected</c:if>>과학</option>
+                                                <option value="11" <c:if test="${bookDetail.bookCategory eq '11'} ">selected</c:if>>기술/공학</option>
+                                                <option value="12" <c:if test="${bookDetail.bookCategory eq '12'} ">selected</c:if>>컴퓨터/IT</option>
                                             </select>
 
                                         </td>
@@ -165,59 +164,6 @@
 
     $(document).ready(function(){
 
-
-        window.onload=function () {
-
-            let book_category = '<c:out value="${bookDetail.bookCategory}"/>';
-
-            let result = "";
-
-            switch(book_category){
-                case "1":
-                    result = "소설";
-                    break;
-                case "2":
-                    result = "시/에세이";
-                    break;
-                case "3":
-                    result = "경제/경영";
-                    break;
-                case "4":
-                    result = "자기계발";
-                    break;
-                case "5":
-                    result = "인문";
-                    break;
-                case "6":
-                    result = "역사/문화";
-                    break;
-                case "7":
-                    result = "종교";
-                    break;
-                case "8":
-                    result = "정치/사회";
-                    break;
-                case "9":
-                    result = "예술/대중문화";
-                    break;
-                case "10":
-                    result = "과학";
-                    break;
-                case "11":
-                    result = "기술/공학";
-                    break;
-                case "12":
-                    result = "컴퓨터/IT";
-                    break;
-            }
-            $('#bookCategory option:checked').text(result);
-        }
-
-    });
-
-
-    $(document).ready(function(){
-
         let idx = false;
 
         let imgFile = '<c:out value="${bookDetail.bookPictureUrl}"/>';
@@ -233,7 +179,11 @@
 
 
         $('#update').click(function(){
-            if($.trim($('#bookTitle').val()) === ''){
+            if($.trim($('#bookCategory').val()) === '') {
+                alert("카테고리를 입력해주세요.");
+                $('#bookCategory').focus();
+                return false;
+            } else if($.trim($('#bookTitle').val()) === ''){
                 alert("제목을 입력해주세요.");
                 $('#bookTitle').focus();
                 return false;
