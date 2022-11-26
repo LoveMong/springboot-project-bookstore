@@ -56,18 +56,18 @@
                                         <th class="success" style="width: 130px; background-color: #f8f8ff">도서 분류</th>
                                         <td colspan="5">
                                             <select name="bookCategory" id="bookCategory" class="form-span6 m-wrap" style="border: none; background: transparent;">
-                                                <option value="1" <c:if test="${bookDetail.bookCategory eq '1'} ">selected</c:if>>소설</option>
-                                                <option value="2" <c:if test="${bookDetail.bookCategory eq '2'} ">selected</c:if>>시/에세이</option>
-                                                <option value="3" <c:if test="${bookDetail.bookCategory eq '3'} ">selected</c:if>>경제/경영</option>
-                                                <option value="4" <c:if test="${bookDetail.bookCategory eq '4'} ">selected</c:if>>자기계발</option>
-                                                <option value="5" <c:if test="${bookDetail.bookCategory eq '5'} ">selected</c:if>>인문</option>
-                                                <option value="6" <c:if test="${bookDetail.bookCategory eq '6'} ">selected</c:if>>역사/문화</option>
-                                                <option value="7" <c:if test="${bookDetail.bookCategory eq '7'} ">selected</c:if>>종교</option>
-                                                <option value="8" <c:if test="${bookDetail.bookCategory eq '8'} ">selected</c:if>>정치/사회</option>
-                                                <option value="9" <c:if test="${bookDetail.bookCategory eq '9'} ">selected</c:if>>예술/대중문화</option>
-                                                <option value="10" <c:if test="${bookDetail.bookCategory eq '10'} ">selected</c:if>>과학</option>
-                                                <option value="11" <c:if test="${bookDetail.bookCategory eq '11'} ">selected</c:if>>기술/공학</option>
-                                                <option value="12" <c:if test="${bookDetail.bookCategory eq '12'} ">selected</c:if>>컴퓨터/IT</option>
+                                                <option value="1" <c:if test="${bookDetail.bookCategory eq '1'}">selected</c:if>>소설</option>
+                                                <option value="2" <c:if test="${bookDetail.bookCategory eq '2'}">selected</c:if>>시/에세이</option>
+                                                <option value="3" <c:if test="${bookDetail.bookCategory eq '3'}">selected</c:if>>경제/경영</option>
+                                                <option value="4" <c:if test="${bookDetail.bookCategory eq '4'}">selected</c:if>>자기계발</option>
+                                                <option value="5" <c:if test="${bookDetail.bookCategory eq '5'}">selected</c:if>>인문</option>
+                                                <option value="6" <c:if test="${bookDetail.bookCategory eq '6'}">selected</c:if>>역사/문화</option>
+                                                <option value="7" <c:if test="${bookDetail.bookCategory eq '7'}">selected</c:if>>종교</option>
+                                                <option value="8" <c:if test="${bookDetail.bookCategory eq '8'}">selected</c:if>>정치/사회</option>
+                                                <option value="9" <c:if test="${bookDetail.bookCategory eq '9'}">selected</c:if>>예술/대중문화</option>
+                                                <option value="10" <c:if test="${bookDetail.bookCategory eq '10'}">selected</c:if>>과학</option>
+                                                <option value="11" <c:if test="${bookDetail.bookCategory eq '11'}">selected</c:if>>기술/공학</option>
+                                                <option value="12" <c:if test="${bookDetail.bookCategory eq '12'}">selected</c:if>>컴퓨터/IT</option>
                                             </select>
 
                                         </td>
@@ -140,7 +140,6 @@
                             </div>
                             <div class="text-center">
                                 <input type="button" value="수정하기"  class="btn btn-success" id="update">
-                                <input type="button" value="목록보기"  class="btn btn-primary" onclick="location.href='<c:url value="/admin/bookList${searchCondition.queryString}"/>' ">
                                 <input type="button" value="취소하기"  class="btn btn-danger" onclick="history.back()">
 
                             </div>

@@ -167,18 +167,16 @@ public class BookController {
     /**
      * 도서 수정 페이지 출력
      *
-     * @param sc      도서 리스트 페이징 처리 및 검색 조건
      * @param bookNum 해당 도서 번호
      * @param model   해당 도서 정보
      * @return 도서 수정 페이지
      */
     @GetMapping("/bookUpdate")
-    public String bookUpdate(@RequestParam("bookNum") int bookNum, SearchCondition sc, Model model) {
+    public String bookUpdate(@RequestParam("bookNum") int bookNum, Model model) {
 
         BookDto bookDetail = adminService.searchBookDetailByBookNum(bookNum);
 
         model.addAttribute("bookDetail", bookDetail);
-        model.addAttribute("searchCondition", sc);
 
         return "/admin/bookUpdate";
 
