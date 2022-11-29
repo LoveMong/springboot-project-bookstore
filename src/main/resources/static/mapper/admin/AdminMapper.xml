@@ -201,18 +201,15 @@
     </select>
 
     <sql id="searchOrderCondition">
-        <choose>
-            <when test='option=="T"'>
-                AND member_email LIKE concat('%', #{keyword}, '%')
-            </when>
-            <when test='option=="R"'>
-                AND member_name LIKE concat('%', #{keyword}, '%')
-            </when>
-            <otherwise>
-                AND (member_email   LIKE concat('%', #{keyword}, '%')
-                OR   member_name LIKE concat('%', #{keyword}, '%'))
-            </otherwise>
-        </choose>
+        <if test='option=="T"'>
+            AND member_email LIKE concat('%', #{keyword}, '%')
+        </if>
+        <if test='option=="R"'>
+            AND member_name LIKE concat('%', #{keyword}, '%')
+        </if>
+        <if test='startDate != null and startDate != "" and endDate != null and endDate != "" '>
+            AND DATE(order_date) BETWEEN #{startDate} AND #{endDate}
+        </if>
     </sql>
 
     <update id="updateOrderState">
