@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/css/admin/bookList.css">
     <script integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="/css/bootstraps/css/bootstrap.css"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -197,6 +200,43 @@
         </div>
         <div class="clear_fix" style="clear:both;"></div>
     </div>
+
+<script>
+
+    let today = new Date().toLocaleDateString();
+
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년',
+        maxDate: new Date(),
+        onClose : function( selectedDate ) {
+            if( selectedDate != "" ) {
+
+                $("#datepickerStart").datepicker("option", "maxDate", $("#datepickerEnd").val());
+                $("#datepickerEnd").datepicker("option", "minDate", $("#datepickerStart").val());
+            }
+        }
+
+
+    });
+
+
+    $(function() {
+        $("#datepickerStart,#datepickerEnd").datepicker({
+            //옵션들 생략//
+            //옵션들 생략//
+        });
+    });
+
+</script>
 
 <jsp:include page="../common/footer.jsp"/>
 
