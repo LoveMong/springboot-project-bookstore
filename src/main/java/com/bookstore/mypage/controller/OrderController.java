@@ -85,7 +85,12 @@ public class OrderController {
     @GetMapping("/cart")
     public String cart(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        List<CartDto> cartList = orderService.readCartInfo(principalDetails.getMemberDto().getMemberEmail());
+        String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+
+        List<CartDto> cartList = orderService.readCartInfo(memberEmail);
+        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
+
+        model.addAttribute("memberInfo", memberDto);
         model.addAttribute("cartList", cartList);
 
         return "/mypage/cart";
@@ -262,7 +267,10 @@ public class OrderController {
     public String myOrders(SearchCondition sc, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
         sc.setMemberEmail(memberEmail);
+
+        model.addAttribute("memberInfo", memberDto);
 
         try {
             int totalCnt = orderService.searchOrderResultCnt(sc);

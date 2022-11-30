@@ -190,7 +190,12 @@ public class HomeController {
      * @return 도서 검색 화면
      */
     @GetMapping("/search")
-    public String search(SearchCondition sc, Model model) {
+    public String search(SearchCondition sc, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+        MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
+
+        model.addAttribute("memberInfo", memberDto);
 
         try {
             List<BookDto> bookDtoList;
