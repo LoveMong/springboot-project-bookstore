@@ -49,7 +49,7 @@
                 <hr />
                 <div class="tabBox">
                     <p class="tab-link current" data-tab="tab-1">저장 정보</p>
-                    <p class="tab-link" data-tab="tab-2">배송지 추가</p>
+                    <p id="tab_2" class="tab-link" data-tab="tab-2">배송지 추가</p>
                 </div>
                 <!-- 저장된 배송지 선택 TAP -->
                 <div id="tab-1" class="tab-content current">
@@ -59,11 +59,11 @@
                             <br/>
                             <h4 style="text-align: center; margin-top: 65px"><strong>배송지를 등록해주세요.</strong></h4>
                             <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-default" style="font-weight: bold; color: darkgreen; padding: 3px; border: 2px outset; margin-left: 510px; margin-top: 20px">등록 하기</button>
-<%--                            <button type="button" data-toggle="modal" data-target="#myModal" id="comment_update" value="" class="btn btn-danger">배송지 등록</button>--%>
+<%--                            <button type="button" data-toggle="modal" d요ata-target="#myModal" id="comment_update" value="" class="btn btn-danger">배송지 등록</button>--%>
                         </c:when>
                         <c:otherwise>
                             <p style="float: left">기본 배송지</p>
-                            <div style="margin-left: 80px; margin-bottom: 10px">
+                            <div style="margin-left: 80px; margin-bottom: 10px">록
                             <button type="button" id="mainAddressUpdateBtn" class="btn btn-default" style="font-weight: bold; color: darkgreen; padding: 3px; border: 2px outset" data-toggle="modal" data-target="#updateAddressModal">수정</button>
                             </div>
                             <div class="arrdGroup alert alert-dismissible alert-warning">
@@ -804,5 +804,36 @@
     }
 
 </script>
+
+<script>
+
+
+    let mainAddress = "${mainAddress}";
+
+
+    // 배송 정보 [기본/입력] 설정
+    $('.tab-link').click(function () {
+
+        $('#tab_2').on("click", function () {
+
+            if (mainAddress === "") {
+                alert("기본 배송지를 등록해주세요.");
+                return false;
+            }
+
+        });
+
+        var tab_id = $(this).attr('data-tab');
+
+        $('.tab-link').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#" + tab_id).addClass('current');
+
+    });
+
+</script>
+
 
 </html>

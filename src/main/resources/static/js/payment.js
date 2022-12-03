@@ -5,17 +5,10 @@ var phone;
 var name;
 
 
-// 배송 정보 [기본/입력] 설정 
-$('.tab-link').click(function () {
-var tab_id = $(this).attr('data-tab');
-					 
-   $('.tab-link').removeClass('current');
-   $('.tab-content').removeClass('current');
-					 
-   $(this).addClass('current');
-   $("#" + tab_id).addClass('current');
-					
-});
+
+
+
+
 
 
 
