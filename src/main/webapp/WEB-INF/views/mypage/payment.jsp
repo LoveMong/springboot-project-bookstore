@@ -421,21 +421,28 @@
 <jsp:include page="../common/footer.jsp"/>
 
 
-
-
 <script>
     <%-- 배송정보 선택 tab[저장정보/배송지 추가] srcript--%>
 
     $('.tab-link').click(function () {
+
+        let mainAddress = "${mainAddress}";
+
         var tab_id = $(this).attr('data-tab');
 
-        $('.tab-link').removeClass('current');
-        $('.tab-content').removeClass('current');
+        if (mainAddress === "") {
+            alert("기본 배송지를 등록해주세요.");
+            return false;
+        } else {
+            $('.tab-link').removeClass('current');
+            $('.tab-content').removeClass('current');
 
-        $(this).addClass('current');
-        $("#" + tab_id).addClass('current');
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+        }
 
     });
+
 </script>
 
 <script>
@@ -804,36 +811,5 @@
     }
 
 </script>
-
-<script>
-
-
-    let mainAddress = "${mainAddress}";
-
-
-    // 배송 정보 [기본/입력] 설정
-    $('.tab-link').click(function () {
-
-        $('#tab_2').on("click", function () {
-
-            if (mainAddress === "") {
-                alert("기본 배송지를 등록해주세요.");
-                return false;
-            }
-
-        });
-
-        var tab_id = $(this).attr('data-tab');
-
-        $('.tab-link').removeClass('current');
-        $('.tab-content').removeClass('current');
-
-        $(this).addClass('current');
-        $("#" + tab_id).addClass('current');
-
-    });
-
-</script>
-
 
 </html>
