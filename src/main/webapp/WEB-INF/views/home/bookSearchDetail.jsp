@@ -244,6 +244,7 @@
 											   }
 
 											   let reviewNum = $('#comment_delete${i.getIndex()}').val(); // 리뷰 번호
+											   let bookNum = "${bookDetail.bookNum}";
 
 												 $.ajax({
 													type:"GET",
@@ -252,7 +253,8 @@
 														 xhr.setRequestHeader(header, token);
 													 },
 													data: {
-													   reviewNum : reviewNum
+														reviewNum : reviewNum,
+														bookNum : bookNum
 													},
 													success:function(result){
 														if (result === "DEL_ERR") {
