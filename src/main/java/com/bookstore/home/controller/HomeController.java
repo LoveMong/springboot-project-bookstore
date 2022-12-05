@@ -98,17 +98,17 @@ public class HomeController {
     /**
      * 도서 리뷰 삭제
      *
-     * @param reviewNum 해당 도서 번호
+     * @param reviewDto 해당 리뷰 정보
      * @return 도서 리뷰 삭제 성공 여부
      */
     @GetMapping("/deleteReview")
     @ResponseBody
-    public String deleteReview(@RequestParam("reviewNum") int reviewNum) {
+    public String deleteReview(ReviewDto reviewDto) {
 
         String resultConfirm = "DEL_OK";
 
         try {
-            if (homeService.deleteReview(reviewNum) != 1) {
+            if (homeService.deleteReview(reviewDto) != 1) {
                 throw new Exception("Delete failed.");
             }
         } catch (Exception e) {

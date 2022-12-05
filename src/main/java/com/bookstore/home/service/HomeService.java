@@ -68,11 +68,20 @@ public class HomeService {
 
     /**
      * 도서 리뷰 삭제
-     * @param reviewNum 해당 리뷰 번호
+     * @param reviewDto 해당 리뷰 정보
      * @return 삭제된 도서 개수(성공 시 -> 1 반환)
      */
-    public int deleteReview(int reviewNum) {
-        return homeMapper.deleteReview(reviewNum);
+    public int deleteReview(ReviewDto reviewDto) {
+
+        int result = homeMapper.deleteReview(reviewDto.getReviewNum());
+
+        if (result != 1) {
+            return 0;
+        } else {
+            homeMapper.updateBookGrade(reviewDto.getBookNum(), bookGradeAverage(reviewDto)); // 새로운 평균 점수 반영
+        }
+
+        return result;
     }
 
 
@@ -181,7 +190,14 @@ public class HomeService {
 
         Map<String, Object> reviewSumAndCount = homeMapper.reviewSumAndCount(reviewDto); // 도서 평균 평점을 구하기 위한 Sum/Count
 
-        float sum = Float.parseFloat(String.valueOf(reviewSumAndCount.get("sum"))); // 해당 도서 평점의 합
+        double sum;
+
+        if (reviewSumAndCount.get("sum") == null) {
+            return 0;
+        } else {
+            sum = Float.parseFloat(String.valueOf(reviewSumAndCount.get("sum"))); // 해당 도서 평점의 합
+        }
+
         int count = Integer.parseInt(String.valueOf(reviewSumAndCount.get("count"))); // 해당 도서 평점의 전체 개수
 
         return sum / count;
