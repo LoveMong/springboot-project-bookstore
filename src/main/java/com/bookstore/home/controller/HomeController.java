@@ -74,7 +74,16 @@ public class HomeController {
     @GetMapping("/bookSearchDetail")
     public String bookSearchDetail(@RequestParam("num") int bookNum,
                                    @RequestParam(value = "page", defaultValue = "1") int page,
-                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, Model model) {
+                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, Model model,
+                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+
+        if (principalDetails != null) {
+            String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+            MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
+
+            model.addAttribute("memberInfo", memberDto);
+        }
 
         HashMap<String, Integer> map = new HashMap<>();
         map.put("bookNum", bookNum);

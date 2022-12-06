@@ -412,7 +412,7 @@
 													<textarea rows="3px" cols="115px" name="repCon" id="regiReviewComment" style="float: left; margin-right: 10px; margin-top: 5px; padding: 8px" ></textarea>
 													<sec:authentication property="principal" var="member"/>
 													<input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberDto.memberEmail }">
-													<input type="button" id="regiReviewCommentBtn" value="등록" class="btn btn-success" style="height: 104pt; width: 65pt; margin-top: 5px">
+													<input type="button" id="regiReviewCommentBtn" value="등록" class="btn btn-success" style="height: 104pt; width: 57pt; margin-top: 5px">
 													<div style="color:#aaa; float: right; margin-right: 120px" id="reviewCommentCount">(0 / 최대 800자)</div>
 												</div>
 											</div>

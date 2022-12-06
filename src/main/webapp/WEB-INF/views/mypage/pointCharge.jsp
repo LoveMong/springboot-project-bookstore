@@ -51,7 +51,7 @@
                           <input type="text" value="" class="form-control is-valid"  id="charge"  name="point_charge_sum" maxlength= "10" onkeyup="inputNumberFormat(this);">
                           
                           
-                          <label class="form-label mt-4" for="inputValid">충전 된 금액 </label>
+                          <label class="form-label mt-4" for="inputValid">충전 후 포인트 </label>
                           <input type="text" value="" class="form-control is-valid"  readonly="readonly" id="pointSum" name="point_charge_sum" onkeyup="inputNumberFormat(this);">
                           
                           <br/>

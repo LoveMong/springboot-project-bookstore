@@ -56,7 +56,7 @@
 						   <div class="" style="float: right; margin-top: 40px; margin-bottom: 40px">
 							   <div class="w100 float_left" style="padding-right:10px; float:left;">
 								   <select class="form-control form-control-sm" name="option" id="searchType" style="width: 107px; float: left; margin-right: 7px; margin-left: -57px;">
-									   <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>제목</option>
+									   <option value="T" ${pageHandler.sc.option=='T' ? "selected" : ""}>주문내역</option>
 									   <option value="R" ${pageHandler.sc.option=='R' ? "selected" : ""}>수령인</option>
 								   </select>
 								</div>
