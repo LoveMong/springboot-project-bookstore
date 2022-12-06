@@ -63,7 +63,7 @@
                         </c:when>
                         <c:otherwise>
                             <p style="float: left">기본 배송지</p>
-                            <div style="margin-left: 80px; margin-bottom: 10px">록
+                            <div style="margin-left: 80px; margin-bottom: 10px">
                             <button type="button" id="mainAddressUpdateBtn" class="btn btn-default" style="font-weight: bold; color: darkgreen; padding: 3px; border: 2px outset" data-toggle="modal" data-target="#updateAddressModal">수정</button>
                             </div>
                             <div class="arrdGroup alert alert-dismissible alert-warning">

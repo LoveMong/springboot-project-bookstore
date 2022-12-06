@@ -295,7 +295,15 @@ public class OrderController {
      * @return 주문내역 상세 화면
      */
     @GetMapping("/orderDetail")
-    public String orderDetail(@RequestParam("num") String orderNumber, SearchCondition sc, Model model) {
+    public String orderDetail(@RequestParam("num") String orderNumber, SearchCondition sc, Model model,
+                              @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        if (principalDetails != null) {
+            String memberEmail = principalDetails.getMemberDto().getMemberEmail();
+            MemberDto memberDto = memberService.selectMemberByEmail(memberEmail);
+
+            model.addAttribute("memberInfo", memberDto);
+        }
 
         List<PayInfoDto> orderDetail = orderService.searchOrderDetail(orderNumber); // 결제 정보
         List<CartDto> searchOrderDetailBookInfo = orderService.searchOrderDetailBookInfo(orderNumber); // 구매 도서 정보
