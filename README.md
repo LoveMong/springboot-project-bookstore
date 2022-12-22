@@ -7,7 +7,7 @@
 
 
 # Demo(시연 영상 - 사진 클릭)
-[![](https://velog.velcdn.com/images%2Fdgk089%2Fpost%2Fa9f911a0-60f9-475b-9082-b44bb7712fa0%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%2C%202020-07-04%2016-47-47.png)](https://youtu.be/jvrAz319NsA)
+[![](src/main/resources/static/img/BookStore.png)](https://youtu.be/jvrAz319NsA)
 
 # ERD
 
