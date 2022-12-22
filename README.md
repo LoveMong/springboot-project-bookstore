@@ -10,7 +10,7 @@
 [![](src/main/resources/static/img/BookStore.png)](https://youtu.be/jvrAz319NsA)
 
 # ERD
-![](src/main/resources/static/img/bookstore ERD.png)
+https://github.com/LoveMong/springboot-project-bookstore/issues/1#issue-1507401152
 
 
 # Technologies
