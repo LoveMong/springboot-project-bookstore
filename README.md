@@ -1,4 +1,4 @@
-# introduction
+# Introduction
 
 * BookStore - 온라인 도서 구매 사이트
 * 개인 사이드 프로젝트로 Spring Boot 사용 경험 및 숙련도 향상을 위해 진행
